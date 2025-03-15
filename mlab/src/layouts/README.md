@@ -1,0 +1,1 @@
+# Layout components (e.g., Navbar, Sidebar, Footer)
