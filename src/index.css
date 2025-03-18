@@ -1,5 +1,15 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
-#root {
-  font-family: "Satoshi";
+:root {
+  font-family: "satoshi";
+  background-color: white;
+}
+* {
+  transition: all 0.2s ease-in-out;
+}
+.dark {
+  --tw-bg-opacity: 1;
+  background-color: rgba(31, 41, 55, var(--tw-bg-opacity)); /* bg-gray-800 */
+  color: white;
 }

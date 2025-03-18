@@ -1,10 +1,12 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Preloader from "@/components/Preloader";
 import Layout from "@/components/Layout";
+import { SearchAndTheme } from "@/layouts/SearchAndTheme";
 import React, { Suspense } from "react";
 
 const Onboarding = React.lazy(() => import("@/pages/Onboarding"));
 const NotFound = React.lazy(() => import("@/components/NotFound"));
+const ComingSoon = React.lazy(() => import("@/components/ComingSoon"));
 
 function AppRoutes() {
   return (
@@ -16,11 +18,35 @@ function AppRoutes() {
               path="/"
               element={
                 <Layout>
-                  <Onboarding />
+                  <SearchAndTheme />
                 </Layout>
               }
             />
-            <Route path="*" element={<NotFound />} />{" "}
+            <Route path="/onboarding" element={<Onboarding />} />
+            <Route
+              path="/coming-soon"
+              element={
+                <Layout>
+                  <ComingSoon />
+                </Layout>
+              }
+            />
+            <Route
+              path="*"
+              element={
+                <Layout>
+                  <NotFound />
+                </Layout>
+              }
+            />
+            <Route
+              path="/404"
+              element={
+                <Layout>
+                  <NotFound />
+                </Layout>
+              }
+            />{" "}
             {/* 404 Not Found route */}
           </Routes>
         </Suspense>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import logo from "@/assets/logo.svg";
+import { useTheme } from "@/hooks/useTheme";
 import {
   Dialog,
   DialogPanel,
@@ -14,74 +14,72 @@ import {
   PopoverPanel,
 } from "@headlessui/react";
 import {
-  ArrowPathIcon,
+  CalculatorIcon,
   Bars3Icon,
   ChartPieIcon,
   CursorArrowRaysIcon,
-  FingerPrintIcon,
   SquaresPlusIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import {
   ChevronDownIcon,
-  PhoneIcon,
+  QuestionMarkCircleIcon,
   PlayCircleIcon,
 } from "@heroicons/react/20/solid";
+import { TbMatrix } from "react-icons/tb";
+import Logo from "@/components/Logo";
+import LogoWhite from "@/components/LogoWhite";
+import { SearchAndTheme } from "@/layouts/SearchAndTheme";
 
 const products = [
   {
-    name: "Analytics",
-    description: "Get a better understanding of your traffic",
-    href: "#",
-    icon: ChartPieIcon,
-  },
-  {
-    name: "Engagement",
-    description: "Speak directly to your customers",
-    href: "#",
+    name: "EV-EV Made Easy",
+    description: "Understand EigenValues & EigenVectors better",
+    href: "coming-soon",
     icon: CursorArrowRaysIcon,
   },
   {
-    name: "Security",
-    description: "Your customers’ data will be safe and secure",
-    href: "#",
-    icon: FingerPrintIcon,
+    name: "EV-EV Properties & Concepts",
+    description: "View some insightful visualizations",
+    href: "coming-soon",
+    icon: ChartPieIcon,
   },
   {
-    name: "Integrations",
-    description: "Connect with third-party tools",
-    href: "#",
+    name: "PCA",
+    description: "Understand PCA concepts",
+    href: "coming-soon",
     icon: SquaresPlusIcon,
   },
   {
-    name: "Automations",
-    description: "Build strategic funnels that will convert",
-    href: "#",
-    icon: ArrowPathIcon,
+    name: "Numerical Methods",
+    description: "Visual Convergence of EigenValues",
+    href: "coming-soon",
+    icon: CalculatorIcon,
+  },
+  {
+    name: "Matrix Playground",
+    description: "Visualize your own matrix and gain insights",
+    href: "coming-soon",
+    icon: TbMatrix,
   },
 ];
 const callsToAction = [
   { name: "Watch demo", href: "#", icon: PlayCircleIcon },
-  { name: "Contact sales", href: "#", icon: PhoneIcon },
+  { name: "Need Help", href: "#", icon: QuestionMarkCircleIcon },
 ];
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { theme } = useTheme();
 
   return (
-    <header className="bg-white">
+    <header className="bg-white outline outline-gray-100 dark:bg-gray-900 dark:outline-gray-700 rounded-b-[70px]">
       <nav
         aria-label="Global"
-        className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+        className="flex mx-auto max-w-7xl items-center justify-between p-6 lg:px-8"
       >
         <div className="flex lg:flex-1">
-          <a href="/" className="-m-1.5 p-1.5">
-            <span className="sr-only">MLAB</span>
-            <div className="flex items-center space-x-2">
-              <img src={logo} alt="MLAB Logo" className="w-20" />
-              <span className="text-black text-4xl font-[aquatico]">MLAB</span>
-            </div>
-          </a>
+          {theme === "dark" ? <Logo /> : <LogoWhite />}
         </div>
 
         <div className="flex lg:hidden">
@@ -94,10 +92,23 @@ export default function Header() {
             <Bars3Icon aria-hidden="true" className="size-6" />
           </button>
         </div>
-        <PopoverGroup className="hidden lg:flex lg:gap-x-12">
+
+        <PopoverGroup className="hidden lg:flex lg:gap-x-12 ">
+          <a
+            href="/"
+            className="text-sm/6 font-semibold text-gray-900 dark:text-white"
+          >
+            Home
+          </a>
+          <a
+            href="coming-soon"
+            className="text-sm/6 font-semibold text-gray-900 dark:text-white"
+          >
+            About Us
+          </a>
           <Popover className="relative">
-            <PopoverButton className="flex items-center gap-x-1 text-sm/6 font-semibold text-gray-900">
-              Product
+            <PopoverButton className="flex items-center gap-x-1 text-sm/6 font-semibold text-gray-900 dark:text-white">
+              Features
               <ChevronDownIcon
                 aria-hidden="true"
                 className="size-5 flex-none text-gray-400"
@@ -106,29 +117,31 @@ export default function Header() {
 
             <PopoverPanel
               transition
-              className="absolute top-full -left-8 z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white ring-1 shadow-lg ring-gray-900/5 transition data-closed:translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in"
+              className="absolute top-full -left-8 z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white dark:bg-gray-800 ring-1 shadow-lg ring-gray-900/5 transition data-closed:translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in"
             >
               <div className="p-4">
                 {products.map((item) => (
                   <div
                     key={item.name}
-                    className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50"
+                    className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50 dark:hover:bg-gray-700"
                   >
                     <div className="flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
                       <item.icon
                         aria-hidden="true"
-                        className="size-6 text-gray-600 group-hover:text-indigo-600"
+                        className="size-6 text-gray-600 group-hover:text-gray-600"
                       />
                     </div>
                     <div className="flex-auto">
                       <a
                         href={item.href}
-                        className="block font-semibold text-gray-900"
+                        className="block font-semibold text-gray-900 dark:text-white"
                       >
                         {item.name}
-                        <span className="absolute inset-0" />
+                        <span className="absolute inset-0 " />
                       </a>
-                      <p className="mt-1 text-gray-600">{item.description}</p>
+                      <p className="mt-1 text-gray-600 dark:text-gray-400">
+                        {item.description}
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -140,30 +153,32 @@ export default function Header() {
                     href={item.href}
                     className="flex items-center justify-center gap-x-2.5 p-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-100"
                   >
+                    {item.name}
                     <item.icon
                       aria-hidden="true"
                       className="size-5 flex-none text-gray-400"
                     />
-                    {item.name}
                   </a>
                 ))}
               </div>
             </PopoverPanel>
           </Popover>
-
-          <a href="#" className="text-sm/6 font-semibold text-gray-900">
-            Features
-          </a>
-          <a href="#" className="text-sm/6 font-semibold text-gray-900">
-            Marketplace
-          </a>
-          <a href="#" className="text-sm/6 font-semibold text-gray-900">
-            Company
+          <a
+            href="coming-soon"
+            className="text-sm/6 font-semibold text-gray-900 dark:text-white"
+          >
+            Meet the Team
           </a>
         </PopoverGroup>
+
+        <SearchAndTheme />
+
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" className="text-sm/6 font-semibold text-gray-900">
-            Log in <span aria-hidden="true">&rarr;</span>
+          <a
+            href="#"
+            className="text-sm/6 font-semibold text-gray-900 dark:text-white"
+          >
+            Sign Up <span aria-hidden="true">&rarr;</span>
           </a>
         </div>
       </nav>
@@ -173,31 +188,33 @@ export default function Header() {
         className="lg:hidden"
       >
         <div className="fixed inset-0 z-10" />
-        <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white dark:bg-gray-800 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
-            <a href="#" className="-m-1.5 p-1.5">
-              <span className="sr-only">Your Company</span>
-              <img
-                alt=""
-                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-                className="h-8 w-auto"
-              />
-            </a>
+            <Logo />
             <button
               type="button"
               onClick={() => setMobileMenuOpen(false)}
               className="-m-2.5 rounded-md p-2.5 text-gray-700"
             >
               <span className="sr-only">Close menu</span>
-              <XMarkIcon aria-hidden="true" className="size-6" />
+              <XMarkIcon
+                aria-hidden="true"
+                className="size-6 dark:text-white"
+              />
             </button>
           </div>
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
+                <a
+                  href="coming-soon"
+                  className="text-sm/6 font-semibold text-gray-900 dark:text-white"
+                >
+                  About Us
+                </a>
                 <Disclosure as="div" className="-mx-3">
-                  <DisclosureButton className="group flex w-full items-center justify-between rounded-lg py-2 pr-3.5 pl-3 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">
-                    Product
+                  <DisclosureButton className="group flex w-full items-center justify-between rounded-lg py-2 pr-3.5 pl-3 text-base/7 font-semibold text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700">
+                    Features
                     <ChevronDownIcon
                       aria-hidden="true"
                       className="size-5 flex-none group-data-open:rotate-180"
@@ -209,38 +226,27 @@ export default function Header() {
                         key={item.name}
                         as="a"
                         href={item.href}
-                        className="block rounded-lg py-2 pr-3 pl-6 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50"
+                        className="block rounded-lg py-2 pr-3 pl-6 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-gray-700"
                       >
                         {item.name}
                       </DisclosureButton>
                     ))}
                   </DisclosurePanel>
                 </Disclosure>
+
                 <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                  href="coming-soon"
+                  className="text-sm/6 font-semibold text-gray-900 dark:text-white"
                 >
-                  Features
-                </a>
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Marketplace
-                </a>
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Company
+                  Meet the Team
                 </a>
               </div>
               <div className="py-6">
                 <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                  href="/signup"
+                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-gray-700"
                 >
-                  Log in
+                  Sign Up
                 </a>
               </div>
             </div>
