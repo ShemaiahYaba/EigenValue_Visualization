@@ -5,7 +5,6 @@ import React, { Suspense } from "react";
 
 const Onboarding = React.lazy(() => import("@/pages/Onboarding"));
 const NotFound = React.lazy(() => import("@/components/NotFound"));
-const Example = React.lazy(() => import("@/pages/Example"));
 
 function AppRoutes() {
   return (
