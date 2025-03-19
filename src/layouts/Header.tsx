@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useTheme } from "@/hooks/useTheme";
 import {
   Dialog,
   DialogPanel,
@@ -28,7 +27,6 @@ import {
 } from "@heroicons/react/20/solid";
 import { TbMatrix } from "react-icons/tb";
 import Logo from "@/components/Logo";
-import LogoWhite from "@/components/LogoWhite";
 import { SearchAndTheme } from "@/layouts/SearchAndTheme";
 
 const products = [
@@ -70,18 +68,19 @@ const callsToAction = [
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { theme } = useTheme();
 
   return (
-    <header className="bg-white outline outline-gray-100 dark:bg-gray-900 dark:outline-gray-700 rounded-b-[70px]">
+    <header className="bg-gray-50 outline outline-gray-100 dark:bg-gray-800 dark:outline-gray-950 rounded-b-[70px]">
       <nav
         aria-label="Global"
-        className="flex mx-auto max-w-7xl items-center justify-between p-6 lg:px-8"
+        className="flex mx-auto max-w-7xl items-center justify-evenly p-6 lg:px-8"
       >
         <div className="flex lg:flex-1">
-          {theme === "dark" ? <Logo /> : <LogoWhite />}
+          <Logo />
         </div>
-
+        <div className="lg:md:sm:hidden flex justify-end">
+          <SearchAndTheme />
+        </div>
         <div className="flex lg:hidden">
           <button
             type="button"
@@ -89,7 +88,7 @@ export default function Header() {
             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
           >
             <span className="sr-only">Open main menu</span>
-            <Bars3Icon aria-hidden="true" className="size-6" />
+            <Bars3Icon aria-hidden="true" className="size-6 dark:text-white" />
           </button>
         </div>
 
@@ -146,12 +145,12 @@ export default function Header() {
                   </div>
                 ))}
               </div>
-              <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
+              <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50 dark:bg-gray-900">
                 {callsToAction.map((item) => (
                   <a
                     key={item.name}
                     href={item.href}
-                    className="flex items-center justify-center gap-x-2.5 p-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-100"
+                    className="flex items-center justify-center gap-x-2.5 p-3 text-sm/6 font-semibold text-gray-900 dark:text-gray-50 hover:bg-gray-100 dark:hover:bg-gray-600"
                   >
                     {item.name}
                     <item.icon
@@ -171,9 +170,9 @@ export default function Header() {
           </a>
         </PopoverGroup>
 
-        <SearchAndTheme />
+        <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:items-center lg:gap-x-6">
+          <SearchAndTheme />
 
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <a
             href="#"
             className="text-sm/6 font-semibold text-gray-900 dark:text-white"
@@ -190,7 +189,9 @@ export default function Header() {
         <div className="fixed inset-0 z-10" />
         <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white dark:bg-gray-800 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
-            <Logo />
+            <div className="ml-4">
+              <Logo />
+            </div>
             <button
               type="button"
               onClick={() => setMobileMenuOpen(false)}

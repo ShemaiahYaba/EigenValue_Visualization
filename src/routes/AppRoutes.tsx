@@ -1,10 +1,9 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Preloader from "@/components/Preloader";
 import Layout from "@/components/Layout";
-import { SearchAndTheme } from "@/layouts/SearchAndTheme";
 import React, { Suspense } from "react";
 
-const Onboarding = React.lazy(() => import("@/pages/Onboarding"));
+const Onboarding = React.lazy(() => import("@/pages/Onboarding/Onboarding"));
 const NotFound = React.lazy(() => import("@/components/NotFound"));
 const ComingSoon = React.lazy(() => import("@/components/ComingSoon"));
 
@@ -18,7 +17,7 @@ function AppRoutes() {
               path="/"
               element={
                 <Layout>
-                  <SearchAndTheme />
+                  <Onboarding />
                 </Layout>
               }
             />
