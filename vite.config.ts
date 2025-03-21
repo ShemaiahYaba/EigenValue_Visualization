@@ -10,4 +10,10 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"),
     },
   },
+  build: {
+    outDir: "dist",
+    rollupOptions: {
+      input: "index.html", // Ensure this path is correct
+    },
+  },
 });

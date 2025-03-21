@@ -12,7 +12,7 @@ const Logo: React.FC = () => {
         <img
           src={theme === "dark" ? logowhite : logoblack}
           alt="MLAB Logo"
-          className="w-20"
+          className="w-15"
         />
         <span className="text-black dark:text-white text-4xl font-[aquatico]">
           MLAB

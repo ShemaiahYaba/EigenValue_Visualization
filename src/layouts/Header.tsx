@@ -33,37 +33,37 @@ const products = [
   {
     name: "EV-EV Made Easy",
     description: "Understand EigenValues & EigenVectors better",
-    href: "coming-soon",
+    href: "/coming-soon",
     icon: CursorArrowRaysIcon,
   },
   {
     name: "EV-EV Properties & Concepts",
     description: "View some insightful visualizations",
-    href: "coming-soon",
+    href: "/coming-soon",
     icon: ChartPieIcon,
   },
   {
     name: "PCA",
     description: "Understand PCA concepts",
-    href: "coming-soon",
+    href: "/coming-soon",
     icon: SquaresPlusIcon,
   },
   {
     name: "Numerical Methods",
     description: "Visual Convergence of EigenValues",
-    href: "coming-soon",
+    href: "/coming-soon",
     icon: CalculatorIcon,
   },
   {
     name: "Matrix Playground",
     description: "Visualize your own matrix and gain insights",
-    href: "coming-soon",
+    href: "/matrix-playground",
     icon: TbMatrix,
   },
 ];
 const callsToAction = [
-  { name: "Watch demo", href: "#", icon: PlayCircleIcon },
-  { name: "Need Help", href: "#", icon: QuestionMarkCircleIcon },
+  { name: "Watch demo", href: "/coming-soon", icon: PlayCircleIcon },
+  { name: "Need Help", href: "/coming-soon", icon: QuestionMarkCircleIcon },
 ];
 
 export default function Header() {
@@ -73,7 +73,7 @@ export default function Header() {
     <header className="bg-gray-50 outline outline-gray-100 dark:bg-gray-800 dark:outline-gray-950 rounded-b-[70px]">
       <nav
         aria-label="Global"
-        className="flex mx-auto max-w-7xl items-center justify-evenly p-6 lg:px-8"
+        className="flex mx-auto max-w-7xl items-center justify-evenly py-3 lg:md:sm:py-1 px-6 lg:px-8"
       >
         <div className="flex lg:flex-1">
           <Logo />

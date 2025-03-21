@@ -6,6 +6,9 @@ import React, { Suspense } from "react";
 const Onboarding = React.lazy(() => import("@/pages/Onboarding/Onboarding"));
 const NotFound = React.lazy(() => import("@/components/NotFound"));
 const ComingSoon = React.lazy(() => import("@/components/ComingSoon"));
+const MatrixPlayground = React.lazy(
+  () => import("@/components/MatrixPlayGround")
+);
 
 function AppRoutes() {
   return (
@@ -21,7 +24,14 @@ function AppRoutes() {
                 </Layout>
               }
             />
-            <Route path="/onboarding" element={<Onboarding />} />
+            <Route
+              path="/matrix-playground"
+              element={
+                <Layout>
+                  <MatrixPlayground />
+                </Layout>
+              }
+            />
             <Route
               path="/coming-soon"
               element={
