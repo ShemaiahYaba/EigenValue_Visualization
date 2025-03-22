@@ -20,14 +20,16 @@ const MatrixInput = ({
       const response = await axios.post("http://127.0.0.1:8000/compute-eigen", {
         matrix,
       });
-      setEigenData(response.data);
+      setEigenData(
+        response.data as { eigenvalues: number[]; eigenvectors: number[][] }
+      );
     } catch (error) {
       console.error("Error computing eigenvalues:", error);
     }
   };
 
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center h-full dark:text-white p-2">
       <h2>Enter a 2x2 Matrix:</h2>
       {matrix.map((row, rowIndex) => (
         <div key={rowIndex}>
@@ -48,7 +50,7 @@ const MatrixInput = ({
       <form onSubmit={handleSubmit}>
         <button
           type="submit"
-          className="bg-red-300 rounded-2xl hover:bg-amber-100"
+          className="bg-red-300 rounded-2xl hover:bg-amber-100 dark:text-white"
         >
           Compute Eigenvalues
         </button>

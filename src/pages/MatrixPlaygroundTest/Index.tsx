@@ -11,7 +11,7 @@ function Index() {
   const [eigenData, setEigenData] = useState<EigenData | null>(null);
 
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center dark:text-white p-2">
       <h1>Eigenvalue & Eigenvector Visualization</h1>
       <MatrixInput setEigenData={setEigenData} />
       {eigenData && (
