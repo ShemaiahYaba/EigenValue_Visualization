@@ -6,9 +6,7 @@ import React, { Suspense } from "react";
 const Onboarding = React.lazy(() => import("@/pages/Onboarding/Onboarding"));
 const NotFound = React.lazy(() => import("@/components/NotFound"));
 const ComingSoon = React.lazy(() => import("@/components/ComingSoon"));
-const MatrixPlayground = React.lazy(
-  () => import("@/components/MatrixPlayGround")
-);
+const Test = React.lazy(() => import("@/pages/MatrixPlaygroundTest/Index"));
 
 function AppRoutes() {
   return (
@@ -28,7 +26,7 @@ function AppRoutes() {
               path="/matrix-playground"
               element={
                 <Layout>
-                  <MatrixPlayground />
+                  <Test />
                 </Layout>
               }
             />
