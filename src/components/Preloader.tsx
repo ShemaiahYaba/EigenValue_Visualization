@@ -35,7 +35,7 @@ const Preloader = () => {
       ref={preloaderRef}
       className="preloader flex items-center justify-center h-screen"
     >
-      <div className="rounded-full bg-gray-50">
+      <div className="rounded-full bg-gray-50 dark:bg-gray-800">
         <img ref={logoRef} src={logo} alt="MLAB Logo" className="w-50" />
       </div>
     </div>

@@ -2,6 +2,42 @@ import React from "react";
 import "@/utils/ImageDeclaration.d.ts";
 import LogoWhite from "@/components/LogoWhite.tsx";
 
+const features = [
+  {
+    name: "EV-EV Made Easy",
+    href: "/coming-soon",
+  },
+  {
+    name: "EV-EV Properties & Concepts",
+    href: "/coming-soon",
+  },
+  {
+    name: "PCA",
+    href: "/coming-soon",
+  },
+  {
+    name: "Numerical Methods",
+    href: "/coming-soon",
+  },
+  {
+    name: "Matrix Playground",
+    href: "/matrix-playground",
+  },
+];
+
+const support = [
+  { name: "Meet The Team", href: "/coming-soon" },
+  { name: "Suggest a Feature", href: "/coming-soon" },
+  { name: "Help Center", href: "/coming-soon" },
+];
+
+const legal = [
+  { name: "Terms of Service", href: "/coming-soon" },
+  { name: "Privacy Policy", href: "/coming-soon" },
+  { name: "License", href: "/coming-soon" },
+  { name: "About", href: "/coming-soon" },
+];
+
 const Footer: React.FC = () => {
   return (
     <footer className="bg-black dark:bg-gray-800 dark:outline dark:outline-gray-950 text-white text-sm rounded-t-[70px]">
@@ -33,18 +69,15 @@ const Footer: React.FC = () => {
 
           {/* Solutions */}
           <div>
-            <h3 className="text-white font-semibold">Solutions</h3>
+            <h3 className="text-white font-semibold">Features</h3>
             <ul className="mt-4 space-y-2">
-              {[
-                "Marketing",
-                "Analytics",
-                "Automation",
-                "Commerce",
-                "Insights",
-              ].map((item) => (
-                <li key={item}>
-                  <a href="#" className="text-gray-400 lg:hover:text-white">
-                    {item}
+              {features.map((item) => (
+                <li>
+                  <a
+                    href={item.href}
+                    className="text-gray-400 lg:hover:text-white"
+                  >
+                    {item.name}
                   </a>
                 </li>
               ))}
@@ -55,10 +88,13 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="text-white font-semibold">Support</h3>
             <ul className="mt-4 space-y-2">
-              {["Submit ticket", "Documentation", "Guides"].map((item) => (
-                <li key={item}>
-                  <a href="#" className="text-gray-400 lg:hover:text-white">
-                    {item}
+              {support.map((item) => (
+                <li>
+                  <a
+                    href={item.href}
+                    className="text-gray-400 lg:hover:text-white"
+                  >
+                    {item.name}
                   </a>
                 </li>
               ))}
@@ -70,15 +106,16 @@ const Footer: React.FC = () => {
             <div className="mt-6 md:mt-0">
               <h3 className="text-white font-semibold">Legal</h3>
               <ul className="mt-4 space-y-2">
-                {["Terms of Service", "Privacy Policy", "License", "About"].map(
-                  (item) => (
-                    <li key={item}>
-                      <a href="#" className="text-gray-400 lg:hover:text-white">
-                        {item}
-                      </a>
-                    </li>
-                  )
-                )}
+                {legal.map((item) => (
+                  <li>
+                    <a
+                      href={item.href}
+                      className="text-gray-400 lg:hover:text-white"
+                    >
+                      {item.name}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>

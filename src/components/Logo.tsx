@@ -7,14 +7,14 @@ const Logo: React.FC = () => {
   const { theme } = useTheme();
 
   return (
-    <a href="/" className="">
-      <div className="flex items-center -ml-6 lg:md:sm:m-0 ">
+    <a href="/" className="justify-start">
+      <div className="flex items-center -ml-4 lg:md:sm:m-0 ">
         <img
           src={theme === "dark" ? logowhite : logoblack}
           alt="MLAB Logo"
-          className="w-15"
+          className="w-10 "
         />
-        <span className="text-black dark:text-white text-4xl font-[aquatico]">
+        <span className="text-black -tracking-tighter dark:text-white text-xl font-[aquatico]">
           MLAB
         </span>
       </div>

@@ -66,14 +66,14 @@ const callsToAction = [
   { name: "Need Help", href: "/coming-soon", icon: QuestionMarkCircleIcon },
 ];
 
-export default function Header() {
+const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-gray-50 outline outline-gray-100 dark:bg-gray-800 dark:outline-gray-950 rounded-b-[70px]">
+    <header className="bg-gray-50 outline outline-gray-100 dark:bg-gray-800 dark:outline-gray-950 lg:md:sm:rounded-b-[70px]">
       <nav
         aria-label="Global"
-        className="flex mx-auto max-w-7xl items-center justify-evenly py-3 lg:md:sm:py-1 px-6 lg:px-8"
+        className="flex mx-auto max-w-7xl items-center justify-evenly py-2 lg:md:sm:py-4 px-6 lg:px-8"
       >
         <div className="flex lg:flex-1">
           <Logo />
@@ -206,15 +206,16 @@ export default function Header() {
           </div>
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
-              <div className="space-y-2 py-6">
+              <div className="space-y-2 py-6 ">
                 <a
                   href="coming-soon"
-                  className="text-sm/6 font-semibold text-gray-900 dark:text-white"
+                  className="-mx-3 block rounded-lg px-3 py-1 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-gray-700"
                 >
                   About Us
                 </a>
+
                 <Disclosure as="div" className="-mx-3">
-                  <DisclosureButton className="group flex w-full items-center justify-between rounded-lg py-2 pr-3.5 pl-3 text-base/7 font-semibold text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700">
+                  <DisclosureButton className="group flex w-full items-center justify-between rounded-lg py-1 pr-3.5 pl-3 text-base/7 font-semibold text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700">
                     Features
                     <ChevronDownIcon
                       aria-hidden="true"
@@ -227,7 +228,7 @@ export default function Header() {
                         key={item.name}
                         as="a"
                         href={item.href}
-                        className="block rounded-lg py-2 pr-3 pl-6 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-gray-700"
+                        className="block rounded-lg py-1 pr-3 pl-6 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-gray-700"
                       >
                         {item.name}
                       </DisclosureButton>
@@ -237,7 +238,7 @@ export default function Header() {
 
                 <a
                   href="coming-soon"
-                  className="text-sm/6 font-semibold text-gray-900 dark:text-white"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-gray-700"
                 >
                   Meet the Team
                 </a>
@@ -256,4 +257,5 @@ export default function Header() {
       </Dialog>
     </header>
   );
-}
+};
+export default Header;
