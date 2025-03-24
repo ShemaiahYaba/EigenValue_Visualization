@@ -1,6 +1,7 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Preloader from "@/components/Preloader";
 import Layout from "@/components/Layout";
+import Sidebar from "@/layouts/Sidebar";
 import React, { Suspense } from "react";
 
 const Onboarding = React.lazy(() => import("@/pages/Onboarding/Onboarding"));
@@ -25,9 +26,9 @@ function AppRoutes() {
             <Route
               path="/matrix-playground"
               element={
-                <Layout>
+                <Sidebar>
                   <Test />
-                </Layout>
+                </Sidebar>
               }
             />
             <Route
