@@ -33,19 +33,19 @@ const products = [
   {
     name: "EV-EV Made Easy",
     description: "Understand EigenValues & EigenVectors better",
-    href: "/coming-soon",
+    href: "/home/made-easy",
     icon: CursorArrowRaysIcon,
   },
   {
     name: "EV-EV Properties & Concepts",
     description: "View some insightful visualizations",
-    href: "/coming-soon",
+    href: "/home/concepts",
     icon: ChartPieIcon,
   },
   {
     name: "PCA",
     description: "Understand PCA concepts",
-    href: "/coming-soon",
+    href: "/home/pca",
     icon: SquaresPlusIcon,
   },
   {
@@ -70,7 +70,7 @@ const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-gray-50 outline outline-gray-100 dark:bg-gray-800 dark:outline-gray-950 lg:md:sm:rounded-b-[70px]">
+    <header className="bg-gray-50 outline outline-gray-100 dark:bg-gray-800 dark:outline-gray-950 ">
       <nav
         aria-label="Global"
         className="flex mx-auto max-w-7xl items-center justify-evenly py-2 lg:md:sm:py-4 px-6 lg:px-8"

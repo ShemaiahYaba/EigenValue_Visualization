@@ -5,11 +5,11 @@ import LogoWhite from "@/components/LogoWhite.tsx";
 const features = [
   {
     name: "EV-EV Made Easy",
-    href: "/coming-soon",
+    href: "/made-easy",
   },
   {
     name: "EV-EV Properties & Concepts",
-    href: "/coming-soon",
+    href: "/concepts",
   },
   {
     name: "PCA",
@@ -40,7 +40,7 @@ const legal = [
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-black dark:bg-gray-800 dark:outline dark:outline-gray-950 text-white text-sm rounded-t-[70px]">
+    <footer className="bg-black dark:bg-gray-800 dark:outline dark:outline-gray-950 text-white text-sm ">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-10">
         <div className="grid md:grid-cols-4 gap-8">
           {/* Company Info */}

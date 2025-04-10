@@ -7,7 +7,10 @@ import React, { Suspense } from "react";
 const Onboarding = React.lazy(() => import("@/pages/Onboarding/Onboarding"));
 const NotFound = React.lazy(() => import("@/components/NotFound"));
 const ComingSoon = React.lazy(() => import("@/components/ComingSoon"));
-const Test = React.lazy(() => import("@/pages/MatrixPlaygroundTest/Index"));
+const MadeEasy = React.lazy(() => import("@/pages/MadeEasy"));
+const Concepts = React.lazy(() => import("@/pages/Concepts"));
+const PCA = React.lazy(() => import("@/pages/PCA"));
+const Features = React.lazy(() => import("@/pages/Features"));
 
 function AppRoutes() {
   return (
@@ -24,13 +27,39 @@ function AppRoutes() {
               }
             />
             <Route
-              path="/matrix-playground"
+              path="/home/made-easy"
+              element={
+                <Layout>
+                  <MadeEasy />
+                </Layout>
+              }
+            />
+            <Route
+              path="/home/concepts"
+              element={
+                <Layout>
+                  <Concepts />
+                </Layout>
+              }
+            />
+            <Route
+              path="/home/pca"
+              element={
+                <Layout>
+                  <PCA />
+                </Layout>
+              }
+            />
+
+            <Route
+              path="/features"
               element={
                 <Sidebar>
-                  <Test />
+                  <Features />
                 </Sidebar>
               }
             />
+
             <Route
               path="/coming-soon"
               element={
@@ -54,8 +83,7 @@ function AppRoutes() {
                   <NotFound />
                 </Layout>
               }
-            />{" "}
-            {/* 404 Not Found route */}
+            />
           </Routes>
         </Suspense>
       </Router>
