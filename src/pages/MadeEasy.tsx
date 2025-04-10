@@ -6,7 +6,6 @@ import {
 } from "@heroicons/react/20/solid";
 import madeeasy from "@/assets/illustrations/made-easy.svg";
 import GetStarted from "@/components/GetStarted";
-import { useNavigate } from "react-router-dom";
 
 const features = [
   {
@@ -30,11 +29,6 @@ const features = [
 ];
 
 const MadeEasy: React.FC = () => {
-  const navigate = useNavigate();
-  const handleClick = () => {
-    // Handle the click event here
-    navigate("/features");
-  };
   return (
     <div className="overflow-hidden py-16 ">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -66,7 +60,7 @@ const MadeEasy: React.FC = () => {
                   </div>
                 ))}
               </dl>
-              <GetStarted onClick={handleClick} />
+              <GetStarted />
             </div>
           </div>
           <img
