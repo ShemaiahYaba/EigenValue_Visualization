@@ -28,7 +28,7 @@ const MatrixInput: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center ">
       <h2>Matrix Input</h2>
       <div>
         <label>

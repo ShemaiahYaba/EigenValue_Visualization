@@ -17,7 +17,7 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ children }) => {
   return (
-    <div className="flex h-svh">
+    <div className="flex h-fit">
       {/* Sidebar */}
       <aside className="w-20 bg-gray-50 dark:bg-gray-900 dark:text-white flex flex-col items-center py-6 shadow-lg">
         {/* Logo */}
