@@ -60,10 +60,10 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
         </nav>
         <div className="mt-auto flex flex-col items-center justify-center space-y-4">
           <ThemeSwitcher />
-          <a href="/matrix-playground/features-home" className="group">
+          <a href="/features" className="group">
             <HomeIcon className="h-8 w-8 text-black hover:text-gray-500 dark:text-gray-400 dark:hover:text-white" />
           </a>
-          <a href="/features-home" className="group">
+          <a href="/features-settings" className="group">
             <TbSettings className="h-8 w-8 text-black hover:text-gray-500 r:bg-gray-100 dark:text-gray-400 dark:hover:text-white" />
           </a>
         </div>
