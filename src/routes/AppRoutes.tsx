@@ -11,6 +11,9 @@ const MadeEasy = React.lazy(() => import("@/pages/MadeEasy"));
 const Concepts = React.lazy(() => import("@/pages/Concepts"));
 const PCA = React.lazy(() => import("@/pages/PCA"));
 const Features = React.lazy(() => import("@/pages/Features"));
+const MatrixPlayground = React.lazy(
+  () => import("@/pages/Features/MatrixPlayground")
+);
 
 function AppRoutes() {
   return (
@@ -56,6 +59,14 @@ function AppRoutes() {
               element={
                 <Sidebar>
                   <Features />
+                </Sidebar>
+              }
+            />
+            <Route
+              path="/matrix-playground"
+              element={
+                <Sidebar>
+                  <MatrixPlayground />
                 </Sidebar>
               }
             />

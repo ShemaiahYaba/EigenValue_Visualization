@@ -1,7 +1,7 @@
 import React from "react";
 import MatrixInput from "@/components/MatrixInput";
 
-const MatrixLab: React.FC = () => {
+const MatrixPlayground: React.FC = () => {
   return (
     <>
       <div className="flex justify-center items-center h-screen bg-gray-100">
@@ -12,4 +12,4 @@ const MatrixLab: React.FC = () => {
     </>
   );
 };
-export default MatrixLab;
+export default MatrixPlayground;
