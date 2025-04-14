@@ -22,8 +22,12 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
       <div className="text-4xl dark:text-gray-300">
         <Icon />
       </div>
-      <h3 className="mt-4 text-lg font-semibold text-center">{name}</h3>
-      <p className="mt-2 text-sm text-gray-600 text-center">{description}</p>
+      <h3 className="mt-4 text-lg font-semibold text-center dark:text-white">
+        {name}
+      </h3>
+      <p className="mt-2 text-sm text-gray-600 text-center dark:text-gray-200">
+        {description}
+      </p>
     </a>
   );
 };
