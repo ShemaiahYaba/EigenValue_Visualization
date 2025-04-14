@@ -44,7 +44,7 @@ const MatrixInput: React.FC = () => {
       </div>
       <div>
         {matrix.map((row, rowIndex) => (
-          <div key={rowIndex} style={{ display: "flex", marginBottom: "5px" }}>
+          <div key={rowIndex} className="flex mb-2">
             {row.map((value, colIndex) => (
               <input
                 key={`${rowIndex}-${colIndex}`}
@@ -53,7 +53,7 @@ const MatrixInput: React.FC = () => {
                 onChange={(e) =>
                   handleInputChange(rowIndex, colIndex, Number(e.target.value))
                 }
-                style={{ width: "50px", marginRight: "5px" }}
+                className="w-12 mr-2 border border-gray-300 rounded px-1"
               />
             ))}
           </div>
