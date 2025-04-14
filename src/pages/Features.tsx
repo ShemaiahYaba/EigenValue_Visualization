@@ -45,7 +45,7 @@ const featureSetTwo = [
 const Features: React.FC = () => {
   return (
     <div className="flex flex-col justify-center items-center">
-      <div className="py-10">
+      <div className="py-6">
         <div className="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
           <h2 className="text-center text-base/7 font-semibold">
             Welcome to MatrixLAB
