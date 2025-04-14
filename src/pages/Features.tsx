@@ -47,10 +47,7 @@ const Features: React.FC = () => {
     <div className="flex flex-col justify-center items-center">
       <div className="py-6">
         <div className="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
-          <h2 className="text-center text-base/7 font-semibold">
-            Welcome to MatrixLAB
-          </h2>
-          <p className="mx-auto mt-2 max-w-lg text-center text-2xl font-semibold tracking-tight text-balance text-gray-950 sm:text-5xl">
+          <p className="mx-auto mt-2 max-w-lg text-center text-4xl font-semibold tracking-tight text-balance text-gray-950 sm:text-5xl">
             Where are you heading to today?
           </p>
           <div className="flex flex-col items-center">
