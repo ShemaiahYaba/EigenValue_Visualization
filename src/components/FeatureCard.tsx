@@ -17,7 +17,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
   return (
     <a
       href={href}
-      className="flex flex-col items-center justify-center px-24 py-10 bg-gray-100 rounded-lg shadow-md hover:shadow-lg"
+      className="flex flex-col items-center justify-center px-14 py-10 bg-gray-100 rounded-lg shadow-md hover:shadow-lg"
     >
       <div className="text-4xl">
         <Icon />
