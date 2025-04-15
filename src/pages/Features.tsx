@@ -9,7 +9,7 @@ import { CiCalculator1 } from "react-icons/ci";
 const featureSetOne = [
   {
     name: "EV-EV Made Easy",
-    description: "Understand EigenValues & EigenVectors better",
+    description: "Understand EigenValues & EigenVectors through First Principles Thinking",
     href: "/coming-soon",
     icon: BsBook,
   },
@@ -36,7 +36,7 @@ const featureSetTwo = [
   },
   {
     name: "Numerical Methods",
-    description: "Visual Convergence of EigenValues",
+    description: "Visual Convergence of Numerical Computations of EigenValues",
     href: "/coming-soon",
     icon: CiCalculator1,
   },

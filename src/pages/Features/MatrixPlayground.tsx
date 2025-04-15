@@ -8,6 +8,9 @@ const MatrixPlayground: React.FC = () => {
         <div className="p-5 border border-gray-300 rounded-xl bg-white shadow-md ">
           <MatrixInput />
         </div>
+        <div>
+          <MatrixInput />
+        </div>
       </div>
     </>
   );
