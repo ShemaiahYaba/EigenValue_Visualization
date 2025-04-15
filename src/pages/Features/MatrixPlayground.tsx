@@ -1,5 +1,6 @@
 import React from "react";
 import MatrixInput from "@/components/MatrixInput";
+import GraphingTool from "@/components/GraphingTool";
 
 const MatrixPlayground: React.FC = () => {
   return (
@@ -8,8 +9,8 @@ const MatrixPlayground: React.FC = () => {
         <div className="p-5 border border-gray-300 rounded-xl bg-white shadow-md ">
           <MatrixInput />
         </div>
-        <div>
-          <MatrixInput />
+        <div className="p-5 border border-gray-300 rounded-xl bg-white shadow-md">
+          <GraphingTool />
         </div>
       </div>
     </>
