@@ -1,62 +1,70 @@
 import React from "react";
-import { useState } from "react";
 
-interface MatrixInputProps {
-  onMatrixChange: (matrix: number[][]) => void;
-}
-
-const GraphingTool: React.FC = () => {
-  const handleMatrixChange = (matrix: number[][]) => {
-    alert("Matrix updated: " + JSON.stringify(matrix));
-  };
+const GraphBook: React.FC = () => {
+  const width = 500;
+  const height = 400;
+  const padding = 50;
 
   return (
-    <div>
-      <h1>Graphing Tool</h1>
-      <MatrixInput onMatrixChange={handleMatrixChange} />
-    </div>
+    <svg width={width} height={height} style={{ border: "1px solid #ccc" }}>
+      {/* X and Y Axes */}
+      <line
+        x1={padding}
+        y1={height - padding}
+        x2={width - padding}
+        y2={height - padding}
+        stroke="black"
+      />
+      <line
+        x1={padding}
+        y1={padding}
+        x2={padding}
+        y2={height - padding}
+        stroke="black"
+      />
+
+      {/* X Axis Label */}
+      <text
+        x={width / 2}
+        y={height - padding / 2}
+        textAnchor="middle"
+        fontSize="14"
+      >
+        X Axis
+      </text>
+
+      {/* Y Axis Label */}
+      <text
+        x={-height / 2}
+        y={padding / 3}
+        transform="rotate(-90)"
+        textAnchor="middle"
+        fontSize="14"
+      >
+        Y Axis
+      </text>
+
+      {/* Example data points */}
+      <circle cx={padding + 40} cy={height - padding - 30} r="5" fill="blue" />
+      <circle cx={padding + 100} cy={height - padding - 80} r="5" fill="blue" />
+      <circle
+        cx={padding + 160}
+        cy={height - padding - 120}
+        r="5"
+        fill="blue"
+      />
+
+      {/* Lines connecting points */}
+      <polyline
+        fill="none"
+        stroke="blue"
+        strokeWidth="2"
+        points={`${padding + 40},${height - padding - 30} 
+                 ${padding + 100},${height - padding - 80} 
+                 ${padding + 160},${height - padding - 120}`}
+      />
+    </svg>
   );
 };
 
-const MatrixInput: React.FC<MatrixInputProps> = ({ onMatrixChange }) => {
-  const [matrix, setMatrix] = useState<number[][]>([
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-  ]);
-
-  const handleInputChange = (row: number, col: number, value: string) => {
-    const updatedMatrix = [...matrix];
-    updatedMatrix[row][col] = parseFloat(value) || 0;
-    setMatrix(updatedMatrix);
-    onMatrixChange(updatedMatrix);
-  };
-
-  return (
-    <div>
-      {matrix.map((row, rowIndex) => (
-        <div key={rowIndex} style={{ display: "flex", marginBottom: "5px" }}>
-          {row.map((value, colIndex) => (
-            <input
-              key={`${rowIndex}-${colIndex}`}
-              type="number"
-              value={value}
-              onChange={(e) =>
-                handleInputChange(rowIndex, colIndex, e.target.value)
-              }
-              style={{
-                width: "50px",
-                marginRight: "5px",
-                textAlign: "center",
-              }}
-            />
-          ))}
-        </div>
-      ))}
-    </div>
-  );
-};
-
-// Removed duplicate definition of GraphingTool
-export default GraphingTool;
+export default GraphBook;
