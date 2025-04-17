@@ -9,9 +9,9 @@ const GraphPaper: React.FC<{
 }> = ({
   width = 800,
   height = 600,
-  xRange = [-16, 16],
-  yRange = [-8, 8],
-  unit = 20,
+  xRange = [-10, 10],
+  yRange = [-6, 6],
+  unit = 40, // tighter grid spacing like GeoGebra
 }) => {
   const xTicks = [];
   const yTicks = [];
@@ -24,7 +24,7 @@ const GraphPaper: React.FC<{
   const centerX = (0 - xStart) * unit;
   const centerY = (yEnd - 0) * unit;
 
-  // Vertical lines
+  // Vertical grid lines
   for (let x = xStart; x <= xEnd; x++) {
     const xPos = (x - xStart) * unit;
     xTicks.push(
@@ -34,17 +34,18 @@ const GraphPaper: React.FC<{
         y1={0}
         x2={xPos}
         y2={height}
-        stroke="#ccc"
-        strokeWidth={x === 0 ? 2 : 1}
+        stroke={x === 0 ? "#333" : "#ddd"}
+        strokeWidth={x === 0 ? 1.5 : 1}
       />
     );
     if (x !== 0) {
       xTicks.push(
         <text
           key={`xt-${x}`}
-          x={xPos + 2}
-          y={centerY - 5}
-          fontSize="10"
+          x={xPos}
+          y={centerY + 12}
+          fontSize="11"
+          textAnchor="middle"
           fill="#555"
         >
           {x}
@@ -53,7 +54,7 @@ const GraphPaper: React.FC<{
     }
   }
 
-  // Horizontal lines
+  // Horizontal grid lines
   for (let y = yStart; y <= yEnd; y++) {
     const yPos = (yEnd - y) * unit;
     yTicks.push(
@@ -63,8 +64,8 @@ const GraphPaper: React.FC<{
         y1={yPos}
         x2={width}
         y2={yPos}
-        stroke="#ccc"
-        strokeWidth={y === 0 ? 2 : 1}
+        stroke={y === 0 ? "#333" : "#ddd"}
+        strokeWidth={y === 0 ? 1.5 : 1}
       />
     );
     if (y !== 0) {
@@ -72,8 +73,9 @@ const GraphPaper: React.FC<{
         <text
           key={`yt-${y}`}
           x={centerX + 5}
-          y={yPos - 2}
-          fontSize="10"
+          y={yPos + 4}
+          fontSize="11"
+          textAnchor="start"
           fill="#555"
         >
           {y}
@@ -82,11 +84,30 @@ const GraphPaper: React.FC<{
     }
   }
 
+  // Axis arrows
+  const arrowSize = 6;
+
   return (
     <svg width={width} height={height} style={{ background: "#fff" }}>
       {/* Grid lines */}
       {xTicks}
       {yTicks}
+
+      {/* X-axis arrow */}
+      <polygon
+        points={`${width},${centerY} ${width - arrowSize},${
+          centerY - arrowSize
+        } ${width - arrowSize},${centerY + arrowSize}`}
+        fill="#333"
+      />
+
+      {/* Y-axis arrow */}
+      <polygon
+        points={`${centerX},0 ${centerX - arrowSize},${arrowSize} ${
+          centerX + arrowSize
+        },${arrowSize}`}
+        fill="#333"
+      />
     </svg>
   );
 };
