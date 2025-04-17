@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const MatrixInput: React.FC = () => {
   const [matrixSize, setMatrixSize] = useState(2);
   const [matrix, setMatrix] = useState<number[][]>(
-    Array(2).fill(Array(2).fill(0))
+    Array.from({ length: 2 }, () => Array(2).fill(0))
   );
 
   const handleSizeChange = (size: number) => {
@@ -83,7 +83,7 @@ const MatrixInput: React.FC = () => {
       </div>
       <button
         onClick={sendMatrixToPython}
-        className="mt-4 px-4 bg-black text-white rounded-2xl hover:bg-gray-500 flex items-center justify-center"
+        className="mt-4 px-4 bg-black text-white rounded-xl hover:bg-gray-500 flex items-center justify-center"
       >
         Create Visualization
       </button>

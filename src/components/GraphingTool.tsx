@@ -40,6 +40,11 @@ const GraphPaper: React.FC<{
   const handleMouseUp = () => setDragging(false);
   const handleMouseLeave = () => setDragging(false);
 
+  const handleReset = () => {
+    setUnit(40); // Reset zoom level
+    setOffset({ x: 0, y: 0 }); // Reset panning
+  };
+
   const xTicks = [];
   const yTicks = [];
 
@@ -111,35 +116,61 @@ const GraphPaper: React.FC<{
   const arrowSize = 6;
 
   return (
-    <svg
-      width={width}
-      height={height}
-      style={{ background: "#fff", cursor: dragging ? "grabbing" : "grab" }}
-      onWheel={handleWheel}
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseLeave}
-    >
-      {xTicks}
-      {yTicks}
+    <div style={{ position: "relative", display: "inline-block" }}>
+      <svg
+        width={width}
+        height={height}
+        style={{ background: "#fff", cursor: dragging ? "grabbing" : "grab" }}
+        onWheel={handleWheel}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseLeave}
+      >
+        {xTicks}
+        {yTicks}
 
-      {/* X-axis arrow */}
-      <polygon
-        points={`${width},${centerY} ${width - arrowSize},${
-          centerY - arrowSize
-        } ${width - arrowSize},${centerY + arrowSize}`}
-        fill="#333"
-      />
+        {/* X-axis arrow */}
+        <polygon
+          points={`${width},${centerY} ${width - arrowSize},${
+            centerY - arrowSize
+          } ${width - arrowSize},${centerY + arrowSize}`}
+          fill="#333"
+        />
 
-      {/* Y-axis arrow */}
-      <polygon
-        points={`${centerX},0 ${centerX - arrowSize},${arrowSize} ${
-          centerX + arrowSize
-        },${arrowSize}`}
-        fill="#333"
-      />
-    </svg>
+        {/* Y-axis arrow */}
+        <polygon
+          points={`${centerX},0 ${centerX - arrowSize},${arrowSize} ${
+            centerX + arrowSize
+          },${arrowSize}`}
+          fill="#333"
+        />
+      </svg>
+      <button
+        onClick={handleReset}
+        style={{
+          position: "absolute",
+          top: 10,
+          left: 10,
+          background: "#fff",
+          border: "1px solid #ccc",
+          borderRadius: "4px",
+          padding: "5px",
+          cursor: "pointer",
+        }}
+        title="Reset View"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="16"
+          height="16"
+          fill="currentColor"
+        >
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+        </svg>
+      </button>
+    </div>
   );
 };
 
