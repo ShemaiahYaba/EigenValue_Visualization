@@ -1,12 +1,17 @@
-import React, { useRef, useState } from "react";
+import React, { useState, useRef } from "react";
+import CoordinateHUD from "@/components/CodrinateHUD";
+import OriginMarker from "@/components/OriginMarker";
+import AxisArrows from "@/components/AxisArrows";
+import GridLines from "@/components/GridLines";
 
-const GraphPaper: React.FC<{
-  width?: number;
-  height?: number;
-}> = ({ width = 800, height = 600 }) => {
+const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
+  width = 800,
+  height = 600,
+}) => {
   const [unit, setUnit] = useState(40); // pixels per unit
   const [offset, setOffset] = useState({ x: 0, y: 0 }); // panning offset in pixels
   const [dragging, setDragging] = useState(false);
+  const [mouse, setMouse] = useState({ x: 0, y: 0 });
   const dragStart = useRef({ x: 0, y: 0 });
   const offsetStart = useRef(offset);
 
@@ -35,6 +40,7 @@ const GraphPaper: React.FC<{
         y: offsetStart.current.y + dy,
       });
     }
+    setMouse({ x: e.clientX, y: e.clientY });
   };
 
   const handleMouseUp = () => setDragging(false);
@@ -44,76 +50,6 @@ const GraphPaper: React.FC<{
     setUnit(40); // Reset zoom level
     setOffset({ x: 0, y: 0 }); // Reset panning
   };
-
-  const xTicks = [];
-  const yTicks = [];
-
-  const centerX = width / 2 + offset.x;
-  const centerY = height / 2 + offset.y;
-
-  for (let x = xRange[0]; x <= xRange[1]; x += 1) {
-    const xPos = centerX + x * unit;
-    if (xPos >= 0 && xPos <= width) {
-      xTicks.push(
-        <line
-          key={`v-${x}`}
-          x1={xPos}
-          y1={0}
-          x2={xPos}
-          y2={height}
-          stroke={x === 0 ? "#333" : "#ddd"}
-          strokeWidth={x === 0 ? 1.5 : 1}
-        />
-      );
-      if (x !== 0) {
-        xTicks.push(
-          <text
-            key={`xt-${x}`}
-            x={xPos}
-            y={centerY + 12}
-            fontSize="11"
-            textAnchor="middle"
-            fill="#555"
-          >
-            {x}
-          </text>
-        );
-      }
-    }
-  }
-
-  for (let y = yRange[0]; y <= yRange[1]; y += 1) {
-    const yPos = centerY - y * unit;
-    if (yPos >= 0 && yPos <= height) {
-      yTicks.push(
-        <line
-          key={`h-${y}`}
-          x1={0}
-          y1={yPos}
-          x2={width}
-          y2={yPos}
-          stroke={y === 0 ? "#333" : "#ddd"}
-          strokeWidth={y === 0 ? 1.5 : 1}
-        />
-      );
-      if (y !== 0) {
-        yTicks.push(
-          <text
-            key={`yt-${y}`}
-            x={centerX + 5}
-            y={yPos + 4}
-            fontSize="11"
-            textAnchor="start"
-            fill="#555"
-          >
-            {y}
-          </text>
-        );
-      }
-    }
-  }
-
-  const arrowSize = 6;
 
   return (
     <div style={{ position: "relative", display: "inline-block" }}>
@@ -127,25 +63,34 @@ const GraphPaper: React.FC<{
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
       >
-        {xTicks}
-        {yTicks}
-
-        {/* X-axis arrow */}
-        <polygon
-          points={`${width},${centerY} ${width - arrowSize},${
-            centerY - arrowSize
-          } ${width - arrowSize},${centerY + arrowSize}`}
-          fill="#333"
+        {/* Grid and other components */}
+        <GridLines
+          width={width}
+          height={height}
+          unit={unit}
+          offset={offset}
+          xRange={xRange}
+          yRange={yRange}
         />
+        <OriginMarker
+          width={width}
+          height={height}
+          offset={offset}
+          unit={unit}
+        />
+        <AxisArrows width={width} height={height} offset={offset} />
 
-        {/* Y-axis arrow */}
-        <polygon
-          points={`${centerX},0 ${centerX - arrowSize},${arrowSize} ${
-            centerX + arrowSize
-          },${arrowSize}`}
-          fill="#333"
+        {/* Coordinate HUD */}
+        <CoordinateHUD
+          mouse={mouse}
+          unit={unit}
+          offset={offset}
+          width={width}
+          height={height}
         />
       </svg>
+
+      {/* Reset button */}
       <button
         onClick={handleReset}
         style={{
