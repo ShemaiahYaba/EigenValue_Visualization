@@ -83,7 +83,7 @@ const MatrixInput: React.FC = () => {
       </div>
       <button
         onClick={sendMatrixToPython}
-        className="mt-4 px-4 bg-blue-500 text-black rounded hover:bg-gray-500"
+        className="mt-4 px-4 bg-black text-white rounded-2xl hover:bg-gray-500 flex items-center justify-center"
       >
         Create Visualization
       </button>
