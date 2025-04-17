@@ -27,6 +27,28 @@ const MatrixInput: React.FC = () => {
     setMatrix(updatedMatrix);
   };
 
+  const sendMatrixToPython = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/matrix", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ matrix }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to send matrix to Python app");
+      }
+
+      const data = await response.json();
+      alert(`Response from Python: ${JSON.stringify(data)}`);
+    } catch (error) {
+      console.error("Error sending matrix to Python app:", error);
+      alert("Error sending matrix to Python app");
+    }
+  };
+
   return (
     <div className="flex flex-col items-center justify-center ">
       <h2>Matrix Input</h2>
@@ -60,10 +82,10 @@ const MatrixInput: React.FC = () => {
         ))}
       </div>
       <button
-        onClick={() => alert(`Matrix Visualization: ${JSON.stringify(matrix)}`)}
+        onClick={sendMatrixToPython}
         className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
       >
-        Create Visualization
+        Send to Python
       </button>
     </div>
   );

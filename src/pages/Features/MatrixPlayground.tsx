@@ -5,12 +5,14 @@ import GraphingTool from "@/components/GraphingTool";
 const MatrixPlayground: React.FC = () => {
   return (
     <>
-      <div className="flex justify-center items-center h-screen ">
-        <div className="p-5 border border-gray-300 rounded-xl bg-white shadow-md ">
-          <MatrixInput />
-        </div>
-        <div className="p-5 border border-gray-300 rounded-xl bg-white shadow-md">
-          <GraphingTool />
+      <div className="flex justify-center items-center h-screen">
+        <div className="flex gap-5">
+          <div className="p-5 border border-gray-300 rounded-xl bg-white shadow-md">
+            <MatrixInput />
+          </div>
+          <div className="p-5 border border-gray-300 rounded-xl bg-white shadow-md">
+            <GraphingTool />
+          </div>
         </div>
       </div>
     </>
