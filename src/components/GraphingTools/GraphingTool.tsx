@@ -1,13 +1,13 @@
 import React, { useState, useRef } from "react";
-import CoordinateHUD from "@/components/CoordinateHUD";
-import OriginMarker from "@/components/OriginMarker";
-import AxisArrows from "@/components/AxisArrows";
-import GridLines from "@/components/GridLines";
-import MatrixResults from "@/components/MatrixResult"; // New component for displaying results
+import CoordinateHUD from "@/components/GraphingTools/CoordinateHUD";
+import OriginMarker from "@/components/GraphingTools/GraphPage/OriginMarker";
+import AxisArrows from "@/components/GraphingTools/GraphPage/AxisArrows";
+import GridLines from "@/components/GraphingTools/GraphPage/GridLines";
+import MatrixResults from "@/components/GraphingTools/MatrixResult"; // New component for displaying results
 
 const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
   width = 800,
-  height = 600,
+  height = 500,
 }) => {
   const [unit, setUnit] = useState(40); // pixels per unit
   const [offset, setOffset] = useState({ x: 0, y: 0 }); // panning offset in pixels
@@ -100,11 +100,11 @@ const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
   };
 
   return (
-    <div style={{ position: "relative", display: "inline-block" }}>
+    <div className="relative inline-block">
       <svg
         width={width}
         height={height}
-        style={{ background: "#fff", cursor: dragging ? "grabbing" : "grab" }}
+        className={`bg-white ${dragging ? "cursor-grabbing" : "cursor-grab"}`}
         onWheel={handleWheel}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
@@ -146,16 +146,7 @@ const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
       {/* Matrix transformation button */}
       <button
         onClick={fetchTransformedMatrix}
-        style={{
-          position: "absolute",
-          top: 10,
-          left: 50,
-          background: "#fff",
-          border: "1px solid #ccc",
-          borderRadius: "4px",
-          padding: "5px",
-          cursor: "pointer",
-        }}
+        className="absolute top-2 left-12 bg-white border border-gray-300 rounded px-2 py-1 cursor-pointer shadow-sm hover:bg-gray-50"
         title="Create Visualization"
       >
         Create Visualization
@@ -167,16 +158,7 @@ const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
       {/* Reset button */}
       <button
         onClick={handleReset}
-        style={{
-          position: "absolute",
-          top: 10,
-          left: 10,
-          background: "#fff",
-          border: "1px solid #ccc",
-          borderRadius: "4px",
-          padding: "5px",
-          cursor: "pointer",
-        }}
+        className="absolute top-2 left-2 bg-white border border-gray-300 rounded px-2 py-1 cursor-pointer shadow-sm hover:bg-gray-50 flex items-center justify-center"
         title="Reset View"
       >
         <svg

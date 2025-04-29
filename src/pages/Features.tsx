@@ -1,5 +1,5 @@
 import React from "react";
-import FeatureCard from "@/components/FeatureCard";
+import FeatureCard from "@/components/UiComponents/FeatureCard";
 import { TbMatrix } from "react-icons/tb";
 import { BsBook } from "react-icons/bs";
 import { FaCompressArrowsAlt } from "react-icons/fa";
@@ -9,7 +9,8 @@ import { CiCalculator1 } from "react-icons/ci";
 const featureSetOne = [
   {
     name: "EV-EV Made Easy",
-    description: "Understand EigenValues & EigenVectors through First Principles Thinking",
+    description:
+      "Understand EigenValues & EigenVectors through First Principles Thinking",
     href: "/coming-soon",
     icon: BsBook,
   },

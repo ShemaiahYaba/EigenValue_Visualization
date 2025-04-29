@@ -1,12 +1,14 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import Preloader from "@/components/Preloader";
-import Layout from "@/components/Layout";
+import Preloader from "@/components/UiComponents/Preloader";
+import Layout from "@/components/UiComponents/Layout";
 import Sidebar from "@/layouts/Sidebar";
 import React, { Suspense } from "react";
 
 const Onboarding = React.lazy(() => import("@/pages/Onboarding"));
-const NotFound = React.lazy(() => import("@/components/NotFound"));
-const ComingSoon = React.lazy(() => import("@/components/ComingSoon"));
+const NotFound = React.lazy(() => import("@/components/UiComponents/NotFound"));
+const ComingSoon = React.lazy(
+  () => import("@/components/UiComponents/ComingSoon")
+);
 const MadeEasy = React.lazy(() => import("@/pages/MadeEasy"));
 const Concepts = React.lazy(() => import("@/pages/Concepts"));
 const PCA = React.lazy(() => import("@/pages/PCA"));

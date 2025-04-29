@@ -5,7 +5,7 @@ import {
   ServerIcon,
 } from "@heroicons/react/20/solid";
 import madeeasy from "@/assets/illustrations/made-easy.svg";
-import GetStarted from "@/components/GetStarted";
+import GetStarted from "@/components/UiComponents/GetStarted";
 
 const features = [
   {

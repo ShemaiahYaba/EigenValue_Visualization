@@ -21,18 +21,7 @@ const CoordinateHUD: React.FC<Props> = ({
   const y = (-(mouse.y - centerY) / unit).toFixed(2);
 
   return (
-    <div
-      style={{
-        position: "absolute",
-        bottom: 10,
-        right: 10,
-        background: "#fff",
-        border: "1px solid #ccc",
-        borderRadius: "4px",
-        padding: "4px 8px",
-        fontSize: "12px",
-      }}
-    >
+    <div className="absolute bottom-2 right-2 bg-white border border-gray-300 rounded px-2 py-1 text-xs">
       ({x}, {y})
     </div>
   );

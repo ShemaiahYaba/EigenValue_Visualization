@@ -1,6 +1,6 @@
 import React from "react";
 import "@/utils/ImageDeclaration.d.ts";
-import LogoWhite from "@/components/LogoWhite.tsx";
+import LogoWhite from "@/components/UiComponents/LogoWhite";
 
 const features = [
   {

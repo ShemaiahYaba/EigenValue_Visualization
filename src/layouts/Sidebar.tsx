@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import logo from "@/assets/logo.svg";
 import logo1 from "@/assets/logowhite.svg";
-import ThemeSwitcher from "@/components/ThemeSwitcher";
+import ThemeSwitcher from "@/components/UiComponents/ThemeSwitcher";
 import {
   AcademicCapIcon,
   CalculatorIcon,
@@ -19,7 +19,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
-      <aside className="w-20 bg-gray-50 dark:bg-gray-900 dark:text-white flex flex-col items-center py-6 shadow-lg">
+      <aside className="w-16 bg-gray-50 dark:bg-gray-900 dark:text-white flex flex-col items-center py-6 shadow-lg">
         {/* Logo */}
         <a href="/" className="mb-6">
           <img src={logo} alt="MLab Logo" className="h-12 w-12 dark:hidden" />

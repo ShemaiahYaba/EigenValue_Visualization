@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Preloader from "@/components/Preloader";
+import Preloader from "@/components/UiComponents/Preloader";
 
 const LocalPreloader = () => <Preloader />;
 

@@ -26,7 +26,7 @@ import {
   PlayCircleIcon,
 } from "@heroicons/react/20/solid";
 import { TbMatrix } from "react-icons/tb";
-import Logo from "@/components/Logo";
+import Logo from "@/components/UiComponents/Logo";
 import { SearchAndTheme } from "@/layouts/SearchAndTheme";
 
 const products = [

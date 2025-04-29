@@ -5,7 +5,7 @@ import {
   FingerPrintIcon,
   LockClosedIcon,
 } from "@heroicons/react/24/outline";
-import GetStarted from "@/components/GetStarted";
+import GetStarted from "@/components/UiComponents/GetStarted";
 
 const features = [
   {

@@ -1,5 +1,5 @@
 import React from "react";
-import ThemeSwitcher from "@/components/ThemeSwitcher";
+import ThemeSwitcher from "@/components/UiComponents/ThemeSwitcher";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 export const SearchAndTheme: React.FC = () => {
