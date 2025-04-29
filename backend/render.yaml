@@ -1,10 +1,9 @@
 services:
   - type: web
     name: mlab
-    env: python
+    runtime: python
     region: oregon # or pick closest to your users
     branch: main
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn main:app
-    workingDir: backend
     autoDeploy: true

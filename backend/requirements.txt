@@ -1,5 +1,5 @@
 fastapi
 numpy
 plotly
-uvicorn
+gunicorn
 flask
