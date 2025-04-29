@@ -3,27 +3,28 @@ import numpy as np
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)  # Allow frontend requests
+CORS(app, origins=["https://mlab-inky.vercel.app"])  # Replace with your actual frontend domain in prod
 
-# Rotation Matrices for 2D
-def rotation_matrix_x(angle):
+# 2D Rotation Matrix
+def rotation_matrix(angle):
     rad = np.radians(angle)
-    return np.array([[np.cos(rad), -np.sin(rad)], [np.sin(rad), np.cos(rad)]])  # 2x2 rotation matrix
+    return np.array([
+        [np.cos(rad), -np.sin(rad)],
+        [np.sin(rad), np.cos(rad)]
+    ])
 
-# Apply Transformation
 @app.route("/transform", methods=["POST"])
 def transform():
     data = request.json
-    matrix = np.array(data["matrix"])  # User input matrix (2x2)
-    rotation = data.get("rotation", {"x": 0})  # Rotation only around Z-axis in 2D
-    translation = data.get("translation", {"x": 0, "y": 0})  # Translation in 2D
+    matrix = np.array(data["matrix"])  # Expected shape: 2xN (points as columns)
+    rotation = data.get("rotation", {}).get("x", 0)  # Rotation in degrees
+    translation = data.get("translation", {"x": 0, "y": 0})
 
-    # Apply Rotation (2D)
-    rot = rotation_matrix_x(rotation["x"])
-    transformed = rot @ matrix  # Perform matrix multiplication
+    # Apply rotation
+    rot = rotation_matrix(rotation)
+    transformed = rot @ matrix  # shape: 2xN
 
-    # Apply Translation: Adding translation to the result
-    # Since we're using 2x2 matrices, translation is done separately
+    # Apply translation
     transformed[0, :] += translation["x"]
     transformed[1, :] += translation["y"]
 

@@ -4,7 +4,7 @@ import Layout from "@/components/Layout";
 import Sidebar from "@/layouts/Sidebar";
 import React, { Suspense } from "react";
 
-const Onboarding = React.lazy(() => import("@/pages/Onboarding/Onboarding"));
+const Onboarding = React.lazy(() => import("@/pages/Onboarding"));
 const NotFound = React.lazy(() => import("@/components/NotFound"));
 const ComingSoon = React.lazy(() => import("@/components/ComingSoon"));
 const MadeEasy = React.lazy(() => import("@/pages/MadeEasy"));
