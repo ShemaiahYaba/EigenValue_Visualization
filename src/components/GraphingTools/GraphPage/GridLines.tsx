@@ -1,85 +1,106 @@
 import React from "react";
 
+function getStepSizes(unit: number) {
+  const pixelsPerMajor = 80; // target pixels between major lines
+  const rawStep = pixelsPerMajor / unit;
+  const magnitude = Math.pow(10, Math.floor(Math.log10(rawStep)));
+  const fraction = rawStep / magnitude;
+
+  let niceFraction = 1;
+  if (fraction < 1.5) niceFraction = 1;
+  else if (fraction < 3) niceFraction = 2;
+  else if (fraction < 7.5) niceFraction = 5;
+  else niceFraction = 10;
+
+  const major = niceFraction * magnitude;
+  const minor = major / 5;
+
+  return { major, minor };
+}
+
+function formatLabel(value: number) {
+  if (Math.abs(value) < 1e-4 || Math.abs(value) >= 1e5) {
+    return value.toExponential(2);
+  }
+  return parseFloat(value.toFixed(6)).toString();
+}
+
+const isAxisLine = (val: number, step: number) => Math.abs(val) < step / 10;
+
 const GridLines: React.FC<{
   width: number;
   height: number;
   unit: number;
   offset: { x: number; y: number };
-  xRange: number[];
-  yRange: number[];
-}> = ({ width, height, unit, offset, xRange, yRange }) => {
-  const xTicks = [];
-  const yTicks = [];
-
+}> = ({ width, height, unit, offset }) => {
   const centerX = width / 2 + offset.x;
   const centerY = height / 2 + offset.y;
+  const { major, minor } = getStepSizes(unit);
+  const lines: React.ReactNode[] = [];
 
-  for (let x = xRange[0]; x <= xRange[1]; x += 1) {
-    const xPos = centerX + x * unit;
-    if (xPos >= 0 && xPos <= width) {
-      xTicks.push(
-        <line
-          key={`v-${x}`}
-          x1={xPos}
-          y1={0}
-          x2={xPos}
-          y2={height}
-          stroke={x === 0 ? "#333" : "#ddd"}
-          strokeWidth={x === 0 ? 1.5 : 1}
-        />
-      );
-      if (x !== 0) {
-        xTicks.push(
-          <text
-            key={`xt-${x}`}
-            x={xPos}
-            y={centerY + 12}
-            fontSize="11"
-            textAnchor="middle"
-            fill="#555"
-          >
-            {x}
-          </text>
+  const drawGridLines = (
+    from: number,
+    to: number,
+    isVertical: boolean // true = vertical lines (X), false = horizontal lines (Y)
+  ) => {
+    const center = isVertical ? centerX : centerY;
+
+    for (const step of [minor, major]) {
+      const isMajor = step === major;
+      const start = Math.ceil(from / step) * step;
+
+      for (let val = start; val <= to; val += step) {
+        const pos = center + (isVertical ? val : -val) * unit;
+        const key = `${isVertical ? "v" : "h"}-${val.toFixed(6)}-${step}`;
+
+        const stroke = isAxisLine(val, major)
+          ? "#000"
+          : isMajor
+          ? "#ccc"
+          : "#eee";
+        const strokeWidth = isAxisLine(val, major) ? 1.5 : isMajor ? 1 : 0.5;
+
+        lines.push(
+          <line
+            key={key}
+            x1={isVertical ? pos : 0}
+            y1={isVertical ? 0 : pos}
+            x2={isVertical ? pos : width}
+            y2={isVertical ? height : pos}
+            stroke={stroke}
+            strokeWidth={strokeWidth}
+          />
         );
+
+        if (isMajor && !isAxisLine(val, major)) {
+          lines.push(
+            <text
+              key={`label-${key}`}
+              x={isVertical ? pos : centerX + 5}
+              y={isVertical ? centerY + 12 : pos - 4}
+              fontSize={11}
+              textAnchor={isVertical ? "middle" : "start"}
+              fill="#444"
+            >
+              {formatLabel(val)}
+            </text>
+          );
+        }
       }
     }
-  }
+  };
 
-  for (let y = yRange[0]; y <= yRange[1]; y += 1) {
-    const yPos = centerY - y * unit;
-    if (yPos >= 0 && yPos <= height) {
-      yTicks.push(
-        <line
-          key={`h-${y}`}
-          x1={0}
-          y1={yPos}
-          x2={width}
-          y2={yPos}
-          stroke={y === 0 ? "#333" : "#ddd"}
-          strokeWidth={y === 0 ? 1.5 : 1}
-        />
-      );
-      if (y !== 0) {
-        yTicks.push(
-          <text
-            key={`yt-${y}`}
-            x={centerX + 5}
-            y={yPos + 4}
-            fontSize="11"
-            textAnchor="start"
-            fill="#555"
-          >
-            {y}
-          </text>
-        );
-      }
-    }
-  }
+  // Vertical grid (X axis)
+  drawGridLines((0 - centerX) / unit, (width - centerX) / unit, true);
+
+  // Horizontal grid (Y axis)
+  drawGridLines((centerY - height) / unit, centerY / unit, false);
 
   return (
     <>
-      {xTicks}
-      {yTicks}
+      {/* Optional background tint to resemble graph paper */}
+      <rect x={0} y={0} width={width} height={height} fill="#fefefe" />
+      {lines}
     </>
   );
 };

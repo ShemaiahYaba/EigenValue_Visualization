@@ -10,7 +10,7 @@ const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
   width = 800,
   height = 500,
 }) => {
-  const [unit, setUnit] = useState(40);
+  const [unit, setUnit] = useState(10);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [dragging, setDragging] = useState(false);
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
@@ -20,14 +20,21 @@ const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
   const dragStart = useRef({ x: 0, y: 0 });
   const offsetStart = useRef(offset);
 
-  const xRange = [-width / 2, width / 2];
-  const yRange = [-height / 2, height / 2];
-
   const handleWheel = (e: React.WheelEvent) => {
     e.preventDefault();
-    const zoomIntensity = 1.1;
-    const newUnit = e.deltaY < 0 ? unit * zoomIntensity : unit / zoomIntensity;
-    setUnit(Math.max(10, Math.min(200, newUnit)));
+    const zoomFactor = 1.1;
+    const newUnit = e.deltaY < 0 ? unit * zoomFactor : unit / zoomFactor;
+    const clampedUnit = Math.max(5, Math.min(500, newUnit));
+
+    // Maintain visual position of origin
+    const scale = clampedUnit / unit;
+    const newOffset = {
+      x: offset.x * scale,
+      y: offset.y * scale,
+    };
+
+    setUnit(clampedUnit);
+    setOffset(newOffset);
   };
 
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -94,14 +101,7 @@ const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
           </marker>
         </defs>
 
-        <GridLines
-          width={width}
-          height={height}
-          unit={unit}
-          offset={offset}
-          xRange={xRange}
-          yRange={yRange}
-        />
+        <GridLines width={width} height={height} unit={unit} offset={offset} />
         <OriginMarker
           width={width}
           height={height}
