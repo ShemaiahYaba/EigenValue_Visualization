@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { useMatrix } from "@/hooks/useMatrix";
 
-// Utility to transpose a matrix: Nx3 → 3xN
-// const transpose = (m: number[][]) => m[0].map((_, i) => m.map((row) => row[i]));
-
 const MatrixInput: React.FC = () => {
   const {
     matrix,
@@ -15,12 +12,21 @@ const MatrixInput: React.FC = () => {
     setTranslation,
   } = useMatrix();
 
-  const [numPoints, setNumPoints] = useState(2); // N (columns), always 3 rows for 3D
+  const [numPoints, setNumPoints] = useState(2); // Number of columns (N)
+  const [numRows, setNumRows] = useState(2); // 2 or 3 for 2D or 3D
 
-  const handleSizeChange = (size: number) => {
-    setNumPoints(size);
-    const newMatrix = Array.from({ length: 3 }, (_, i) =>
-      Array.from({ length: size }, (_, j) => matrix[i]?.[j] ?? 0)
+  const handleSizeChange = (points: number) => {
+    setNumPoints(points);
+    const newMatrix = Array.from({ length: numRows }, (_, i) =>
+      Array.from({ length: points }, (_, j) => matrix[i]?.[j] ?? 0)
+    );
+    setMatrix(newMatrix);
+  };
+
+  const handleRowChange = (rows: number) => {
+    setNumRows(rows);
+    const newMatrix = Array.from({ length: rows }, (_, i) =>
+      Array.from({ length: numPoints }, (_, j) => matrix[i]?.[j] ?? 0)
     );
     setMatrix(newMatrix);
   };
@@ -38,7 +44,7 @@ const MatrixInput: React.FC = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          matrix: matrix, // Already 3xN in frontend now
+          matrix,
           rotation,
           translation,
         }),
@@ -57,18 +63,32 @@ const MatrixInput: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <h2 className="text-xl font-semibold mb-2">3D Matrix Input</h2>
+      <h2 className="text-xl font-semibold mb-2">Matrix Input</h2>
 
-      <div className="mb-4">
-        <label>Number of Points: {numPoints}</label>
-        <input
-          type="range"
-          min="2"
-          max="4"
-          value={numPoints}
-          onChange={(e) => handleSizeChange(Number(e.target.value))}
-          className="ml-2"
-        />
+      <div className="mb-4 space-y-2">
+        <div>
+          <label>Dimension:</label>
+          <select
+            value={numRows}
+            onChange={(e) => handleRowChange(Number(e.target.value))}
+            className="ml-2 border border-gray-300 rounded px-1"
+          >
+            <option value={2}>2D (2xN)</option>
+            <option value={3}>3D (3xN)</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Number of Points: {numPoints}</label>
+          <input
+            type="range"
+            min="2"
+            max="4"
+            value={numPoints}
+            onChange={(e) => handleSizeChange(Number(e.target.value))}
+            className="ml-2"
+          />
+        </div>
       </div>
 
       <div className="mb-4">
@@ -88,13 +108,13 @@ const MatrixInput: React.FC = () => {
           </div>
         ))}
         <p className="text-sm text-gray-500 mt-1">
-          Each column represents a point in 3D space
+          Each column represents a point in {numRows}D space
         </p>
       </div>
 
       <div className="mb-4 space-y-2">
         <label className="block font-semibold">Rotation (degrees)</label>
-        {["x", "y", "z"].map((axis) => (
+        {["x", "y", "z"].slice(0, numRows).map((axis) => (
           <input
             key={axis}
             type="number"
@@ -113,7 +133,7 @@ const MatrixInput: React.FC = () => {
 
       <div className="mb-4 space-y-2">
         <label className="block font-semibold">Translation</label>
-        {["x", "y", "z"].map((axis) => (
+        {["x", "y", "z"].slice(0, numRows).map((axis) => (
           <input
             key={axis}
             type="number"
