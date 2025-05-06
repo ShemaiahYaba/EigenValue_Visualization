@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useMatrix } from "@/hooks/useMatrix";
 
+// Utility to transpose a matrix: Nx3 → 3xN
+const transpose = (m: number[][]) => m[0].map((_, i) => m.map((row) => row[i]));
+
 const MatrixInput: React.FC = () => {
   const {
     matrix,
@@ -12,11 +15,11 @@ const MatrixInput: React.FC = () => {
     setTranslation,
   } = useMatrix();
 
-  const [matrixSize, setMatrixSize] = useState(2);
+  const [numPoints, setNumPoints] = useState(2); // N (columns), always 3 rows for 3D
 
   const handleSizeChange = (size: number) => {
-    setMatrixSize(size);
-    const newMatrix = Array.from({ length: size }, (_, i) =>
+    setNumPoints(size);
+    const newMatrix = Array.from({ length: 3 }, (_, i) =>
       Array.from({ length: size }, (_, j) => matrix[i]?.[j] ?? 0)
     );
     setMatrix(newMatrix);
@@ -35,7 +38,7 @@ const MatrixInput: React.FC = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          matrix,
+          matrix: transpose(matrix), // Already 3xN in frontend now
           rotation,
           translation,
         }),
@@ -54,16 +57,15 @@ const MatrixInput: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <h2 className="text-xl font-semibold mb-2">Matrix Input</h2>
+      <h2 className="text-xl font-semibold mb-2">3D Matrix Input</h2>
+
       <div className="mb-4">
-        <label>
-          Matrix Size: {matrixSize}x{matrixSize}
-        </label>
+        <label>Number of Points: {numPoints}</label>
         <input
           type="range"
           min="2"
           max="4"
-          value={matrixSize}
+          value={numPoints}
           onChange={(e) => handleSizeChange(Number(e.target.value))}
           className="ml-2"
         />
@@ -85,6 +87,9 @@ const MatrixInput: React.FC = () => {
             ))}
           </div>
         ))}
+        <p className="text-sm text-gray-500 mt-1">
+          Each column represents a point in 3D space
+        </p>
       </div>
 
       <div className="mb-4 space-y-2">

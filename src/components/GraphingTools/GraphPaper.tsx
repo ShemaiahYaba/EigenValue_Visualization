@@ -3,20 +3,19 @@ import CoordinateHUD from "@/components/GraphingTools/GraphPage/CoordinateHUD";
 import OriginMarker from "@/components/GraphingTools/GraphPage/OriginMarker";
 import AxisArrows from "@/components/GraphingTools/GraphPage/AxisArrows";
 import GridLines from "@/components/GraphingTools/GraphPage/GridLines";
-import MatrixResults from "@/components/GraphingTools/MatrixResult"; // New component for displaying results
+import MatrixResults from "@/components/GraphingTools/MatrixResult";
+import { useMatrix } from "@/hooks/useMatrix";
 
 const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
   width = 800,
   height = 500,
 }) => {
-  const [unit, setUnit] = useState(40); // pixels per unit
-  const [offset, setOffset] = useState({ x: 0, y: 0 }); // panning offset in pixels
+  const [unit, setUnit] = useState(40);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [dragging, setDragging] = useState(false);
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
-  const [transformedMatrix, setTransformedMatrix] = useState<number[][] | null>(
-    null
-  ); // New state for transformed matrix
-  const [error, setError] = useState<string | null>(null); // For error messages
+
+  const { transformedMatrix } = useMatrix();
 
   const dragStart = useRef({ x: 0, y: 0 });
   const offsetStart = useRef(offset);
@@ -53,48 +52,16 @@ const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
   const handleMouseLeave = () => setDragging(false);
 
   const handleReset = () => {
-    setUnit(40); // Reset zoom level
-    setOffset({ x: 0, y: 0 }); // Reset panning
+    setUnit(40);
+    setOffset({ x: 0, y: 0 });
   };
 
-  const fetchTransformedMatrix = async () => {
-    const matrix = [
-      [1, 2],
-      [3, 4],
-    ]; // Example input matrix
-    const rotation = { x: 45 }; // Example rotation (in degrees)
-    const translation = { x: 10, y: 5 }; // Example translation
-
-    try {
-      const response = await fetch("https://mlab-uezm.onrender.com/transform", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ matrix, rotation, translation }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Transformation failed");
-      }
-
-      const data = await response.json();
-      setTransformedMatrix(data.transformed);
-      setError(null); // Clear any previous error
-    } catch {
-      console.error("Error fetching transformed matrix:", error);
-      setError("Failed to transform matrix. Please try again.");
-      setTransformedMatrix(null); // Clear any previous results
-    }
-  };
-
-  // Visualize the points (from transformed matrix) on the grid
   const visualizeTransformedPoints = () => {
     if (!transformedMatrix) return [];
     const points = [];
     for (const row of transformedMatrix) {
       const x = row[0] * unit + offset.x;
-      const y = -row[1] * unit + offset.y; // Flip Y-axis to match canvas coordinates
+      const y = -row[1] * unit + offset.y;
       points.push({ x, y });
     }
     return points;
@@ -112,7 +79,6 @@ const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
       >
-        {/* Grid and other components */}
         <GridLines
           width={width}
           height={height}
@@ -129,12 +95,10 @@ const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
         />
         <AxisArrows width={width} height={height} offset={offset} />
 
-        {/* Visualize transformed points */}
         {visualizeTransformedPoints().map((point, index) => (
           <circle key={index} cx={point.x} cy={point.y} r={5} fill="blue" />
         ))}
 
-        {/* Coordinate HUD */}
         <CoordinateHUD
           mouse={mouse}
           unit={unit}
@@ -144,19 +108,8 @@ const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
         />
       </svg>
 
-      {/* Matrix transformation button */}
-      <button
-        onClick={fetchTransformedMatrix}
-        className="absolute top-2 left-12 bg-white border border-gray-300 rounded px-2 py-1 cursor-pointer shadow-sm hover:bg-gray-50"
-        title="Create Visualization"
-      >
-        Create Visualization
-      </button>
+      <MatrixResults matrixData={transformedMatrix} errorMessage={null} />
 
-      {/* Display transformation results */}
-      <MatrixResults matrixData={transformedMatrix} errorMessage={error} />
-
-      {/* Reset button */}
       <button
         onClick={handleReset}
         className="absolute top-2 left-2 bg-white border border-gray-300 rounded px-2 py-1 cursor-pointer shadow-sm hover:bg-gray-50 flex items-center justify-center"
