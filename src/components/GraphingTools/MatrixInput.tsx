@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useMatrix } from "@/hooks/useMatrix";
 
 // Utility to transpose a matrix: Nx3 → 3xN
-const transpose = (m: number[][]) => m[0].map((_, i) => m.map((row) => row[i]));
+// const transpose = (m: number[][]) => m[0].map((_, i) => m.map((row) => row[i]));
 
 const MatrixInput: React.FC = () => {
   const {
@@ -38,7 +38,7 @@ const MatrixInput: React.FC = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          matrix: transpose(matrix), // Already 3xN in frontend now
+          matrix: matrix, // Already 3xN in frontend now
           rotation,
           translation,
         }),
