@@ -27,7 +27,7 @@ const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
   const handleWheel = (e: React.WheelEvent) => {
     e.preventDefault();
 
-    const zoomFactor = 1.1; // Zoom factor for scaling
+    const zoomFactor = 1.05; // Zoom factor for scaling
 
     // Adjust the unit based on scroll direction (zoom in or out)
     const newUnit = e.deltaY < 0 ? unit * zoomFactor : unit / zoomFactor;
@@ -93,7 +93,7 @@ const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
   };
 
   return (
-    <div className="relative inline-block">
+    <div className="relative inline-block select-none">
       <svg
         width={width}
         height={height}
