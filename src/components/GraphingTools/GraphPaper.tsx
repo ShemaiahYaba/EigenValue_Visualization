@@ -79,6 +79,21 @@ const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
       >
+        {/* Arrowhead marker definition */}
+        <defs>
+          <marker
+            id="arrowhead"
+            markerWidth="10"
+            markerHeight="7"
+            refX="10"
+            refY="3.5"
+            orient="auto"
+            markerUnits="strokeWidth"
+          >
+            <polygon points="0 0, 10 3.5, 0 7" fill="blue" />
+          </marker>
+        </defs>
+
         <GridLines
           width={width}
           height={height}
@@ -95,8 +110,18 @@ const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
         />
         <AxisArrows width={width} height={height} offset={offset} />
 
+        {/* Replace dots with arrows */}
         {visualizeTransformedPoints().map((point, index) => (
-          <circle key={index} cx={point.x} cy={point.y} r={5} fill="blue" />
+          <line
+            key={index}
+            x1={offset.x}
+            y1={offset.y}
+            x2={point.x}
+            y2={point.y}
+            stroke="blue"
+            strokeWidth={2}
+            markerEnd="url(#arrowhead)"
+          />
         ))}
 
         <CoordinateHUD
