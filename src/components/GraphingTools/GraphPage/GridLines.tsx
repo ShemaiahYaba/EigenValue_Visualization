@@ -73,13 +73,41 @@ const GridLines: React.FC<{
         );
 
         if (isMajor && !isAxisLine(val, major)) {
+          let labelPosX: number, labelPosY: number;
+
+          if (isVertical) {
+            labelPosX = pos;
+            if (centerY < 0) {
+              labelPosY = 12; // top
+            } else if (centerY > height) {
+              labelPosY = height - 4; // bottom
+            } else {
+              labelPosY = centerY + 12;
+            }
+          } else {
+            if (centerX < 0) {
+              labelPosX = 4; // left
+            } else if (centerX > width) {
+              labelPosX = width - 4; // right
+            } else {
+              labelPosX = centerX + 5;
+            }
+            labelPosY = pos - 4;
+          }
+
           lines.push(
             <text
               key={`label-${key}`}
-              x={isVertical ? pos : centerX + 5}
-              y={isVertical ? centerY + 12 : pos - 4}
+              x={labelPosX}
+              y={labelPosY}
               fontSize={11}
-              textAnchor={isVertical ? "middle" : "start"}
+              textAnchor={
+                isVertical
+                  ? "middle"
+                  : centerX > width
+                  ? "end" // anchor right-aligned if axis is off to the right
+                  : "start"
+              }
               fill="#444"
             >
               {formatLabel(val)}

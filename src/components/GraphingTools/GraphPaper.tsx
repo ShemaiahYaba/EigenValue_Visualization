@@ -10,7 +10,7 @@ const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
   width = 800,
   height = 500,
 }) => {
-  const [unit, setUnit] = useState(10);
+  const [unit, setUnit] = useState(10); // Default unit size
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [dragging, setDragging] = useState(false);
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
@@ -20,19 +20,37 @@ const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
   const dragStart = useRef({ x: 0, y: 0 });
   const offsetStart = useRef(offset);
 
+  // Define a minimum unit size
+  const MIN_UNIT_SIZE = 0.01; // Reasonable lower limit for zooming
+
+  // Handling the zoom on mouse wheel
   const handleWheel = (e: React.WheelEvent) => {
     e.preventDefault();
-    const zoomFactor = 1.1;
-    const newUnit = e.deltaY < 0 ? unit * zoomFactor : unit / zoomFactor;
-    const clampedUnit = Math.max(5, Math.min(500, newUnit));
 
-    // Maintain visual position of origin
-    const scale = clampedUnit / unit;
+    const zoomFactor = 1.1; // Zoom factor for scaling
+
+    // Adjust the unit based on scroll direction (zoom in or out)
+    const newUnit = e.deltaY < 0 ? unit * zoomFactor : unit / zoomFactor;
+
+    // Clamp the unit to prevent zooming too far
+    const clampedUnit = Math.max(MIN_UNIT_SIZE, newUnit);
+
+    // Get the mouse position relative to the graph container
+    const rect = e.currentTarget.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+
+    // Calculate the graph coordinates of the mouse position
+    const graphX = (mouseX - offset.x - width / 2) / unit;
+    const graphY = (mouseY - offset.y - height / 2) / -unit;
+
+    // Calculate the new offset so that the zoom happens around the mouse cursor
     const newOffset = {
-      x: offset.x * scale,
-      y: offset.y * scale,
+      x: mouseX - graphX * clampedUnit - width / 2,
+      y: mouseY + graphY * clampedUnit - height / 2,
     };
 
+    // Set the new unit and offset
     setUnit(clampedUnit);
     setOffset(newOffset);
   };
@@ -59,8 +77,8 @@ const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
   const handleMouseLeave = () => setDragging(false);
 
   const handleReset = () => {
-    setUnit(40);
-    setOffset({ x: 0, y: 0 });
+    setUnit(40); // Reset to default unit size
+    setOffset({ x: 0, y: 0 }); // Reset offset to origin
   };
 
   const visualizeTransformedPoints = () => {
@@ -86,7 +104,6 @@ const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
       >
-        {/* Arrowhead marker definition */}
         <defs>
           <marker
             id="arrowhead"
@@ -110,7 +127,6 @@ const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
         />
         <AxisArrows width={width} height={height} offset={offset} />
 
-        {/* Replace dots with arrows */}
         {visualizeTransformedPoints().map((point, index) => (
           <line
             key={index}
