@@ -7,7 +7,7 @@ import MatrixResults from "@/components/GraphingTools/MatrixResult";
 import { useMatrix } from "@/hooks/useMatrix";
 
 const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
-  width = 800,
+  width = 900,
   height = 500,
 }) => {
   const [unit, setUnit] = useState(10); // Default unit size
