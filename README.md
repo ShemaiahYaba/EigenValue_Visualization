@@ -1,54 +1,63 @@
-# React + TypeScript + Vite
+# Eigenvalue Visualization with MLAB
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A graphical project that helps users intuitively understand the behavior of eigenvalues and eigenvectors by visualizing their impact on linear transformations in 2D and 3D space. Built using MLAB (Matplotlib + NumPy) in Python.
 
-Currently, two official plugins are available:
+## 📊 Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This tool provides interactive visualizations that demonstrate how eigenvectors define invariant directions under a matrix transformation, and how eigenvalues scale those vectors. It’s particularly useful for educational purposes in linear algebra and numerical analysis.
 
-## Expanding the ESLint configuration
+## 🚀 Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Visualize 2D and 3D linear transformations
+- Plot eigenvectors and show their orientation and scaling
+- Animate transformations applied to a vector space
+- Custom matrix input (manual or random)
+- Color-coded axis and vectors for clarity
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 🛠️ Tech Stack
+
+- **Python 3.8+**
+- **Matplotlib**
+- **NumPy**
+
+## 🔧 Installation
+
+```bash
+git clone https://github.com/yourusername/eigenvalue-visualization.git
+cd eigenvalue-visualization
+pip install -r requirements.txt
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## ▶️ Usage
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Run the main script:
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+python eigen_visualizer.py
+```
+
+You will be prompted to either enter your own 2x2 matrix or generate a random one. Once the matrix is set, the transformation and its effect on eigenvectors will be visualized.
+
+## 📷 Screenshots
+
+_(Optional: Add screenshots or a demo GIF here to show the project in action)_
+
+## 👨‍💻 Author
+
+- **Your Name** – [your.email@example.com](mailto:your.email@example.com)
+- GitHub: [@yourusername](https://github.com/yourusername)
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+_This project is part of an ongoing exploration into making abstract linear algebra concepts more intuitive through visualization._
+
+```
+
+---
+
+Would you like me to include LaTeX-rendered math for the matrix equations or provide a sample image to embed as a screenshot?
 ```

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import CoordinateHUD from "@/components/GraphingTools/CoordinateHUD";
+import CoordinateHUD from "@/components/GraphingTools/GraphPage/CoordinateHUD";
 import OriginMarker from "@/components/GraphingTools/GraphPage/OriginMarker";
 import AxisArrows from "@/components/GraphingTools/GraphPage/AxisArrows";
 import GridLines from "@/components/GraphingTools/GraphPage/GridLines";
@@ -66,7 +66,7 @@ const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
     const translation = { x: 10, y: 5 }; // Example translation
 
     try {
-      const response = await fetch("http://localhost:5000/transform", {
+      const response = await fetch("https://mlab-uezm.onrender.com/transform", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -82,6 +82,7 @@ const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
       setTransformedMatrix(data.transformed);
       setError(null); // Clear any previous error
     } catch {
+      console.error("Error fetching transformed matrix:", error);
       setError("Failed to transform matrix. Please try again.");
       setTransformedMatrix(null); // Clear any previous results
     }

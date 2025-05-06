@@ -31,7 +31,7 @@ const MatrixInput: React.FC = () => {
 
   const sendMatrixToPython = async () => {
     try {
-      const response = await fetch("https://mlab-uezm.onrender.com/transfrom", {
+      const response = await fetch("https://mlab-uezm.onrender.com/transform", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
