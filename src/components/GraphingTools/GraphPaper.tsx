@@ -119,7 +119,7 @@ const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
             orient="auto"
             markerUnits="strokeWidth"
           >
-            <polygon points="0 0, 10 3.5, 0 7" fill="#e11d48" />
+            <polygon points="0 0, 10 3.5, 0 7" fill="red" />
           </marker>
         </defs>
 
