@@ -81,12 +81,17 @@ const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
     setOffset({ x: 0, y: 0 }); // Reset offset to origin
   };
 
+  const center = {
+    x: width / 2 + offset.x,
+    y: height / 2 + offset.y,
+  };
+
   const visualizeTransformedPoints = () => {
     if (!transformedMatrix) return [];
     const points = [];
     for (const row of transformedMatrix) {
-      const x = row[0] * unit + offset.x;
-      const y = -row[1] * unit + offset.y;
+      const x = row[0] * unit + center.x;
+      const y = -row[1] * unit + center.y;
       points.push({ x, y });
     }
     return points;
@@ -130,8 +135,8 @@ const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
         {visualizeTransformedPoints().map((point, index) => (
           <line
             key={index}
-            x1={offset.x}
-            y1={offset.y}
+            x1={center.x}
+            y1={center.y}
             x2={point.x}
             y2={point.y}
             stroke="blue"
