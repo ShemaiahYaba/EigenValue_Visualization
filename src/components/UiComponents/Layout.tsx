@@ -1,26 +1,21 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 import Header from "@/layouts/Header";
 import Footer from "@/layouts/Footer";
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
-
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout: React.FC = () => {
   return (
-    <div className="min-h-screen flex">
-      {/* Sidebar */}
+    <div className="min-h-screen flex flex-col">
+      {/* Header */}
+      <Header />
 
-      {/* Content Area */}
-      <div className="flex flex-col flex-1">
-        <Header />
-        <main className="flex-grow p-4 overflow-y-auto">{children}</main>
+      {/* Main content */}
+      <main className="flex-grow p-4 overflow-y-auto">
+        <Outlet />
+      </main>
 
-        {/* Footer */}
-        <div className="relative">
-          <Footer />
-        </div>
-      </div>
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

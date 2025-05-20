@@ -6,9 +6,9 @@ import GridLines from "@/components/GraphingTools/GraphPage/GridLines";
 
 import { useMatrix } from "@/hooks/useMatrix";
 
-const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
-  width = 800,
-  height = 500,
+const Graph2D: React.FC<{ width?: number; height?: number }> = ({
+  width = 900,
+  height = 450,
 }) => {
   const [unit, setUnit] = useState(10); // Default unit size
   const [offset, setOffset] = useState({ x: 0, y: 0 });
@@ -98,79 +98,94 @@ const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
   };
 
   return (
-    <div className="relative inline-block select-none">
-      <svg
-        width={width}
-        height={height}
-        className={`bg-white ${dragging ? "cursor-grabbing" : "cursor-grab"}`}
-        onWheel={handleWheel}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseLeave}
-      >
-        <defs>
-          <marker
-            id="arrowhead"
-            markerWidth="10"
-            markerHeight="7"
-            refX="10"
-            refY="3.5"
-            orient="auto"
-            markerUnits="strokeWidth"
+    <div
+      className="flex items-center justify-center bg-gray-200 dark:bg-gray-900"
+      style={{ height: "90vh", width: "100vw" }}
+    >
+      <div style={{ width: "100vw", height: "100%" }}>
+        <div className="relative inline-block select-none w-full h-full">
+          <svg
+            width="100%"
+            height="100%"
+            viewBox={`0 0 ${width} ${height}`}
+            className={`bg-white ${
+              dragging ? "cursor-grabbing" : "cursor-grab"
+            }`}
+            onWheel={handleWheel}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseLeave}
           >
-            <polygon points="0 0, 10 3.5, 0 7" fill="red" />
-          </marker>
-        </defs>
+            <defs>
+              <marker
+                id="arrowhead"
+                markerWidth="10"
+                markerHeight="7"
+                refX="10"
+                refY="3.5"
+                orient="auto"
+                markerUnits="strokeWidth"
+              >
+                <polygon points="0 0, 10 3.5, 0 7" fill="red" />
+              </marker>
+            </defs>
 
-        <GridLines width={width} height={height} unit={unit} offset={offset} />
-        <OriginMarker
-          width={width}
-          height={height}
-          offset={offset}
-          unit={unit}
-        />
-        <AxisArrows width={width} height={height} offset={offset} />
+            <GridLines
+              width={width}
+              height={height}
+              unit={unit}
+              offset={offset}
+            />
+            <OriginMarker
+              width={width}
+              height={height}
+              offset={offset}
+              unit={unit}
+            />
+            <AxisArrows width={width} height={height} offset={offset} />
 
-        {visualizeTransformedPoints().map((point, index) => (
-          <line
-            key={index}
-            x1={center.x}
-            y1={center.y}
-            x2={point.x}
-            y2={point.y}
-            stroke="#e11d48"
-            strokeWidth={2}
-            markerEnd="url(#arrowhead)"
-          />
-        ))}
+            {visualizeTransformedPoints().map((point, index) => (
+              <line
+                key={index}
+                x1={center.x}
+                y1={center.y}
+                x2={point.x}
+                y2={point.y}
+                stroke="#e11d48"
+                strokeWidth={2}
+                markerEnd="url(#arrowhead)"
+              />
+            ))}
 
-        <CoordinateHUD
-          mouse={mouse}
-          unit={unit}
-          offset={offset}
-          width={width}
-          height={height}
-        />
-      </svg>
+            <CoordinateHUD
+              mouse={mouse}
+              unit={unit}
+              offset={offset}
+              width={width}
+              height={height}
+            />
+          </svg>
 
-      <button
-        onClick={handleReset}
-        className="absolute top-2 left-2 bg-white border border-gray-300 rounded px-2 py-1 cursor-pointer shadow-sm hover:bg-gray-50 flex items-center justify-center"
-        title="Reset View"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          width="16"
-          height="16"
-          fill="currentColor"
-        >
-          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-        </svg>
-      </button>
+          <button
+            onClick={handleReset}
+            className="absolute top-2 left-2 bg-white border border-gray-300 rounded px-2 py-1 cursor-pointer shadow-sm hover:bg-gray-50 flex items-center justify-center"
+            title="Reset View"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="16"
+              height="16"
+              fill="currentColor"
+            >
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+            </svg>
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default GraphPaper;
+export default Graph2D;
