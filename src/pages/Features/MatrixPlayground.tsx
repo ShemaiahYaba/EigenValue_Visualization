@@ -1,7 +1,7 @@
 import React from "react";
 import MatrixInput from "@/components/GraphingTools/MatrixInput";
-// import GraphPaper from "@/components/GraphingTools/GraphPaper";
-import GraphPage from "@/components/GraphingTools/GraphPage";
+import GraphPaper from "@/components/GraphingTools/GraphPaper";
+// import GraphPage from "@/components/GraphingTools/GraphPage";
 import { MatrixProvider } from "@/contexts/MatrixProvider";
 
 const MatrixPlayground: React.FC = () => {
@@ -13,7 +13,7 @@ const MatrixPlayground: React.FC = () => {
             <MatrixInput />
           </div>
           <div className="p-5 border border-gray-300 rounded-xl bg-white shadow-md">
-            <GraphPage />
+            <GraphPaper />
           </div>
         </div>
       </MatrixProvider>
