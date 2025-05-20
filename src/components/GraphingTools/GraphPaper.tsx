@@ -3,7 +3,7 @@ import CoordinateHUD from "@/components/GraphingTools/GraphPage/CoordinateHUD";
 import OriginMarker from "@/components/GraphingTools/GraphPage/OriginMarker";
 import AxisArrows from "@/components/GraphingTools/GraphPage/AxisArrows";
 import GridLines from "@/components/GraphingTools/GraphPage/GridLines";
-import MatrixResults from "@/components/GraphingTools/MatrixResult";
+
 import { useMatrix } from "@/hooks/useMatrix";
 
 const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
@@ -153,8 +153,6 @@ const GraphPaper: React.FC<{ width?: number; height?: number }> = ({
           height={height}
         />
       </svg>
-
-      <MatrixResults matrixData={transformedMatrix} errorMessage={null} />
 
       <button
         onClick={handleReset}
