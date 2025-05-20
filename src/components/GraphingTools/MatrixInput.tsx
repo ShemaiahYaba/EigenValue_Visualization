@@ -54,7 +54,7 @@ const MatrixInput: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center justify-center p-2 text-xs w-full max-w-xs">
-      <h2 className="text-base font-semibold mb-2">Square Matrix Input</h2>
+      <h2 className="text-base font-semibold mb-2">Matrix Input</h2>
       <label className="flex items-center gap-2 mb-2">
         Size:
         <select
