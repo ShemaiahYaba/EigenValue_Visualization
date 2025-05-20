@@ -5,7 +5,7 @@ interface FeatureCardProps {
   name: string;
   description: string;
   href: string;
-  icon: React.ElementType;
+  icon: React.ComponentType;
 }
 
 const FeatureCard: React.FC<FeatureCardProps> = ({
