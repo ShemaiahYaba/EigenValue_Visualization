@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import CoordinateHUD from "@/components/GraphingTools/GraphPage/CoordinateHUD";
 import OriginMarker from "@/components/GraphingTools/GraphPage/OriginMarker";
 import AxisArrows from "@/components/GraphingTools/GraphPage/AxisArrows";
@@ -6,115 +6,51 @@ import GridLines from "@/components/GraphingTools/GraphPage/GridLines";
 
 import { useMatrix } from "@/hooks/useMatrix";
 
-const ANIMATION_DURATION = 300; // ms
-
 const Graph2D: React.FC<{ width?: number; height?: number }> = ({
   width = 900,
   height = 450,
 }) => {
-  const [unit, setUnit] = useState(10);
+  const [unit, setUnit] = useState(10); // Default unit size
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [dragging, setDragging] = useState(false);
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
 
-  const { matrix, transformedMatrix } = useMatrix();
+  const { transformedMatrix } = useMatrix();
 
-  // Ref to track animation frame ID so we can cancel if needed
-  const animationFrameRef = useRef<number | null>(null);
-  // Timestamp when animation started
-  const animationStartRef = useRef<number | null>(null);
-
-  // Interpolated points state: these are what we draw animated
-  const [animatedPoints, setAnimatedPoints] = useState<
-    { x: number; y: number }[]
-  >([]);
-
-  // Calculate original points from `matrix` (input matrix vectors)
-  const originalPoints = React.useMemo(() => {
-    if (!matrix) return [];
-    // Assume 2D vectors: x = row[0], y = row[1]
-    return matrix.map((row) => ({ x: row[0], y: row[1] }));
-  }, [matrix]);
-
-  // Calculate target points from transformedMatrix
-  const targetPoints = React.useMemo(() => {
-    if (!transformedMatrix) return [];
-    return transformedMatrix.map((row) => ({ x: row[0], y: row[1] }));
-  }, [transformedMatrix]);
-
-  // Linear interpolation helper
-  const lerp = (start: number, end: number, t: number) =>
-    start + (end - start) * t;
-
-  // Animate vectors when either originalPoints or targetPoints change
-  useEffect(() => {
-    if (originalPoints.length === 0 || targetPoints.length === 0) {
-      setAnimatedPoints([]);
-      return;
-    }
-
-    // Cancel previous animation if any
-    if (animationFrameRef.current) {
-      cancelAnimationFrame(animationFrameRef.current);
-    }
-    animationStartRef.current = null;
-
-    const animate = (timestamp: number) => {
-      if (!animationStartRef.current) animationStartRef.current = timestamp;
-      const elapsed = timestamp - animationStartRef.current;
-      const progress = Math.min(elapsed / ANIMATION_DURATION, 1);
-
-      // Interpolate each point from original to target by progress
-      const interpolated = originalPoints.map((orig, i) => {
-        const target = targetPoints[i];
-        return {
-          x: lerp(orig.x, target.x, progress),
-          y: lerp(orig.y, target.y, progress),
-        };
-      });
-
-      setAnimatedPoints(interpolated);
-
-      if (progress < 1) {
-        animationFrameRef.current = requestAnimationFrame(animate);
-      }
-    };
-
-    animationFrameRef.current = requestAnimationFrame(animate);
-
-    // Cleanup on unmount or re-run
-    return () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-    };
-  }, [originalPoints, targetPoints]);
-
-  // The rest of your pan and zoom handlers here (unchanged)...
   const dragStart = useRef({ x: 0, y: 0 });
   const offsetStart = useRef(offset);
 
-  const MIN_UNIT_SIZE = 0.01;
+  // Define a minimum unit size
+  const MIN_UNIT_SIZE = 0.01; // Reasonable lower limit for zooming
 
+  // Handling the zoom on mouse wheel
   const handleWheel = (e: React.WheelEvent) => {
     e.preventDefault();
 
-    const zoomFactor = 1.05;
+    const zoomFactor = 1.05; // Zoom factor for scaling
+
+    // Adjust the unit based on scroll direction (zoom in or out)
     const newUnit = e.deltaY < 0 ? unit * zoomFactor : unit / zoomFactor;
+
+    // Clamp the unit to prevent zooming too far
     const clampedUnit = Math.max(MIN_UNIT_SIZE, newUnit);
 
+    // Get the mouse position relative to the graph container
     const rect = e.currentTarget.getBoundingClientRect();
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
 
+    // Calculate the graph coordinates of the mouse position
     const graphX = (mouseX - offset.x - width / 2) / unit;
     const graphY = (mouseY - offset.y - height / 2) / -unit;
 
+    // Calculate the new offset so that the zoom happens around the mouse cursor
     const newOffset = {
       x: mouseX - graphX * clampedUnit - width / 2,
       y: mouseY + graphY * clampedUnit - height / 2,
     };
 
+    // Set the new unit and offset
     setUnit(clampedUnit);
     setOffset(newOffset);
   };
@@ -141,8 +77,8 @@ const Graph2D: React.FC<{ width?: number; height?: number }> = ({
   const handleMouseLeave = () => setDragging(false);
 
   const handleReset = () => {
-    setUnit(40);
-    setOffset({ x: 0, y: 0 });
+    setUnit(40); // Reset to default unit size
+    setOffset({ x: 0, y: 0 }); // Reset offset to origin
   };
 
   const center = {
@@ -150,25 +86,15 @@ const Graph2D: React.FC<{ width?: number; height?: number }> = ({
     y: height / 2 + offset.y,
   };
 
-  // Render animated vectors
-  const renderVectors = () => {
-    return animatedPoints.map((point, index) => {
-      const x = point.x * unit + center.x;
-      const y = -point.y * unit + center.y;
-
-      return (
-        <line
-          key={index}
-          x1={center.x}
-          y1={center.y}
-          x2={x}
-          y2={y}
-          stroke="#e11d48"
-          strokeWidth={2}
-          markerEnd="url(#arrowhead)"
-        />
-      );
-    });
+  const visualizeTransformedPoints = () => {
+    if (!transformedMatrix) return [];
+    const points = [];
+    for (const row of transformedMatrix) {
+      const x = row[0] * unit + center.x;
+      const y = -row[1] * unit + center.y;
+      points.push({ x, y });
+    }
+    return points;
   };
 
   return (
@@ -219,7 +145,18 @@ const Graph2D: React.FC<{ width?: number; height?: number }> = ({
             />
             <AxisArrows width={width} height={height} offset={offset} />
 
-            {renderVectors()}
+            {visualizeTransformedPoints().map((point, index) => (
+              <line
+                key={index}
+                x1={center.x}
+                y1={center.y}
+                x2={point.x}
+                y2={point.y}
+                stroke="#e11d48"
+                strokeWidth={2}
+                markerEnd="url(#arrowhead)"
+              />
+            ))}
 
             <CoordinateHUD
               mouse={mouse}
