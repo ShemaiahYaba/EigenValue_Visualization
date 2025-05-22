@@ -15,13 +15,13 @@ const featureSetOne = [
     name: "EV-EV Made Easy",
     description:
       "Understand EigenValues & EigenVectors through First Principles Thinking",
-    href: "/coming-soon",
+    href: "/made-easy",
     icon: BsBook,
   },
   {
     name: "EV-EV Properties & Concepts",
     description: "View some insightful visualizations",
-    href: "/coming-soon",
+    href: "/concepts",
     icon: FaCompressArrowsAlt,
   },
   {
@@ -36,13 +36,13 @@ const featureSetTwo = [
   {
     name: "PCA",
     description: "Understand PCA concepts",
-    href: "/coming-soon",
+    href: "/pca",
     icon: BiAnalyse,
   },
   {
     name: "Numerical Methods",
     description: "Visual Convergence of Numerical Computations of EigenValues",
-    href: "/coming-soon",
+    href: "/numerical-methods",
     icon: CiCalculator1,
   },
 ];

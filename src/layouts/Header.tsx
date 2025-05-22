@@ -51,13 +51,13 @@ const products = [
   {
     name: "Numerical Methods",
     description: "Visual Convergence of EigenValues",
-    href: "/coming-soon",
+    href: "/home/numerical-methods",
     icon: CalculatorIcon,
   },
   {
     name: "Matrix Playground",
     description: "Visualize your own matrix and gain insights",
-    href: "/matrix-playground",
+    href: "/home/matrix-playground",
     icon: TbMatrix,
   },
 ];

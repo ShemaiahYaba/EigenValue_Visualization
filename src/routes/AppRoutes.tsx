@@ -44,9 +44,18 @@ function AppRoutes() {
 
           {/* Features with Navbar layout */}
           <Route path="/" element={<Navbar />}>
-            <Route path="features" element={<Features />} />
-            <Route path="numerical-methods" element={<NumericalMethods />} />
-            <Route path="matrix-playground" element={<MatrixPlayground />} />
+            <Route index element={<Features />} />
+            <Route path="features" element={<Features />}>
+              <Route path="made-easy" element={<MadeEasy />} />
+              <Route path="concepts" element={<Concepts />} />
+              <Route path="pca" element={<PCA />} />
+              <Route path="numerical-methods" element={<NumericalMethods />} />
+              <Route path="matrix-playground" element={<MatrixPlayground />} />
+              <Route path="coming-soon" element={<ComingSoon />} />
+
+              <Route path="404" element={<NotFound />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
           </Route>
         </Routes>
       </Suspense>
