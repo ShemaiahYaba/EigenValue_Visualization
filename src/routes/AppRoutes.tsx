@@ -6,13 +6,19 @@ import React, { Suspense } from "react";
 
 const Onboarding = React.lazy(() => import("@/pages/Onboarding"));
 const NotFound = React.lazy(() => import("@/components/UiComponents/NotFound"));
-const ComingSoon = React.lazy(() => import("@/components/UiComponents/ComingSoon"));
+const ComingSoon = React.lazy(
+  () => import("@/components/UiComponents/ComingSoon")
+);
 const MadeEasy = React.lazy(() => import("@/pages/MadeEasy"));
 const Concepts = React.lazy(() => import("@/pages/Concepts"));
 const PCA = React.lazy(() => import("@/pages/PCA"));
 const Features = React.lazy(() => import("@/pages/Features"));
-const MatrixPlayground = React.lazy(() => import("@/pages/Features/MatrixPlayground"));
-const NumericalMethods = React.lazy(() => import("@/pages/Features/NumericalMethods"));
+const MatrixPlayground = React.lazy(
+  () => import("@/pages/Features/MatrixPlayground")
+);
+const NumericalMethods = React.lazy(
+  () => import("@/pages/Features/NumericalMethods")
+);
 
 function AppRoutes() {
   return (
@@ -34,7 +40,7 @@ function AppRoutes() {
             <Route path="*" element={<NotFound />} />
 
             {/* Features section with Navbar */}
-            <Route path="features" element={<Navbar />}>
+            <Route path="/" element={<Navbar />}>
               <Route index element={<Features />} />
               <Route path="made-easy" element={<MadeEasy />} />
               <Route path="concepts" element={<Concepts />} />
