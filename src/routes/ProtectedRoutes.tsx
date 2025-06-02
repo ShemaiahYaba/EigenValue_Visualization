@@ -1,8 +1,8 @@
 // src/routes/ProtectedRoutes.tsx
 import React from "react";
 import { Route } from "react-router-dom";
-import FeaturesLayout from "@/layouts/FeaturesLayout";
 import ProtectedRoute from "./ProtectedRoute";
+import Navbar from "@/layouts/FeaturesNavbar";
 
 const Features = React.lazy(() => import("@/pages/Features"));
 const MatrixPlayground = React.lazy(
@@ -17,7 +17,7 @@ const ProtectedRoutes = () => (
     path="/features"
     element={
       <ProtectedRoute>
-        <FeaturesLayout />
+        <Navbar />
       </ProtectedRoute>
     }
   >
