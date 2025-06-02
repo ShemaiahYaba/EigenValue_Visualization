@@ -1,5 +1,5 @@
 import React from "react";
-import cta from "@/assets/illustrations/cta.svg";
+import cta from "@/assets/illustrations/cta-main.svg";
 
 const CTA: React.FC = () => {
   return (
