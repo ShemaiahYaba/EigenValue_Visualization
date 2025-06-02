@@ -26,7 +26,7 @@ const SignUp: React.FC = () => {
     try {
       setLoading(true);
       await signUp(email, password, firstName, lastName);
-      navigate("/home/made-easy");
+      navigate("/features");
     } catch (err: Error | unknown) {
       const errorMessage =
         err instanceof Error ? err.message : "Failed to sign up.";

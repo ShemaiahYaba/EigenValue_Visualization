@@ -17,7 +17,7 @@ const SignIn: React.FC = () => {
     setError(null);
     try {
       await signIn(email, password);
-      navigate("/home/made-easy"); // Redirect to protected page
+      navigate("/features"); // Redirect to protected page
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Failed to sign in.");
     } finally {
