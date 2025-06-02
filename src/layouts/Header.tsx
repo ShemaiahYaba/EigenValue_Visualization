@@ -27,7 +27,7 @@ import {
 } from "@heroicons/react/20/solid";
 import { TbMatrix } from "react-icons/tb";
 import Logo from "@/components/UiComponents/Logo";
-import { SearchAndTheme } from "@/layouts/SearchAndTheme";
+import { SearchAndTheme } from "@/layouts/ThemeIcon";
 
 const products = [
   {
@@ -172,13 +172,6 @@ const Header: React.FC = () => {
 
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:items-center lg:gap-x-6">
           <SearchAndTheme />
-
-          <a
-            href="#"
-            className="text-sm/6 font-semibold text-gray-900 dark:text-white"
-          >
-            Sign Up <span aria-hidden="true">&rarr;</span>
-          </a>
         </div>
       </nav>
       <Dialog
@@ -241,14 +234,6 @@ const Header: React.FC = () => {
                   className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-gray-700"
                 >
                   Meet the Team
-                </a>
-              </div>
-              <div className="py-6">
-                <a
-                  href="/signup"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-gray-700"
-                >
-                  Sign Up
                 </a>
               </div>
             </div>

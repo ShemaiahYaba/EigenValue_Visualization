@@ -5,23 +5,23 @@ import LogoWhite from "@/components/UiComponents/LogoWhite";
 const features = [
   {
     name: "EV-EV Made Easy",
-    href: "/made-easy",
+    href: "/features/made-easy",
   },
   {
     name: "EV-EV Properties & Concepts",
-    href: "/concepts",
+    href: "/features/concepts",
   },
   {
     name: "PCA",
-    href: "/coming-soon",
+    href: "/features/coming-soon",
   },
   {
     name: "Numerical Methods",
-    href: "/coming-soon",
+    href: "/features/coming-soon",
   },
   {
     name: "Matrix Playground",
-    href: "/matrix-playground",
+    href: "/features/matrix-playground",
   },
 ];
 

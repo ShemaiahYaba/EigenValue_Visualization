@@ -5,7 +5,7 @@ import {
   useEffect,
   ReactNode,
 } from "react";
-import { auth, db } from "../firebaase";
+import { auth, db } from "../utils/supabaseClient";
 import {
   onAuthStateChanged,
   signInWithEmailAndPassword,

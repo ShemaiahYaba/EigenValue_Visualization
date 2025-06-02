@@ -1,6 +1,5 @@
-// components/UiComponents/FeatureCard.tsx
-
 import React from "react";
+import { Link } from "react-router-dom";
 
 interface FeatureCardProps {
   name: string;
@@ -16,8 +15,8 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
   icon: Icon,
 }) => {
   return (
-    <a
-      href={href}
+    <Link
+      to={href}
       className="group relative flex flex-col gap-4 rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition hover:shadow-md dark:border-gray-700 dark:bg-gray-900 dark:hover:border-gray-500"
     >
       <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-300">
@@ -38,7 +37,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
           Learn more →
         </span>
       </div>
-    </a>
+    </Link>
   );
 };
 
