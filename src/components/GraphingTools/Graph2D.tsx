@@ -7,10 +7,10 @@ import GridLines from "@/components/GraphingTools/GraphPage/GridLines";
 import { useMatrix } from "@/hooks/useMatrix";
 
 const Graph2D: React.FC<{ width?: number; height?: number }> = ({
-  width = 900,
-  height = 450,
+  width = 800,
+  height = 400,
 }) => {
-  const [unit, setUnit] = useState(10); // Default unit size
+  const [unit, setUnit] = useState(100); // Default unit size
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [dragging, setDragging] = useState(false);
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
@@ -20,20 +20,29 @@ const Graph2D: React.FC<{ width?: number; height?: number }> = ({
   const dragStart = useRef({ x: 0, y: 0 });
   const offsetStart = useRef(offset);
 
-  // Define a minimum unit size
-  const MIN_UNIT_SIZE = 0.01; // Reasonable lower limit for zooming
+  // Define minimum and maximum unit sizes
+  const MIN_UNIT_SIZE = 0.01;
+  const MAX_UNIT_SIZE = 5000000; // Set this to your preferred maximum zoom-out
 
   // Handling the zoom on mouse wheel
   const handleWheel = (e: React.WheelEvent) => {
     e.preventDefault();
 
-    const zoomFactor = 1.05; // Zoom factor for scaling
+    const zoomFactor = 1.05;
 
-    // Adjust the unit based on scroll direction (zoom in or out)
+    // Calculate the intended new unit
     const newUnit = e.deltaY < 0 ? unit * zoomFactor : unit / zoomFactor;
 
-    // Clamp the unit to prevent zooming too far
-    const clampedUnit = Math.max(MIN_UNIT_SIZE, newUnit);
+    // Prevent zooming in past minimum
+    if (newUnit < MIN_UNIT_SIZE && e.deltaY > 0) return;
+    // Prevent zooming out past maximum
+    if (newUnit > MAX_UNIT_SIZE && e.deltaY < 0) return;
+
+    // Clamp the unit to the allowed range
+    const clampedUnit = Math.max(
+      MIN_UNIT_SIZE,
+      Math.min(MAX_UNIT_SIZE, newUnit)
+    );
 
     // Get the mouse position relative to the graph container
     const rect = e.currentTarget.getBoundingClientRect();
@@ -50,7 +59,6 @@ const Graph2D: React.FC<{ width?: number; height?: number }> = ({
       y: mouseY + graphY * clampedUnit - height / 2,
     };
 
-    // Set the new unit and offset
     setUnit(clampedUnit);
     setOffset(newOffset);
   };
@@ -77,13 +85,13 @@ const Graph2D: React.FC<{ width?: number; height?: number }> = ({
   const handleMouseLeave = () => setDragging(false);
 
   const handleReset = () => {
-    setUnit(40); // Reset to default unit size
+    setUnit(100); // Reset to default unit size
     setOffset({ x: 0, y: 0 }); // Reset offset to origin
   };
 
   const center = {
-    x: width / 2 + offset.x,
-    y: height / 2 + offset.y,
+    x: width / 10 + offset.x,
+    y: height / 10 + offset.y,
   };
 
   const visualizeTransformedPoints = () => {
@@ -102,7 +110,7 @@ const Graph2D: React.FC<{ width?: number; height?: number }> = ({
       className="flex items-center justify-center bg-gray-200 dark:bg-gray-900"
       style={{ height: "90vh", width: "100vw" }}
     >
-      <div style={{ width: "100vw", height: "100%" }}>
+      <div style={{ width: "80vw", height: "100%" }}>
         <div className="relative inline-block select-none w-full h-full">
           <svg
             width="100%"

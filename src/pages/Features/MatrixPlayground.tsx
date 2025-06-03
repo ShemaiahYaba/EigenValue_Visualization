@@ -21,13 +21,15 @@ const MatrixPlayground: React.FC = () => {
                 className="mt-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition w-full"
                 onClick={() => setIs3D(!is3D)}
               >
-                Toggle to {is3D ? "2D" : "3D"}
+                Toggle to {is3D ? "3D" : "2D"}
               </button>
             </div>
           </div>
 
           {/* Main Playground Graph - 70% width */}
-          <div className="w-[78%]">{is3D ? <Graph3D /> : <Graph2D />}</div>
+          <div className="w-[78%] flex justify-center items-center overflow-hidden">
+            {is3D ? <Graph2D /> : <Graph3D />}
+          </div>
         </div>
       </div>
     </MatrixProvider>
