@@ -90,8 +90,8 @@ const Graph2D: React.FC<{ width?: number; height?: number }> = ({
   };
 
   const center = {
-    x: width / 10 + offset.x,
-    y: height / 10 + offset.y,
+    x: width / 2 + offset.x,
+    y: height / 2 + offset.y,
   };
 
   const visualizeTransformedPoints = () => {
