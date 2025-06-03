@@ -14,8 +14,8 @@ const MatrixPlayground: React.FC = () => {
 
         <div className="h-full w-full overflow-hidden flex">
           {/* Control Panel - 30% width */}
-          <div className="w-[30%] p-4">
-            <div className="p-4 bg-white border border-gray-300 rounded-xl shadow-xl backdrop-blur-md">
+          <div className="w-[22%]">
+            <div className="h-full p-4 bg-white border border-gray-300  shadow-xl backdrop-blur-md">
               <MatrixInput />
               <button
                 className="mt-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition w-full"
@@ -27,7 +27,7 @@ const MatrixPlayground: React.FC = () => {
           </div>
 
           {/* Main Playground Graph - 70% width */}
-          <div className="w-[70%]">{is3D ? <Graph3D /> : <Graph2D />}</div>
+          <div className="w-[78%]">{is3D ? <Graph3D /> : <Graph2D />}</div>
         </div>
       </div>
     </MatrixProvider>
