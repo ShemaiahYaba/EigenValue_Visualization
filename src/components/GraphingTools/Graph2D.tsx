@@ -9,16 +9,22 @@ interface Point {
   y: number;
 }
 
+type GraphMode = "vector" | "eigenvalue";
+
 interface Graph2DProps {
   width?: number;
   height?: number;
-  iterations?: number[][];
+  vectors?: number[][];
+  eigenvalues?: number[];
+  mode: GraphMode;
 }
 
 const Graph2D: React.FC<Graph2DProps> = ({
   width = 800,
   height = 400,
-  iterations,
+  vectors,
+  eigenvalues,
+  mode,
 }) => {
   const [unit, setUnit] = useState(100);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
@@ -26,25 +32,25 @@ const Graph2D: React.FC<Graph2DProps> = ({
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
   const dragStart = useRef({ x: 0, y: 0 });
   const offsetStart = useRef(offset);
-
-  // Animation state: which iteration index is currently shown
   const [currentStep, setCurrentStep] = useState(0);
 
-  // Zoom limits
   const MIN_UNIT_SIZE = 0.01;
   const MAX_UNIT_SIZE = 5_000_000;
 
-  // Animate iterations: increment currentStep every 700ms until done
   useEffect(() => {
-    if (!iterations || iterations.length === 0) {
+    const dataLength =
+      mode === "vector" ? vectors?.length ?? 0 : eigenvalues?.length ?? 0;
+
+    if (dataLength === 0) {
       setCurrentStep(0);
       return;
     }
 
-    setCurrentStep(0); // reset on new data
+    setCurrentStep(0);
+
     const interval = setInterval(() => {
       setCurrentStep((prev) => {
-        if (prev >= iterations.length - 1) {
+        if (prev >= dataLength - 1) {
           clearInterval(interval);
           return prev;
         }
@@ -53,22 +59,29 @@ const Graph2D: React.FC<Graph2DProps> = ({
     }, 700);
 
     return () => clearInterval(interval);
-  }, [iterations]);
+  }, [vectors, eigenvalues, mode]);
 
-  // Convert eigenvector(s) at currentStep to screen points
   const getPointsToDraw = (): Point[] => {
-    if (!iterations || iterations.length === 0) return [];
-    const vectorsToShow = iterations.slice(0, currentStep + 1);
     const centerX = width / 2 + offset.x;
     const centerY = height / 2 + offset.y;
 
-    return vectorsToShow.map((vec) => ({
-      x: vec[0] * unit + centerX,
-      y: -vec[1] * unit + centerY,
-    }));
+    if (mode === "vector" && vectors?.length) {
+      return vectors.slice(0, currentStep + 1).map(([x, y]) => ({
+        x: x * unit + centerX,
+        y: -y * unit + centerY,
+      }));
+    }
+
+    if (mode === "eigenvalue" && eigenvalues?.length) {
+      return eigenvalues.slice(0, currentStep + 1).map((val, i) => ({
+        x: i * unit + centerX,
+        y: -val * unit + centerY,
+      }));
+    }
+
+    return [];
   };
 
-  // Handle zooming with mouse wheel
   const handleWheel = (e: React.WheelEvent) => {
     e.preventDefault();
     const zoomFactor = 1.05;
@@ -82,7 +95,6 @@ const Graph2D: React.FC<Graph2DProps> = ({
       Math.min(MAX_UNIT_SIZE, newUnit)
     );
 
-    // Zoom relative to mouse pointer
     const rect = e.currentTarget.getBoundingClientRect();
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
@@ -99,7 +111,6 @@ const Graph2D: React.FC<Graph2DProps> = ({
     setOffset(newOffset);
   };
 
-  // Drag handlers for panning
   const handleMouseDown = (e: React.MouseEvent) => {
     setDragging(true);
     dragStart.current = { x: e.clientX, y: e.clientY };
@@ -120,8 +131,6 @@ const Graph2D: React.FC<Graph2DProps> = ({
 
   const handleMouseUp = () => setDragging(false);
   const handleMouseLeave = () => setDragging(false);
-
-  // Reset zoom and pan
   const handleReset = () => {
     setUnit(100);
     setOffset({ x: 0, y: 0 });
@@ -132,7 +141,6 @@ const Graph2D: React.FC<Graph2DProps> = ({
     y: height / 2 + offset.y,
   };
 
-  // Points to draw for current animation step
   const points = getPointsToDraw();
 
   return (
@@ -146,9 +154,9 @@ const Graph2D: React.FC<Graph2DProps> = ({
             width="100%"
             height="100%"
             viewBox={`0 0 ${width} ${height}`}
-            className={`bg-white ${
+            className={`${
               dragging ? "cursor-grabbing" : "cursor-grab"
-            }`}
+            } bg-white dark:bg-gray-900`}
             onWheel={handleWheel}
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
@@ -183,18 +191,36 @@ const Graph2D: React.FC<Graph2DProps> = ({
             />
             <AxisArrows width={width} height={height} offset={offset} />
 
-            {points.map((point, i) => (
-              <line
-                key={i}
-                x1={center.x}
-                y1={center.y}
-                x2={point.x}
-                y2={point.y}
-                stroke="#e11d48"
-                strokeWidth={2}
-                markerEnd="url(#arrowhead)"
-              />
-            ))}
+            {mode === "vector" &&
+              points.map((point, i) => (
+                <line
+                  key={i}
+                  x1={center.x}
+                  y1={center.y}
+                  x2={point.x}
+                  y2={point.y}
+                  stroke="#e11d48"
+                  strokeWidth={2}
+                  markerEnd="url(#arrowhead)"
+                />
+              ))}
+
+            {mode === "eigenvalue" &&
+              points.map((point, i) => {
+                if (i === 0) return null;
+                const prev = points[i - 1];
+                return (
+                  <line
+                    key={i}
+                    x1={prev.x}
+                    y1={prev.y}
+                    x2={point.x}
+                    y2={point.y}
+                    stroke="#2563eb"
+                    strokeWidth={2}
+                  />
+                );
+              })}
 
             <CoordinateHUD
               mouse={mouse}
@@ -207,7 +233,7 @@ const Graph2D: React.FC<Graph2DProps> = ({
 
           <button
             onClick={handleReset}
-            className="absolute top-2 left-2 bg-white border border-gray-300 rounded px-2 py-1 cursor-pointer shadow-sm hover:bg-gray-50 flex items-center justify-center"
+            className="absolute top-2 left-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-black dark:text-white rounded px-2 py-1 cursor-pointer shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center justify-center"
             title="Reset View"
           >
             <svg
