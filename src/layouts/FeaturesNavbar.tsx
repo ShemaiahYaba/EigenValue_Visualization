@@ -50,7 +50,7 @@ const Navbar: React.FC = () => {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Navbar */}
-      <nav className="w-full bg-gray-50 dark:bg-gray-900 dark:text-white flex items-center justify-between px-6 py-3 shadow-lg">
+      <nav className="w-screen bg-gray-50 dark:bg-gray-900 dark:text-white flex items-center justify-between px-6 py-3 shadow-lg">
         {/* Left: Logo */}
         <Link to="/" className="flex items-center space-x-2">
           <img src={logo} alt="MLab Logo" className="h-10 w-10 dark:hidden" />

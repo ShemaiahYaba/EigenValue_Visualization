@@ -62,7 +62,7 @@ const products = [
   },
 ];
 const callsToAction = [
-  { name: "Watch demo", href: "/coming-soon", icon: PlayCircleIcon },
+  { name: "Get Started", href: "/auth", icon: PlayCircleIcon },
   { name: "Need Help", href: "/coming-soon", icon: QuestionMarkCircleIcon },
 ];
 
