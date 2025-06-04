@@ -37,3 +37,18 @@ export const checkUserDocument = async (user: User): Promise<boolean> => {
   const userDoc = await getDoc(userRef);
   return !userDoc.exists();
 };
+
+export const getUserNames = async (
+  user: User
+): Promise<{ firstName: string; lastName: string } | null> => {
+  const userRef = doc(db, "users", user.uid);
+  const userDoc = await getDoc(userRef);
+  if (userDoc.exists()) {
+    const data = userDoc.data();
+    return {
+      firstName: data.firstName || "",
+      lastName: data.lastName || "",
+    };
+  }
+  return null;
+};

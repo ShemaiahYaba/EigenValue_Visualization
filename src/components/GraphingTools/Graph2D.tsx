@@ -1,59 +1,95 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import CoordinateHUD from "@/components/GraphingTools/GraphPage/CoordinateHUD";
 import OriginMarker from "@/components/GraphingTools/GraphPage/OriginMarker";
 import AxisArrows from "@/components/GraphingTools/GraphPage/AxisArrows";
 import GridLines from "@/components/GraphingTools/GraphPage/GridLines";
 
-import { useMatrix } from "@/hooks/useMatrix";
+interface Point {
+  x: number;
+  y: number;
+}
 
-const Graph2D: React.FC<{ width?: number; height?: number }> = ({
+interface Graph2DProps {
+  width?: number;
+  height?: number;
+  iterations?: number[][];
+}
+
+const Graph2D: React.FC<Graph2DProps> = ({
   width = 800,
   height = 400,
+  iterations,
 }) => {
-  const [unit, setUnit] = useState(100); // Default unit size
+  const [unit, setUnit] = useState(100);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [dragging, setDragging] = useState(false);
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
-
-  const { transformedMatrix } = useMatrix();
-
   const dragStart = useRef({ x: 0, y: 0 });
   const offsetStart = useRef(offset);
 
-  // Define minimum and maximum unit sizes
-  const MIN_UNIT_SIZE = 0.01;
-  const MAX_UNIT_SIZE = 5000000; // Set this to your preferred maximum zoom-out
+  // Animation state: which iteration index is currently shown
+  const [currentStep, setCurrentStep] = useState(0);
 
-  // Handling the zoom on mouse wheel
+  // Zoom limits
+  const MIN_UNIT_SIZE = 0.01;
+  const MAX_UNIT_SIZE = 5_000_000;
+
+  // Animate iterations: increment currentStep every 700ms until done
+  useEffect(() => {
+    if (!iterations || iterations.length === 0) {
+      setCurrentStep(0);
+      return;
+    }
+
+    setCurrentStep(0); // reset on new data
+    const interval = setInterval(() => {
+      setCurrentStep((prev) => {
+        if (prev >= iterations.length - 1) {
+          clearInterval(interval);
+          return prev;
+        }
+        return prev + 1;
+      });
+    }, 700);
+
+    return () => clearInterval(interval);
+  }, [iterations]);
+
+  // Convert eigenvector(s) at currentStep to screen points
+  const getPointsToDraw = (): Point[] => {
+    if (!iterations || iterations.length === 0) return [];
+    const vectorsToShow = iterations.slice(0, currentStep + 1);
+    const centerX = width / 2 + offset.x;
+    const centerY = height / 2 + offset.y;
+
+    return vectorsToShow.map((vec) => ({
+      x: vec[0] * unit + centerX,
+      y: -vec[1] * unit + centerY,
+    }));
+  };
+
+  // Handle zooming with mouse wheel
   const handleWheel = (e: React.WheelEvent) => {
     e.preventDefault();
-
     const zoomFactor = 1.05;
-
-    // Calculate the intended new unit
     const newUnit = e.deltaY < 0 ? unit * zoomFactor : unit / zoomFactor;
 
-    // Prevent zooming in past minimum
     if (newUnit < MIN_UNIT_SIZE && e.deltaY > 0) return;
-    // Prevent zooming out past maximum
     if (newUnit > MAX_UNIT_SIZE && e.deltaY < 0) return;
 
-    // Clamp the unit to the allowed range
     const clampedUnit = Math.max(
       MIN_UNIT_SIZE,
       Math.min(MAX_UNIT_SIZE, newUnit)
     );
 
-    // Get the mouse position relative to the graph container
+    // Zoom relative to mouse pointer
     const rect = e.currentTarget.getBoundingClientRect();
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
 
-    // Calculate the graph coordinates of the mouse position
     const graphX = (mouseX - offset.x - width / 2) / unit;
     const graphY = (mouseY - offset.y - height / 2) / -unit;
 
-    // Calculate the new offset so that the zoom happens around the mouse cursor
     const newOffset = {
       x: mouseX - graphX * clampedUnit - width / 2,
       y: mouseY + graphY * clampedUnit - height / 2,
@@ -63,6 +99,7 @@ const Graph2D: React.FC<{ width?: number; height?: number }> = ({
     setOffset(newOffset);
   };
 
+  // Drag handlers for panning
   const handleMouseDown = (e: React.MouseEvent) => {
     setDragging(true);
     dragStart.current = { x: e.clientX, y: e.clientY };
@@ -84,9 +121,10 @@ const Graph2D: React.FC<{ width?: number; height?: number }> = ({
   const handleMouseUp = () => setDragging(false);
   const handleMouseLeave = () => setDragging(false);
 
+  // Reset zoom and pan
   const handleReset = () => {
-    setUnit(100); // Reset to default unit size
-    setOffset({ x: 0, y: 0 }); // Reset offset to origin
+    setUnit(100);
+    setOffset({ x: 0, y: 0 });
   };
 
   const center = {
@@ -94,16 +132,8 @@ const Graph2D: React.FC<{ width?: number; height?: number }> = ({
     y: height / 2 + offset.y,
   };
 
-  const visualizeTransformedPoints = () => {
-    if (!transformedMatrix) return [];
-    const points = [];
-    for (const row of transformedMatrix) {
-      const x = row[0] * unit + center.x;
-      const y = -row[1] * unit + center.y;
-      points.push({ x, y });
-    }
-    return points;
-  };
+  // Points to draw for current animation step
+  const points = getPointsToDraw();
 
   return (
     <div
@@ -153,9 +183,9 @@ const Graph2D: React.FC<{ width?: number; height?: number }> = ({
             />
             <AxisArrows width={width} height={height} offset={offset} />
 
-            {visualizeTransformedPoints().map((point, index) => (
+            {points.map((point, i) => (
               <line
-                key={index}
+                key={i}
                 x1={center.x}
                 y1={center.y}
                 x2={point.x}
