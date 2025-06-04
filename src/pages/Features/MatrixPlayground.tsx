@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import MatrixInput from "@/components/GraphingTools/MatrixInput";
 import Graph3D from "@/components/GraphingTools/Graph3D";
 import Graph2D from "@/components/GraphingTools/Graph2D";
+import Insights from "@/components/UiComponents/Insights";
 import { MatrixProvider } from "@/contexts/MatrixProvider";
 
 const MatrixPlayground: React.FC = () => {
@@ -23,6 +24,14 @@ const MatrixPlayground: React.FC = () => {
               >
                 Toggle to {is3D ? "3D" : "2D"}
               </button>
+              <Insights
+                insights={[
+                  {
+                    title: "Matrix Properties",
+                    description: "Basic matrix information",
+                  },
+                ]}
+              />
             </div>
           </div>
 

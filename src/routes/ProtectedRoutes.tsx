@@ -3,6 +3,7 @@ import React from "react";
 import { Route } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import Navbar from "@/layouts/FeaturesNavbar";
+import NotFound from "@/components/UiComponents/NotFound";
 
 const Features = React.lazy(() => import("@/pages/Features"));
 const MatrixPlayground = React.lazy(
@@ -24,6 +25,7 @@ const ProtectedRoutes = () => (
     <Route index element={<Features />} />
     <Route path="numerical-methods" element={<NumericalMethods />} />
     <Route path="matrix-playground" element={<MatrixPlayground />} />
+    <Route path="*" element={<NotFound />} />
   </Route>
 );
 

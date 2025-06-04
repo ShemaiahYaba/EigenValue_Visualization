@@ -3,7 +3,7 @@ import numpy as np
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app, origins=["https://mlab-inky.vercel.app"])  # adjust frontend origin
+CORS(app, origins=["https://mlab-inky.vercel.app", "http://localhost:5173"])  # adjust as needed
 
 def rotation_matrix_x(angle):
     rad = np.radians(angle)
@@ -103,6 +103,74 @@ def transform():
 
         transformed = translation_matrix @ rotation_matrix_combined @ matrix
         return jsonify({"transformed": transformed.tolist()})
+
+@app.route("/power-method", methods=["POST"])
+def power_method():
+    data = request.json
+    matrix = np.array(data["matrix"], dtype=float)
+    v0 = np.array(data.get("initial_vector", [1]*len(matrix)), dtype=float)
+    max_iter = int(data.get("max_iter", 10))
+    tol = float(data.get("tol", 1e-8))
+
+    if matrix.ndim != 2 or matrix.shape[0] != matrix.shape[1]:
+        return jsonify({"error": "Matrix must be square"}), 400
+
+    n = matrix.shape[0]
+    if v0.shape[0] != n:
+        return jsonify({"error": "Initial vector size mismatch"}), 400
+
+    vectors = []
+    eigenvalues = []
+    v = v0 / np.linalg.norm(v0)
+    for i in range(max_iter):
+        w = matrix @ v
+        eigval = np.dot(w, v) / np.dot(v, v)
+        w_norm = np.linalg.norm(w)
+        if w_norm == 0:
+            break
+        v_next = w / w_norm
+        vectors.append(v_next.tolist())
+        eigenvalues.append(eigval)
+        if np.linalg.norm(v_next - v) < tol:
+            break
+        v = v_next
+
+    return jsonify({
+        "vectors": vectors,
+        "eigenvalues": eigenvalues
+    })
+
+@app.route("/pca", methods=["POST"])
+def pca():
+    data = request.json
+    X = np.array(data["matrix"], dtype=float)  # shape: (n_samples, n_features)
+    n_samples, n_features = X.shape
+
+    # Center the data
+    X_centered = X - np.mean(X, axis=0)
+
+    # Covariance matrix
+    cov = np.cov(X_centered, rowvar=False)
+
+    # Eigen decomposition
+    eigvals, eigvecs = np.linalg.eigh(cov)
+    # Sort by descending eigenvalue
+    idx = np.argsort(eigvals)[::-1]
+    eigvals = eigvals[idx]
+    eigvecs = eigvecs[:, idx]
+
+    # Project data onto principal components
+    projected = X_centered @ eigvecs
+
+    # Explained variance ratio
+    explained_variance_ratio = eigvals / np.sum(eigvals)
+
+    return jsonify({
+        "principal_components": eigvecs.tolist(),
+        "explained_variance": eigvals.tolist(),
+        "explained_variance_ratio": explained_variance_ratio.tolist(),
+        "projected_data": projected.tolist()
+    })
 
 if __name__ == "__main__":
     app.run(debug=True)

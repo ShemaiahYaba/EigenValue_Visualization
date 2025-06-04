@@ -30,19 +30,19 @@ const Navbar: React.FC = () => {
 
         {/* Center: Navigation Icons */}
         <div className="flex items-center space-x-6">
-          <Link to="/made-easy" className="group">
+          <Link to="/features/made-easy" className="group">
             <AcademicCapIcon className="h-7 w-7 text-black hover:text-gray-700 dark:text-gray-400 dark:hover:text-white" />
           </Link>
-          <Link to="/concepts" className="group">
+          <Link to="/features/concepts" className="group">
             <CubeIcon className="h-7 w-7 text-black hover:text-gray-700 dark:text-gray-400 dark:hover:text-white" />
           </Link>
-          <Link to="/pca" className="group">
+          <Link to="/features/pca" className="group">
             <SquaresPlusIcon className="h-7 w-7 text-black hover:text-gray-700 dark:text-gray-400 dark:hover:text-white" />
           </Link>
-          <Link to="/numerical-methods" className="group">
+          <Link to="/features/numerical-methods" className="group">
             <CalculatorIcon className="h-7 w-7 text-black hover:text-gray-700 dark:text-gray-400 dark:hover:text-white" />
           </Link>
-          <Link to="/matrix-playground" className="group">
+          <Link to="/features/matrix-playground" className="group">
             <TbMatrix className="h-7 w-7 text-black hover:text-gray-700 dark:text-gray-400 dark:hover:text-white" />
           </Link>
         </div>
@@ -53,7 +53,7 @@ const Navbar: React.FC = () => {
           <Link to="/features" className="group">
             <HomeIcon className="h-7 w-7 text-black hover:text-gray-500 dark:text-gray-400 dark:hover:text-white" />
           </Link>
-          <Link to="/settings" className="group">
+          <Link to="/features/settings" className="group">
             <TbSettings className="h-7 w-7 text-black hover:text-gray-500 dark:text-gray-400 dark:hover:text-white" />
           </Link>
           {/* Profile Image */}
