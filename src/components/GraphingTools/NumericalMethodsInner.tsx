@@ -69,7 +69,7 @@ const NumericalMethodsInner: React.FC = () => {
       <div className="w-[78%] flex justify-center items-center overflow-hidden">
         <Graph2D
           vectors={iterations} // if that's what you're naming them
-          mode="vector"
+          mode="eigenvalue"
           currentStep={currentStep}
         />
       </div>

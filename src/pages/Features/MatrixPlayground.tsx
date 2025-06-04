@@ -58,7 +58,7 @@ const MatrixPlayground: React.FC = () => {
 
           {/* Graph View */}
           <div className="w-[78%] flex justify-center items-center overflow-hidden">
-            {is3D ? <Graph2D /> : <Graph3D />}
+            {is3D ? <Graph2D mode="vector" /> : <Graph3D />}
           </div>
         </div>
       </div>
