@@ -1,32 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { useMatrix } from "@/hooks/useMatrix";
+import { initializeMatrix } from "@/services/matrixServices";
 
-const MatrixInput: React.FC = () => {
+type MatrixInputProps = {
+  onSubmit: (params: {
+    matrix: number[][];
+    rotation?: { x: number; y: number; z: number };
+    translation?: { x: number; y: number; z: number };
+  }) => void;
+};
+
+const MatrixInput: React.FC<MatrixInputProps> = ({ onSubmit }) => {
   const {
     matrix,
     setMatrix,
-    setTransformedMatrix,
     rotation,
     setRotation,
     translation,
     setTranslation,
   } = useMatrix();
 
-  // Square matrix size: 2, 3 or 4
   const [size, setSize] = useState(2);
 
-  // Initialize matrix on size change
+  // Initialize or resize matrix when size changes
   useEffect(() => {
-    // Create a size x size matrix preserving existing values when possible
-    setMatrix((prevMatrix) => {
-      const newMatrix = Array.from({ length: size }, (_, row) =>
-        Array.from({ length: size }, (_, col) => prevMatrix?.[row]?.[col] ?? 0)
-      );
-      return newMatrix;
-    });
+    setMatrix((prev) => initializeMatrix(prev, size));
   }, [size, setMatrix]);
 
-  // Immutable update of matrix cell
   const handleInputChange = (row: number, col: number, value: number) => {
     setMatrix((prevMatrix) =>
       prevMatrix.map((r, i) =>
@@ -35,26 +35,15 @@ const MatrixInput: React.FC = () => {
     );
   };
 
-  // Send matrix and optional transforms to backend
-  const sendMatrixToPython = async () => {
-    try {
-      const response = await fetch("https://mlab-uezm.onrender.com/transform", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ matrix, rotation, translation }),
-      });
-      if (!response.ok) throw new Error("Failed to send matrix");
-      const data = await response.json();
-      setTransformedMatrix(data.transformed);
-      alert("Matrix transformed successfully");
-    } catch {
-      alert("Transformation failed.");
-    }
+  const handleSubmit = () => {
+    onSubmit({ matrix, rotation, translation });
   };
 
   return (
     <div className="flex flex-col items-center justify-center p-2 text-xs w-full max-w-xs">
       <h2 className="text-base font-semibold mb-2">Matrix Input</h2>
+
+      {/* Size Selector */}
       <label className="flex items-center gap-2 mb-2">
         Size:
         <select
@@ -69,6 +58,8 @@ const MatrixInput: React.FC = () => {
           ))}
         </select>
       </label>
+
+      {/* Matrix Input Grid */}
       <div className="space-y-1 mb-2">
         {matrix.slice(0, size).map((row, rowIndex) => (
           <div key={rowIndex} className="flex space-x-1">
@@ -87,7 +78,7 @@ const MatrixInput: React.FC = () => {
         ))}
       </div>
 
-      {/* Optional: Show rotation and translation only for 3x3 or 4x4 matrices */}
+      {/* Rotation / Translation Inputs */}
       {(size === 3 || size === 4) && (
         <>
           <div className="mb-2 w-full">
@@ -112,6 +103,7 @@ const MatrixInput: React.FC = () => {
               ))}
             </div>
           </div>
+
           <div className="mb-2 w-full">
             <label className="block font-semibold mb-0.5">Translation</label>
             <div className="flex space-x-1">
@@ -135,11 +127,12 @@ const MatrixInput: React.FC = () => {
         </>
       )}
 
+      {/* Submit Button */}
       <button
-        onClick={sendMatrixToPython}
+        onClick={handleSubmit}
         className="px-3 py-1 bg-black text-white rounded hover:bg-gray-600 transition text-xs"
       >
-        Visualize
+        Submit
       </button>
     </div>
   );
