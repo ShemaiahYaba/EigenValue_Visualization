@@ -42,7 +42,7 @@ const ProfileInitials: React.FC = () => {
         {initials}
       </div>
       {showTooltip && (
-        <div className="absolute left-1/2 -translate-x-1/2 mt-2 z-50 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-xs rounded shadow-lg px-3 py-2 whitespace-nowrap">
+        <div className="absolute left-1 -translate-x-1 mt-2 z-50 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-xs rounded shadow-lg px-3 py-2 whitespace-nowrap">
           <div>{fullName || "User"}</div>
           {dateJoined && (
             <div className="text-gray-500 dark:text-gray-400">
