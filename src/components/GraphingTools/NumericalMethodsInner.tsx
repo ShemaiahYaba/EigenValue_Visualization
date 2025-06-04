@@ -13,6 +13,8 @@ interface Results {
 const NumericalMethodsInner: React.FC = () => {
   const { matrix } = useMatrix();
   const [results, setResults] = useState<Results | null>(null);
+  const [iterations, setIterations] = useState<number[][]>([]);
+  const [currentStep, setCurrentStep] = useState<number>(0);
 
   const handleSubmit = async () => {
     try {
@@ -20,6 +22,8 @@ const NumericalMethodsInner: React.FC = () => {
         matrix,
         (result: Results) => {
           setResults(result);
+          setIterations((prev) => [...prev, result.vectors.at(-1) || []]);
+          setCurrentStep(result.vectors.length - 1);
           alert("Power Method completed");
         },
         () => alert("Power Method failed")
@@ -63,7 +67,11 @@ const NumericalMethodsInner: React.FC = () => {
 
       {/* Graph Display */}
       <div className="w-[78%] flex justify-center items-center overflow-hidden">
-        <Graph2D iterations={results?.vectors} />
+        <Graph2D
+          vectors={iterations} // if that's what you're naming them
+          mode="vector"
+          currentStep={currentStep}
+        />
       </div>
     </div>
   );

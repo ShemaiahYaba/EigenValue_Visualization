@@ -17,6 +17,7 @@ interface Graph2DProps {
   vectors?: number[][];
   eigenvalues?: number[];
   mode: GraphMode;
+  currentStep?: number;
 }
 
 const Graph2D: React.FC<Graph2DProps> = ({

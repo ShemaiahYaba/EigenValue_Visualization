@@ -38,7 +38,7 @@ const ProfileInitials: React.FC = () => {
       onMouseEnter={() => setShowTooltip(true)}
       onMouseLeave={() => setShowTooltip(false)}
     >
-      <div className="h-10 w-10 rounded-full bg-gray-300 dark:bg-gray-700 flex items-start justify-start border-2 border-gray-700 text-lg font-bold text-gray-700 dark:text-white">
+      <div className="h-10 w-10 rounded-full bg-gray-300 dark:bg-gray-700 flex items-center justify-center border-2 border-gray-700 text-lg font-bold text-gray-700 dark:text-white">
         {initials}
       </div>
       {showTooltip && (
