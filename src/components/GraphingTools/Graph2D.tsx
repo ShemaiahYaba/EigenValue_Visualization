@@ -18,6 +18,7 @@ interface Graph2DProps {
   eigenvalues?: number[];
   mode: GraphMode;
   currentStep?: number;
+  trueEigenvalues?: number[];
 }
 
 const Graph2D: React.FC<Graph2DProps> = ({
@@ -26,6 +27,7 @@ const Graph2D: React.FC<Graph2DProps> = ({
   vectors,
   eigenvalues,
   mode,
+  trueEigenvalues,
 }) => {
   const [unit, setUnit] = useState(100);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
@@ -207,21 +209,18 @@ const Graph2D: React.FC<Graph2DProps> = ({
               ))}
 
             {mode === "eigenvalue" &&
-              points.map((point, i) => {
-                if (i === 0) return null;
-                const prev = points[i - 1];
-                return (
-                  <line
-                    key={i}
-                    x1={prev.x}
-                    y1={prev.y}
-                    x2={point.x}
-                    y2={point.y}
-                    stroke="#2563eb"
-                    strokeWidth={2}
-                  />
-                );
-              })}
+              trueEigenvalues?.map((val, i) => (
+                <line
+                  key={`true-${i}`}
+                  x1={0}
+                  y1={-val * unit + center.y}
+                  x2={width}
+                  y2={-val * unit + center.y}
+                  stroke="red "
+                  strokeDasharray="5,5"
+                  strokeWidth={1}
+                />
+              ))}
 
             <CoordinateHUD
               mouse={mouse}

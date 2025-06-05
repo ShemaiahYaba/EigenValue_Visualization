@@ -42,6 +42,34 @@ const NumericalMethodsInner: React.FC = () => {
       {/* Control Panel */}
       <div className="w-[22%] p-4 bg-white border border-gray-300 shadow-xl backdrop-blur-md">
         <MatrixInput onSubmit={handleSubmit} />
+        // Inside NumericalMethodsInner or wherever you manage currentStep
+        {results?.vectors && (
+          <div style={{ marginTop: 12 }}>
+            <label>
+              Iteration:
+              <input
+                type="range"
+                min={0}
+                max={results.vectors.length - 1}
+                value={currentStep}
+                onChange={(e) => setCurrentStep(Number(e.target.value))}
+              />
+              <span>{currentStep}</span>
+            </label>
+          </div>
+        )}
+        <button onClick={() => setCurrentStep((s) => Math.max(0, s - 1))}>
+          ◀
+        </button>
+        <button
+          onClick={() =>
+            setCurrentStep((s) =>
+              Math.min(results?.vectors?.length ?? 0 - 1, s + 1)
+            )
+          }
+        >
+          ▶
+        </button>
         {results && (
           <div className="mt-4 h-[calc(100vh-300px)] overflow-y-auto">
             <Insights
@@ -72,6 +100,7 @@ const NumericalMethodsInner: React.FC = () => {
           eigenvalues={results?.eigenvalues}
           mode="eigenvalue"
           currentStep={currentStep}
+          trueEigenvalues={results?.eigenvalues}
         />
       </div>
     </div>
