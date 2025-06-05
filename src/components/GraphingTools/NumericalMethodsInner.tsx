@@ -42,7 +42,7 @@ const NumericalMethodsInner: React.FC = () => {
       {/* Control Panel */}
       <div className="w-[22%] p-4 bg-white border border-gray-300 shadow-xl backdrop-blur-md">
         <MatrixInput onSubmit={handleSubmit} />
-        // Inside NumericalMethodsInner or wherever you manage currentStep
+
         {results?.vectors && (
           <div style={{ marginTop: 12 }}>
             <label>
