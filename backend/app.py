@@ -112,6 +112,7 @@ def power_method():
     max_iter = int(data.get("max_iter", 10))
     tol = float(data.get("tol", 1e-8))
 
+    # Input validation
     if matrix.ndim != 2 or matrix.shape[0] != matrix.shape[1]:
         return jsonify({"error": "Matrix must be square"}), 400
 
@@ -121,6 +122,7 @@ def power_method():
 
     vectors = []
     eigenvalues = []
+
     v = v0 / np.linalg.norm(v0)
     for i in range(max_iter):
         w = matrix @ v
@@ -135,10 +137,16 @@ def power_method():
             break
         v = v_next
 
+    # Compute true eigenvalues and find max
+    true_eigenvalues = np.linalg.eigvals(matrix).tolist()
+    max_true_eigenvalue = max(true_eigenvalues, key=abs)
+
     return jsonify({
         "vectors": vectors,
-        "eigenvalues": eigenvalues
+        "eigenvalues": eigenvalues,
+        "true_max_eigenvalue": max_true_eigenvalue
     })
+
 
 @app.route("/pca", methods=["POST"])
 def pca():

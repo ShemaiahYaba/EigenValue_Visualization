@@ -13,7 +13,7 @@ interface Results {
 const NumericalMethodsInner: React.FC = () => {
   const { matrix } = useMatrix();
   const [results, setResults] = useState<Results | null>(null);
-  const [iterations, setIterations] = useState<number[][]>([]);
+  const [, setIterations] = useState<number[][]>([]);
   const [currentStep, setCurrentStep] = useState<number>(0);
 
   const handleSubmit = async () => {
@@ -68,7 +68,8 @@ const NumericalMethodsInner: React.FC = () => {
       {/* Graph Display */}
       <div className="w-[78%] flex justify-center items-center overflow-hidden">
         <Graph2D
-          vectors={iterations} // if that's what you're naming them
+          vectors={results?.vectors}
+          eigenvalues={results?.eigenvalues}
           mode="eigenvalue"
           currentStep={currentStep}
         />
