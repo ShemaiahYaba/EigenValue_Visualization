@@ -12,7 +12,7 @@ interface InsightProps {
 const Insights: React.FC<InsightProps> = ({ insights = [] }) => {
   return (
     <Box sx={{ padding: 2 }}>
-      <Typography variant="h5" gutterBottom>
+      <Typography variant="h6" gutterBottom>
         Visualization Insights
       </Typography>
       <Box
@@ -23,7 +23,7 @@ const Insights: React.FC<InsightProps> = ({ insights = [] }) => {
         }}
       >
         {insights.map((insight, index) => (
-          <Card key={index} sx={{ height: "100%" }}>
+          <Card key={index} sx={{ height: "10%" }}>
             <CardContent>
               <Typography variant="h6" color="primary">
                 {insight.title}
