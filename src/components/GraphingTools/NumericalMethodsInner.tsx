@@ -15,6 +15,7 @@ const NumericalMethodsInner: React.FC = () => {
   const [results, setResults] = useState<Results | null>(null);
   const [, setIterations] = useState<number[][]>([]);
   const [currentStep, setCurrentStep] = useState<number>(0);
+  const [errorInsight, setErrorInsight] = useState<string | null>(null);
 
   const handleSubmit = async () => {
     try {
@@ -24,11 +25,20 @@ const NumericalMethodsInner: React.FC = () => {
           setResults(result);
           setIterations((prev) => [...prev, result.vectors.at(-1) || []]);
           setCurrentStep(result.vectors.length - 1);
+          setErrorInsight(null);
           alert("Power Method completed");
         },
-        () => alert("Power Method failed")
+        (errMsg?: string) => {
+          setErrorInsight(errMsg ? `Error: ${errMsg}` : "Power Method failed");
+          alert("Power Method failed");
+        }
       );
     } catch (error: unknown) {
+      setErrorInsight(
+        `Error: ${
+          error instanceof Error ? error.message : String(error)
+        }`
+      );
       alert(
         `Unexpected error during power method: ${
           error instanceof Error ? error.message : String(error)
@@ -70,6 +80,11 @@ const NumericalMethodsInner: React.FC = () => {
         >
           ▶
         </button>
+        {errorInsight && (
+          <div className="mt-4">
+            <Insights insights={[{ title: "Error", description: errorInsight }]} />
+          </div>
+        )}
         {results && (
           <div className="mt-4 h-[calc(100vh-300px)] overflow-y-auto">
             <Insights
@@ -94,7 +109,7 @@ const NumericalMethodsInner: React.FC = () => {
       </div>
 
       {/* Graph Display */}
-      <div className="w-[78%] flex justify-center items-center overflow-hidden">
+      <div className="w-[78%] h-full flex justify-center items-center overflow-hidden">
         <Graph2D
           vectors={results?.vectors}
           eigenvalues={results?.eigenvalues}

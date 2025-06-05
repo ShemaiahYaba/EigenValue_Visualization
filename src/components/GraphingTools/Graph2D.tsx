@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import CoordinateHUD from "@/components/GraphingTools/GraphPage/CoordinateHUD";
 import OriginMarker from "@/components/GraphingTools/GraphPage/OriginMarker";
 import AxisArrows from "@/components/GraphingTools/GraphPage/AxisArrows";
@@ -17,7 +17,7 @@ interface Graph2DProps {
   vectors?: number[][];
   eigenvalues?: number[];
   mode: GraphMode;
-  currentStep?: number;
+  currentStep: number; // <-- Now required
   trueEigenvalues?: number[];
 }
 
@@ -27,6 +27,7 @@ const Graph2D: React.FC<Graph2DProps> = ({
   vectors,
   eigenvalues,
   mode,
+  currentStep,
   trueEigenvalues,
 }) => {
   const [unit, setUnit] = useState(100);
@@ -35,50 +36,25 @@ const Graph2D: React.FC<Graph2DProps> = ({
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
   const dragStart = useRef({ x: 0, y: 0 });
   const offsetStart = useRef(offset);
-  const [currentStep, setCurrentStep] = useState(0);
 
   const MIN_UNIT_SIZE = 0.01;
   const MAX_UNIT_SIZE = 5_000_000;
 
-  useEffect(() => {
-    const dataLength =
-      mode === "vector" ? vectors?.length ?? 0 : eigenvalues?.length ?? 0;
-
-    if (dataLength === 0) {
-      setCurrentStep(0);
-      return;
-    }
-
-    setCurrentStep(0);
-
-    const interval = setInterval(() => {
-      setCurrentStep((prev) => {
-        if (prev >= dataLength - 1) {
-          clearInterval(interval);
-          return prev;
-        }
-        return prev + 1;
-      });
-    }, 700);
-
-    return () => clearInterval(interval);
-  }, [vectors, eigenvalues, mode]);
-
   const getPointsToDraw = (): Point[] => {
-    const centerX = width / 2 + offset.x;
-    const centerY = height / 2 + offset.y;
+    const centerX = width / 2; // + offset.x if you have panning
+    const centerY = height / 2; // + offset.y if you have panning
 
     if (mode === "vector" && vectors?.length) {
       return vectors.slice(0, currentStep + 1).map(([x, y]) => ({
-        x: x * unit + centerX,
-        y: -y * unit + centerY,
+        x: x * 40 + centerX, // replace 40 with your unit/scale variable
+        y: -y * 40 + centerY,
       }));
     }
 
     if (mode === "eigenvalue" && eigenvalues?.length) {
       return eigenvalues.slice(0, currentStep + 1).map((val, i) => ({
-        x: i * unit + centerX,
-        y: -val * unit + centerY,
+        x: i * 40 + centerX,
+        y: -val * 40 + centerY,
       }));
     }
 
@@ -147,12 +123,9 @@ const Graph2D: React.FC<Graph2DProps> = ({
   const points = getPointsToDraw();
 
   return (
-    <div
-      className="flex items-center justify-center bg-gray-200 dark:bg-gray-900"
-      style={{ height: "90vh", width: "100vw" }}
-    >
-      <div style={{ width: "80vw", height: "100%" }}>
-        <div className="relative inline-block select-none w-full h-full">
+    <div className="flex items-center justify-center bg-gray-200 dark:bg-gray-900 w-full h-full max-h-[90vh] overflow-hidden">
+      <div className="w-full h-full max-w-5xl max-h-[80vh]">
+        <div className="relative select-none w-full h-full">
           <svg
             width="100%"
             height="100%"
@@ -165,6 +138,7 @@ const Graph2D: React.FC<Graph2DProps> = ({
             onMouseMove={handleMouseMove}
             onMouseUp={handleMouseUp}
             onMouseLeave={handleMouseLeave}
+            style={{ display: "block", width: "100%", height: "100%" }}
           >
             <defs>
               <marker

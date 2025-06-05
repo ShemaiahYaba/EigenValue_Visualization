@@ -30,6 +30,7 @@ const MatrixInputWrapper = () => {
 
 const MatrixPlayground: React.FC = () => {
   const [is3D, setIs3D] = useState(true);
+  const { transformedMatrix } = useMatrix(); // <-- Get the transformed matrix
 
   return (
     <MatrixProvider>
@@ -58,7 +59,15 @@ const MatrixPlayground: React.FC = () => {
 
           {/* Graph View */}
           <div className="w-[78%] flex justify-center items-center overflow-hidden">
-            {is3D ? <Graph2D mode="vector" /> : <Graph3D />}
+            {is3D ? (
+              <Graph2D
+                mode="vector"
+                vectors={transformedMatrix ?? undefined}
+                currentStep={0}
+              />
+            ) : (
+              <Graph3D />
+            )}
           </div>
         </div>
       </div>
