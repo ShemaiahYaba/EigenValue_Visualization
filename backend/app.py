@@ -3,7 +3,7 @@ import numpy as np
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app, origins=["https://mlab-inky.vercel.app", "http://localhost:5173"])  # adjust as needed
+CORS(app, origins=["https://mlab-inky.vercel.app"])  # adjust as needed
 
 def rotation_matrix_x(angle):
     rad = np.radians(angle)
