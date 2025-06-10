@@ -92,7 +92,7 @@ const NumericalMethodsInner: React.FC = () => {
       {/* Graph Display */}
       <div className="w-[78%] h-full flex justify-center items-center overflow-hidden">
         <Graph2D
-          mode="vector"
+          mode="eigenvalue"
           vectors={results?.vectors} // sequence of vectors from power method
           currentStep={currentStep} // controls how many vectors to show
         />

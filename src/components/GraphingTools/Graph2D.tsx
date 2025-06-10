@@ -46,15 +46,15 @@ const Graph2D: React.FC<Graph2DProps> = ({
 
     if (mode === "vector" && vectors?.length) {
       return vectors.slice(0, currentStep + 1).map(([x, y]) => ({
-        x: x * 40 + centerX, // replace 40 with your unit/scale variable
-        y: -y * 40 + centerY,
+        x: x * unit + centerX,
+        y: -y * unit + centerY,
       }));
     }
 
     if (mode === "eigenvalue" && eigenvalues?.length) {
       return eigenvalues.slice(0, currentStep + 1).map((val, i) => ({
-        x: i * 40 + centerX,
-        y: -val * 40 + centerY,
+        x: i * unit + centerX,
+        y: -val * unit + centerY,
       }));
     }
 
