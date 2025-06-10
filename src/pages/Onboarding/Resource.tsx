@@ -11,7 +11,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { BookOpenText, GraduationCap, FileText, Lightbulb } from "lucide-react";
+import { BookOpenText, GraduationCap, FileText, Projector } from "lucide-react";
 
 const resourceTopics = [
   {
@@ -29,7 +29,7 @@ const resourceTopics = [
     link: "/features",
   },
   {
-    icon: <Lightbulb className="h-8 w-8 text-accent" />,
+    icon: <Projector className="h-8 w-8 text-accent" />,
     title: "Matrix Transformations",
     description:
       "Understand how matrices can represent linear transformations in geometric space.",
@@ -69,7 +69,7 @@ export default function ResourcesPage() {
         </p>
       </section>
 
-      <section>
+      <section className="">
         <h2 className="text-3xl font-semibold mb-8 text-center font-headline text-primary">
           Learning Modules
         </h2>

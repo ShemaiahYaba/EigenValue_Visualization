@@ -4,6 +4,7 @@ import Graph2D from "@/components/GraphingTools/Graph2D";
 import Insights from "@/components/UiComponents/Insights";
 import { useMatrix } from "@/hooks/useMatrix";
 import { runPowerMethod } from "@/services/matrixServices";
+import IterationSlider from "@/components/GraphingTools/IterationSlider";
 
 interface Results {
   eigenvalues: number[];
@@ -79,16 +80,21 @@ const NumericalMethodsInner: React.FC = () => {
             />
           </div>
         )}
+        {results && (
+          <IterationSlider
+            maxSteps={results.vectors.length}
+            currentStep={currentStep}
+            onStepChange={setCurrentStep}
+          />
+        )}
       </div>
 
       {/* Graph Display */}
       <div className="w-[78%] h-full flex justify-center items-center overflow-hidden">
         <Graph2D
-          vectors={results?.vectors}
-          eigenvalues={results?.eigenvalues}
-          mode="eigenvalue"
-          currentStep={currentStep}
-          trueEigenvalues={results?.eigenvalues}
+          mode="vector"
+          vectors={results?.vectors} // sequence of vectors from power method
+          currentStep={currentStep} // controls how many vectors to show
         />
       </div>
     </div>

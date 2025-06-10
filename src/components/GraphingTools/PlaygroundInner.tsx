@@ -8,6 +8,15 @@ import { useMatrix } from "@/hooks/useMatrix";
 import { sendMatrixTransform } from "@/services/matrixServices";
 import { MatrixSubmissionPayload } from "@/types/matrixTypes";
 
+function getTransformedBasisVectors(matrix: number[][] | null): number[][] {
+  if (!matrix || matrix.length !== 2 || matrix[0].length !== 2) return [];
+  // Columns of the matrix are the images of [1,0] and [0,1]
+  return [
+    [matrix[0][0], matrix[1][0]], // image of [1,0]
+    [matrix[0][1], matrix[1][1]], // image of [0,1]
+  ];
+}
+
 const MatrixInputWrapper = () => {
   const { setTransformedMatrix } = useMatrix();
 
@@ -61,8 +70,8 @@ const MatrixPlayground: React.FC = () => {
           {is3D ? (
             <Graph2D
               mode="vector"
-              vectors={transformedMatrix ?? undefined}
-              currentStep={0}
+              vectors={getTransformedBasisVectors(transformedMatrix)}
+              currentStep={1}
             />
           ) : (
             <Graph3D />
