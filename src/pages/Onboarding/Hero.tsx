@@ -1,139 +1,151 @@
-import React, { useState, ReactElement, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-
-interface FeatureCircle {
-  id: string;
-  title: string;
-  icon: ReactElement;
-  description: string;
-  position: string;
-}
-
-const fadeInUpVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 },
-};
-
-const tooltipVariants = {
-  hidden: { opacity: 0, y: 10, scale: 0.95 },
-  visible: { opacity: 1, y: 0, scale: 1 },
-};
+import React, { useState, ReactElement } from "react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/Button";
+import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
+import logo from "@/assets/logo.svg"; // Adjust the path as necessary
 
 const Hero: React.FC = (): ReactElement => {
-  const [activeFeature, setActiveFeature] = useState<string | null>(null);
-
-  const features: FeatureCircle[] = useMemo(
-    () => [
-      {
-        id: "fundamentals",
-        title: "Matrix Fundamentals",
-        description: "Master the basics of matrix operations",
-        position: "top-0 left-1/2 -translate-x-1/2",
-        icon: (
-          <svg
-            className="w-12 h-12 transition-colors duration-200 text-blue-600 dark:text-blue-400"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" />
-          </svg>
-        ),
-      },
-      {
-        id: "visualization",
-        title: "Data Visualization",
-        description: "Visualize matrix transformations in real-time",
-        position: "top-1/4 right-[5%]",
-        icon: (
-          <svg
-            className="w-12 h-12 transition-colors duration-200 text-purple-600 dark:text-purple-400"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6h-6z" />
-          </svg>
-        ),
-      },
-      // ... Add other features similarly
-    ],
-    []
+  const [expandedColumnIndex, setExpandedColumnIndex] = useState<number | null>(
+    null
   );
 
+  const backdropFeatures = [
+    {
+      title: "EV-EV Crash Course",
+      description:
+        "Eigenvalues & Eigenvectors: Like VIPs, they keep their direction under transformation! Uncover their secrets. This is a much longer description to test the scrolling behavior. It needs to be long enough to potentially overflow the available space in the expanded column, especially on smaller viewports or when the hero section itself isn't very tall. We're adding more and more text here to simulate a real-world scenario where a feature might have a detailed explanation that shouldn't push the call-to-action buttons off-screen. Let's add even more. Still more. One more sentence should do it for testing purposes.",
+      tooltip: "Unlock Eigen-magic!",
+    },
+    {
+      title: "EV-EV Visualizations",
+      description:
+        "See the matrix's 'personality' – how it stretches, squashes, and rotates space. A visual feast!",
+      tooltip: "Matrices: The Space Invaders",
+    },
+    {
+      title: "Matrix Playground",
+      description:
+        "Your sandbox for matrix math. Experiment freely. No actual sand, we promise (it gets everywhere).",
+      tooltip: "Enter the Matrix... Sandbox",
+    },
+    {
+      title: "Power Method",
+      description:
+        "Iteratively unmasking the 'strongest' eigenvector, one powerful step at a time! Feel the dominance.",
+      tooltip: "Unleash the Power!",
+    },
+    {
+      title: "PCA",
+      description:
+        "Principal Component Analysis: Finding the essence of your data, like a digital Marie Kondo! Spark joy with dimensions.",
+      tooltip: "Data's Inner Zen",
+    },
+  ];
+
   return (
-    <motion.section
-      initial="hidden"
-      animate="visible"
-      variants={fadeInUpVariants}
-      className="relative flex flex-col items-center justify-center min-h-screen px-6 py-16 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 overflow-hidden"
-    >
-      <div className="relative w-[800px] h-[800px] max-w-full">
-        {features.map((feature) => (
-          <motion.div
-            key={feature.id}
-            className={`absolute ${feature.position}`}
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 300 }}
-            onHoverStart={() => setActiveFeature(feature.id)}
-            onHoverEnd={() => setActiveFeature(null)}
-          >
-            <div
-              className="rounded-full bg-white dark:bg-gray-800 flex flex-col items-center justify-center w-32 h-32 
-                shadow-lg hover:shadow-xl dark:shadow-gray-700 cursor-pointer relative group
-                transition-all duration-300 ease-in-out"
-              role="button"
-              tabIndex={0}
-              aria-label={feature.title}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  setActiveFeature(feature.id);
-                }
-              }}
-            >
-              {feature.icon}
-
-              <AnimatePresence>
-                {activeFeature === feature.id && (
-                  <motion.div
-                    variants={tooltipVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="hidden"
-                    className="absolute -bottom-16 bg-black dark:bg-white text-white dark:text-black 
-                      rounded-lg p-3 text-sm w-48 text-center pointer-events-none shadow-xl"
-                  >
-                    <p className="font-semibold mb-1">{feature.title}</p>
-                    <p className="text-xs opacity-90">{feature.description}</p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </motion.div>
-        ))}
-
-        <motion.div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center"
-          variants={fadeInUpVariants}
-          transition={{ delay: 0.5 }}
+    <>
+      <div>
+        <section
+          className="relative w-full py-20 md:py-32 text-center bg-gradient-to-br from-background to-muted rounded-xl shadow-lg overflow-hidden"
+          onMouseLeave={() => setExpandedColumnIndex(null)}
         >
-          <h1 className="mb-6 font-[montez] text-6xl md:text-7xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 select-none">
-            MatrixLAB
-          </h1>
-          <motion.p
-            className="text-2xl md:text-3xl max-w-2xl mb-8 text-gray-700 dark:text-gray-300"
-            variants={fadeInUpVariants}
-            transition={{ delay: 0.7 }}
+          {/* Five Column Backdrop */}
+          <div className="absolute inset-0 flex bg-white">
+            {backdropFeatures.map((feature, index) => (
+              <div
+                key={feature.title}
+                className={cn(
+                  "group flex flex-col p-3 text-center border-r border-black/10 last:border-r-0 relative",
+                  "transition-all duration-500 ease-in-out",
+                  expandedColumnIndex === null
+                    ? "flex-1 justify-start pt-6 opacity-60"
+                    : "",
+                  expandedColumnIndex === index
+                    ? "flex-grow-[5] bg-background/95 opacity-100 z-10 justify-start pt-6"
+                    : "",
+                  expandedColumnIndex !== null && expandedColumnIndex !== index
+                    ? "flex-grow-[0] opacity-0 scale-90 w-0 p-0 border-0 overflow-hidden"
+                    : ""
+                )}
+              >
+                <h4
+                  className={cn(
+                    "font-bold break-words transition-all duration-300",
+                    expandedColumnIndex === index
+                      ? "opacity-0"
+                      : "filter blur-[1.5px]",
+                    expandedColumnIndex === null
+                      ? "text-primary/80"
+                      : "text-primary"
+                  )}
+                >
+                  {feature.title}
+                </h4>
+
+                <div
+                  onMouseEnter={() => setExpandedColumnIndex(index)}
+                  className="absolute bottom-0 left-0 w-full h-1/2 cursor-pointer z-0"
+                  aria-label={`Expand ${feature.title}`}
+                />
+
+                {expandedColumnIndex === index && (
+                  <div className="absolute inset-0 flex flex-col items-center p-6 bg-background/90 transition-opacity duration-300 ease-in-out">
+                    <h4 className="text-primary text-xl mb-4 font-bold filter-none text-center flex-shrink-0">
+                      {feature.title}
+                    </h4>
+                    <div className="flex-grow overflow-y-auto mb-4 w-full max-w-md">
+                      <p className="text-xs md:text-sm text-foreground/80 opacity-100 px-2 text-center">
+                        {feature.description}
+                      </p>
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4 flex-shrink-0">
+                      <Button
+                        asChild
+                        size="lg"
+                        className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-md transition-transform hover:scale-105"
+                      >
+                        <Link to="/features">
+                          Try It Now <ArrowRight className="ml-2 h-5 w-5" />
+                        </Link>
+                      </Button>
+                      <Button
+                        asChild
+                        variant="outline"
+                        size="lg"
+                        className="text-primary border-primary hover:bg-primary/10 shadow-md transition-transform hover:scale-105"
+                      >
+                        <Link to="/resources">Learn More</Link>
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <div
+            className={cn(
+              "relative mx-auto w-full max-w-4xl px-4 md:px-6 transition-opacity duration-300 ease-in-out z-20 flex items-center justify-center flex-col text-center",
+              expandedColumnIndex !== null
+                ? "opacity-0 pointer-events-none"
+                : "opacity-100"
+            )}
           >
-            From{" "}
-            <span className="italic font-[montez] text-blue-600 dark:text-blue-400 select-none">
-              First Principles Thinking
-            </span>{" "}
-            to PCA Mastery.
-          </motion.p>
-        </motion.div>
+            <div>
+              <img src={logo} className="h-24 w-24 text-primary mx-auto mb-6" />
+            </div>
+            <h1 className="text-5xl md:text-7xl font-light tracking-tighter mb-6 font-headline ">
+              Welcome to{" "}
+              <span className="font-[satoshi] font-semibold">MatrixLAB</span>
+            </h1>
+            <p className="max-w-[700px] mx-auto text-lg md:text-xl text-foreground/80 mb-8 font-body">
+              from first principles to pca mastery.
+            </p>
+          </div>
+        </section>
       </div>
-    </motion.section>
+    </>
   );
 };
 

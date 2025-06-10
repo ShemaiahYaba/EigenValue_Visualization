@@ -1,9 +1,10 @@
 import React from "react";
 import cta from "@/assets/illustrations/cta-main.svg";
+import { Link } from "react-router-dom";
 
 const CTA: React.FC = () => {
   return (
-    <div className="">
+    <div className="font-[satoshi]">
       <div className="mx-auto max-w-7xl py-24 sm:px-6 sm:py-32 lg:px-8">
         <div className="relative isolate overflow-hidden bg-white dark:bg-gray-900 px-6 pt-16 shadow-2xl sm:rounded-3xl sm:px-16 md:pt-24 lg:flex lg:gap-x-20 lg:px-24 lg:pt-0">
           <svg
@@ -34,24 +35,22 @@ const CTA: React.FC = () => {
               Malesuada adipiscing sagittis vel nulla.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start">
-              <button
-                type="button"
-                onClick={() => {
-                  // handle get started click
-                }}
-                className="rounded-md bg-gray-900 dark:bg-white px-3.5 py-2.5 text-sm font-semibold text-white dark:text-gray-900 shadow-xs hover:bg-gray-800 dark:hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white dark:focus-visible:outline-gray-900"
-              >
-                Get started
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  // handle learn more click
-                }}
-                className="text-sm/6 font-semibold text-gray-900 dark:text-white"
-              >
-                Learn more <span aria-hidden="true">→</span>
-              </button>
+              <Link to="/features">
+                <button
+                  type="button"
+                  className="rounded-md bg-gray-900 dark:bg-white px-3.5 py-2.5 text-sm font-semibold text-white dark:text-gray-900 shadow-xs hover:bg-gray-800 dark:hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white dark:focus-visible:outline-gray-900"
+                >
+                  Get started
+                </button>
+              </Link>
+              <Link to="/resources#faq">
+                <button
+                  type="button"
+                  className="text-sm/6 font-semibold text-gray-900 dark:text-white"
+                >
+                  Learn more <span aria-hidden="true">→</span>
+                </button>
+              </Link>
             </div>
           </div>
           <div className="relative flex flex-col justify-center items-center ">

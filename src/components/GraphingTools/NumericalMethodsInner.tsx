@@ -35,9 +35,7 @@ const NumericalMethodsInner: React.FC = () => {
       );
     } catch (error: unknown) {
       setErrorInsight(
-        `Error: ${
-          error instanceof Error ? error.message : String(error)
-        }`
+        `Error: ${error instanceof Error ? error.message : String(error)}`
       );
       alert(
         `Unexpected error during power method: ${
@@ -53,36 +51,11 @@ const NumericalMethodsInner: React.FC = () => {
       <div className="w-[22%] p-4 bg-white border border-gray-300 shadow-xl backdrop-blur-md">
         <MatrixInput onSubmit={handleSubmit} />
 
-        {results?.vectors && (
-          <div style={{ marginTop: 12 }}>
-            <label>
-              Iteration:
-              <input
-                type="range"
-                min={0}
-                max={results.vectors.length - 1}
-                value={currentStep}
-                onChange={(e) => setCurrentStep(Number(e.target.value))}
-              />
-              <span>{currentStep}</span>
-            </label>
-          </div>
-        )}
-        <button onClick={() => setCurrentStep((s) => Math.max(0, s - 1))}>
-          ◀
-        </button>
-        <button
-          onClick={() =>
-            setCurrentStep((s) =>
-              Math.min(results?.vectors?.length ?? 0 - 1, s + 1)
-            )
-          }
-        >
-          ▶
-        </button>
         {errorInsight && (
           <div className="mt-4">
-            <Insights insights={[{ title: "Error", description: errorInsight }]} />
+            <Insights
+              insights={[{ title: "Error", description: errorInsight }]}
+            />
           </div>
         )}
         {results && (

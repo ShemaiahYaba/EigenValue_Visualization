@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import {
   Dialog,
@@ -63,7 +61,7 @@ const products = [
 ];
 const callsToAction = [
   { name: "Get Started", href: "/auth", icon: PlayCircleIcon },
-  { name: "Need Help", href: "/coming-soon", icon: QuestionMarkCircleIcon },
+  { name: "Need Help", href: "/resources", icon: QuestionMarkCircleIcon },
 ];
 
 const Header: React.FC = () => {
@@ -100,7 +98,7 @@ const Header: React.FC = () => {
             Home
           </a>
           <a
-            href="coming-soon"
+            href="/about-us"
             className="text-sm/6 font-semibold text-gray-900 dark:text-white"
           >
             About Us
@@ -116,7 +114,7 @@ const Header: React.FC = () => {
 
             <PopoverPanel
               transition
-              className="absolute top-full -left-8 z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white dark:bg-gray-800 ring-1 shadow-lg ring-gray-900/5 transition data-closed:translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in"
+              className="absolute top-full -left-8 z-50 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white dark:bg-gray-800 ring-1 shadow-lg ring-gray-900/5 transition data-closed:translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in"
             >
               <div className="p-4">
                 {products.map((item) => (
@@ -163,7 +161,7 @@ const Header: React.FC = () => {
             </PopoverPanel>
           </Popover>
           <a
-            href="coming-soon"
+            href="/about-us#team"
             className="text-sm/6 font-semibold text-gray-900 dark:text-white"
           >
             Meet the Team
@@ -201,7 +199,7 @@ const Header: React.FC = () => {
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6 ">
                 <a
-                  href="coming-soon"
+                  href="about-us"
                   className="-mx-3 block rounded-lg px-3 py-1 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-gray-700"
                 >
                   About Us
@@ -230,7 +228,7 @@ const Header: React.FC = () => {
                 </Disclosure>
 
                 <a
-                  href="coming-soon"
+                  href="/about-us#team"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-gray-700"
                 >
                   Meet the Team

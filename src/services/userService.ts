@@ -1,6 +1,12 @@
 // src/services/userService.ts
 import { db } from "@/utils/firebase";
-import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  getDoc,
+  serverTimestamp,
+  onSnapshot,
+} from "firebase/firestore";
 import { User } from "firebase/auth";
 
 interface NewUserData {
@@ -51,4 +57,23 @@ export const getUserNames = async (
     };
   }
   return null;
+};
+
+export const ensureUserDocument = async (user: User) => {
+  const ref = doc(db, "users", user.uid);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) {
+    await setDoc(ref, { email: user.email, createdAt: Date.now() });
+  }
+};
+
+// Real-time sync (optional)
+export const subscribeToUserProfile = (
+  user: User,
+  callback: (data: unknown) => void
+) => {
+  const ref = doc(db, "users", user.uid);
+  return onSnapshot(ref, (doc) => {
+    callback(doc.data());
+  });
 };

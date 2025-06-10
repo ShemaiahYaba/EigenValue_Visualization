@@ -1,6 +1,6 @@
 // src/contexts/AuthProvider.tsx
 import { useState, useEffect, ReactNode } from "react";
-import { User, UserCredential, onAuthStateChanged } from "firebase/auth";
+import { User, UserCredential, onAuthStateChanged, onIdTokenChanged } from "firebase/auth";
 import { AuthContext, AuthContextType } from "@/contexts/AuthContext";
 import { auth } from "@/utils/firebase";
 
@@ -18,7 +18,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   // Listen to auth state
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+    // Listen for auth state changes
+    const unsubscribeAuth = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
         const isNew = await userService.checkUserDocument(currentUser);
@@ -30,7 +31,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setLoading(false);
     });
 
-    return () => unsubscribe();
+    // Listen for token refresh
+    const unsubscribeToken = onIdTokenChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      // Optionally, you can refresh user profile or permissions here
+    });
+
+    return () => {
+      unsubscribeAuth();
+      unsubscribeToken();
+    };
   }, []);
 
   // Sign Up with extended data

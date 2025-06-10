@@ -1,7 +1,8 @@
 // src/routes/ProtectedRoute.tsx
 import React from "react";
-import { Navigate } from "react-router-dom";
-import { useAuth } from "@/hooks/useAuth";
+import { Navigate, useLocation } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth"; // Adjust the import path as necessary
+import Preloader from "@/components/UiComponents/Preloader";
 
 interface Props {
   children: React.ReactNode;
@@ -9,9 +10,21 @@ interface Props {
 
 const ProtectedRoute = ({ children }: Props) => {
   const { isAuthenticated, loading } = useAuth();
+  const location = useLocation();
 
-  if (loading) return null; // or a spinner if needed
-  return isAuthenticated ? <>{children}</> : <Navigate to="/" replace />;
+  if (loading) return <Preloader />; // Or a spinner
+
+  if (!isAuthenticated) {
+    return (
+      <Navigate
+        to="/"
+        replace
+        state={{ showAuth: true, from: location.pathname }}
+      />
+    );
+  }
+
+  return <>{children}</>;
 };
 
 export default ProtectedRoute;
