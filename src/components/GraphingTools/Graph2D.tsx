@@ -41,8 +41,8 @@ const Graph2D: React.FC<Graph2DProps> = ({
   const MAX_UNIT_SIZE = 5_000_000;
 
   const getPointsToDraw = (): Point[] => {
-    const centerX = width / 2; // + offset.x if you have panning
-    const centerY = height / 2; // + offset.y if you have panning
+    const centerX = width / 2 + offset.x;
+    const centerY = height / 2 + offset.y;
 
     if (mode === "vector" && vectors?.length) {
       return vectors.slice(0, currentStep + 1).map(([x, y]) => ({
