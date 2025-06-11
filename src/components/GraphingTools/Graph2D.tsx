@@ -190,8 +190,29 @@ const Graph2D: React.FC<Graph2DProps> = ({
                   y1={-val * unit + center.y}
                   x2={width}
                   y2={-val * unit + center.y}
-                  stroke="red "
+                  stroke="red"
                   strokeDasharray="5,5"
+                  strokeWidth={1}
+                />
+              ))}
+
+            {mode === "eigenvalue" && points.length > 1 && (
+              <polyline
+                fill="none"
+                stroke="#0ea5e9"
+                strokeWidth={2}
+                points={points.map((pt) => `${pt.x},${pt.y}`).join(" ")}
+              />
+            )}
+            {mode === "eigenvalue" &&
+              points.map((pt, i) => (
+                <circle
+                  key={i}
+                  cx={pt.x}
+                  cy={pt.y}
+                  r={5}
+                  fill="#0ea5e9"
+                  stroke="#222"
                   strokeWidth={1}
                 />
               ))}
