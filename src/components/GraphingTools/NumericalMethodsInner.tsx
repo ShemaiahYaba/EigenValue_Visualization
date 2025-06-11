@@ -9,6 +9,7 @@ import IterationSlider from "@/components/GraphingTools/IterationSlider";
 interface Results {
   eigenvalues: number[];
   vectors: number[][];
+  true_max_eigenvalue: number; // <-- Add this line
 }
 
 const NumericalMethodsInner: React.FC = () => {
@@ -93,8 +94,13 @@ const NumericalMethodsInner: React.FC = () => {
       <div className="w-[78%] h-full flex justify-center items-center overflow-hidden">
         <Graph2D
           mode="eigenvalue"
-          vectors={results?.vectors} // sequence of vectors from power method
-          currentStep={currentStep} // controls how many vectors to show
+          eigenvalues={results?.eigenvalues}
+          currentStep={currentStep}
+          trueEigenvalues={
+            results?.true_max_eigenvalue !== undefined
+              ? [results.true_max_eigenvalue]
+              : []
+          }
         />
       </div>
     </div>

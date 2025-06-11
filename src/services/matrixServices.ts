@@ -45,7 +45,11 @@ export const sendMatrixTransform = async (
  */
 export const runPowerMethod = async (
   matrix: number[][],
-  onSuccess: (result: { vectors: number[][]; eigenvalues: number[] }) => void,
+  onSuccess: (result: {
+    vectors: number[][];
+    eigenvalues: number[];
+    true_max_eigenvalue: number;
+  }) => void,
   onError: () => void,
   max_iter: number = 20,
   tol: number = 1e-8
