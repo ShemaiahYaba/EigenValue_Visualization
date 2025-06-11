@@ -23,6 +23,7 @@ const AxisInputGroup: React.FC<{
         <input
           key={axis}
           type="number"
+          step="any"
           value={values[axis as "x" | "y" | "z"]}
           onChange={(e) =>
             onChange(axis as "x" | "y" | "z", Number(e.target.value))
@@ -97,11 +98,12 @@ const MatrixInput: React.FC<MatrixInputProps> = ({ onSubmit }) => {
               <input
                 key={`${rowIndex}-${colIndex}`}
                 type="number"
+                step="any"
                 value={value}
                 onChange={(e) =>
                   handleInputChange(rowIndex, colIndex, Number(e.target.value))
                 }
-                className="w-12 text-center border rounded px-1 py-0.5"
+                className="w-14 text-center border rounded px-2 py-1.5"
               />
             ))}
           </div>
