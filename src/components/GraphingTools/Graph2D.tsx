@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import CoordinateHUD from "@/components/GraphingTools/GraphPage/CoordinateHUD";
 import OriginMarker from "@/components/GraphingTools/GraphPage/OriginMarker";
 import AxisArrows from "@/components/GraphingTools/GraphPage/AxisArrows";
@@ -39,6 +39,56 @@ const Graph2D: React.FC<Graph2DProps> = ({
 
   const MIN_UNIT_SIZE = 0.01;
   const MAX_UNIT_SIZE = 5_000_000;
+
+  // --- Feature 3: Auto-fit plotted values (vectors or eigenvalues) ---
+  useEffect(() => {
+    let points: { x: number; y: number }[] = [];
+    if (mode === "vector" && vectors?.length) {
+      points = vectors.slice(0, currentStep + 1).map(([x, y]) => ({ x, y }));
+    } else if (mode === "eigenvalue" && eigenvalues?.length) {
+      points = eigenvalues
+        .slice(0, currentStep + 1)
+        .map((val, i) => ({ x: i, y: val }));
+    }
+    if (points.length === 0) return;
+
+    // Find bounding box
+    const xs = points.map((point) => point.x);
+    const ys = points.map((point) => point.y);
+    const minX = Math.min(...xs);
+    const maxX = Math.max(...xs);
+    const minY = Math.min(...ys);
+    const maxY = Math.max(...ys);
+
+    // Add some padding
+    const padding = 0.5;
+    const rangeX = maxX - minX || 1;
+    const rangeY = maxY - minY || 1;
+
+    // Calculate the required unit (zoom) to fit all points
+    const fitUnitX = (width * 0.7) / (rangeX + 2 * padding);
+    const fitUnitY = (height * 0.7) / (rangeY + 2 * padding);
+    const fitUnit = Math.max(
+      Math.min(fitUnitX, fitUnitY, MAX_UNIT_SIZE),
+      MIN_UNIT_SIZE
+    );
+
+    // Center of the points in graph coordinates
+    const centerX = (minX + maxX) / 2;
+    const centerY = (minY + maxY) / 2;
+
+    // Center of the SVG in pixels
+    const svgCenterX = width / 2;
+    const svgCenterY = height / 2;
+
+    // Compute the new offset so the plotted values are centered
+    setUnit(fitUnit);
+    setOffset({
+      x: svgCenterX - centerX * fitUnit,
+      y: svgCenterY + centerY * fitUnit,
+    });
+  }, [mode, vectors, eigenvalues, currentStep, width, height]);
+  // --- End Feature 3 ---
 
   const getPointsToDraw = (): Point[] => {
     const centerX = width / 2 + offset.x;

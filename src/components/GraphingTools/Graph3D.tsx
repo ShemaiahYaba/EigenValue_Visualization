@@ -48,7 +48,7 @@ const AutoRotate: React.FC = () => {
       ref={controlsRef}
       target={[0, 0, 0]}
       minDistance={2}
-      maxDistance={20}
+      maxDistance={40}
       autoRotateSpeed={1}
     />
   );
@@ -67,7 +67,7 @@ const Graph3D: React.FC = () => {
           <directionalLight position={[5, 5, 5]} intensity={0.8} />
 
           <gridHelper args={[50, 20, "blue", "gray"]} />
-          <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
+          <GizmoHelper alignment="top-right" margin={[160, 80]}>
             <GizmoViewport
               axisColors={["#ff0000", "#00ff00", "#0000ff"]}
               labelColor="white"

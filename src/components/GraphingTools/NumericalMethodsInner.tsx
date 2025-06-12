@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import MatrixInput from "@/components/GraphingTools/MatrixInput";
+import MatrixInput from "@/components/GraphingTools/Matirx/MatrixInput";
 import Graph2D from "@/components/GraphingTools/Graph2D";
 import Insights from "@/components/UiComponents/Insights";
 import { useMatrix } from "@/hooks/useMatrix";
@@ -9,8 +9,11 @@ import IterationSlider from "@/components/GraphingTools/IterationSlider";
 interface Results {
   eigenvalues: number[];
   vectors: number[][];
-  true_max_eigenvalue: number; // <-- Add this line
+  true_max_eigenvalue: number;
 }
+
+// Adjust this value to match your navbar's height in px
+const NAVBAR_HEIGHT = 64;
 
 const NumericalMethodsInner: React.FC = () => {
   const { matrix } = useMatrix();
@@ -47,21 +50,39 @@ const NumericalMethodsInner: React.FC = () => {
     }
   };
 
-  return (
-    <div className="h-full w-full overflow-hidden flex">
-      {/* Control Panel */}
-      <div className="w-[22%] p-4 bg-white border border-gray-300 shadow-xl backdrop-blur-md">
-        <MatrixInput onSubmit={handleSubmit} />
+  // Only show insights if there is a visualization (results and at least one eigenvalue/vector)
+  const showInsights =
+    !!results &&
+    Array.isArray(results.eigenvalues) &&
+    results.eigenvalues.length > 0 &&
+    Array.isArray(results.vectors) &&
+    results.vectors.length > 0;
 
-        {errorInsight && (
-          <div className="mt-4">
-            <Insights
-              insights={[{ title: "Error", description: errorInsight }]}
-            />
+  return (
+    <div
+      className="w-full flex overflow-hidden"
+      style={{
+        height: `calc(100vh - ${NAVBAR_HEIGHT}px)`,
+        minHeight: `calc(100vh - ${NAVBAR_HEIGHT}px)`,
+        maxHeight: `calc(100vh - ${NAVBAR_HEIGHT}px)`,
+      }}
+    >
+      {/* Left Panel: 1/5 width, scrollable */}
+      <div className="w-[35%] h-full bg-white border-r border-gray-200 flex flex-col">
+        <div className="flex-1 overflow-y-auto p-2">
+          {/* Matrix Input on top */}
+          <div className="mb-4">
+            <MatrixInput onSubmit={handleSubmit} />
           </div>
-        )}
-        {results && (
-          <div className="mt-4 h-[calc(100vh-300px)] overflow-y-auto">
+          {/* Insights Panel below */}
+          {errorInsight && (
+            <div className="mb-4">
+              <Insights
+                insights={[{ title: "Error", description: errorInsight }]}
+              />
+            </div>
+          )}
+          {showInsights && (
             <Insights
               insights={[
                 {
@@ -79,19 +100,16 @@ const NumericalMethodsInner: React.FC = () => {
                 },
               ]}
             />
-          </div>
-        )}
-        {results && (
-          <IterationSlider
-            maxSteps={results.vectors.length}
-            currentStep={currentStep}
-            onStepChange={setCurrentStep}
-          />
-        )}
+          )}
+        </div>
       </div>
-
-      {/* Graph Display */}
-      <div className="w-[78%] h-full flex justify-center items-center overflow-hidden">
+      {/* Right Panel: 4/5 width, fills available height */}
+      <div
+        className="w-[65%] flex flex-col justify-center items-center relative bg-gray-50"
+        style={{
+          height: "100%",
+        }}
+      >
         <Graph2D
           mode="eigenvalue"
           eigenvalues={results?.eigenvalues}
@@ -101,7 +119,17 @@ const NumericalMethodsInner: React.FC = () => {
               ? [results.true_max_eigenvalue]
               : []
           }
+          height={undefined} // Let Graph2D fill parent height
         />
+        {results && (
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10">
+            <IterationSlider
+              maxSteps={results.vectors.length}
+              currentStep={currentStep}
+              onStepChange={setCurrentStep}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
