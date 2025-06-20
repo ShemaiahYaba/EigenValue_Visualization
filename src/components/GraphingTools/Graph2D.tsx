@@ -115,6 +115,40 @@ const Graph2D: React.FC<Graph2DProps> = ({
     setOffset({ x: 0, y: 0 });
   };
 
+  // --- Auto-zoom to fit all plotted points (no auto-centering) ---
+  const autoZoomToFit = () => {
+    let points: { x: number; y: number }[] = [];
+    if (mode === "vector" && vectors?.length) {
+      points = vectors.slice(0, currentStep + 1).map(([x, y]) => ({ x, y }));
+    } else if (mode === "eigenvalue" && eigenvalues?.length) {
+      points = eigenvalues.slice(0, currentStep + 1).map((val, i) => ({ x: i, y: val }));
+    }
+    if (points.length === 0) return;
+
+    // Find bounding box
+    const xs = points.map((point) => point.x);
+    const ys = points.map((point) => point.y);
+    const minX = Math.min(...xs);
+    const maxX = Math.max(...xs);
+    const minY = Math.min(...ys);
+    const maxY = Math.max(...ys);
+
+    // Add some padding
+    const padding = 0.5;
+    const rangeX = maxX - minX || 1;
+    const rangeY = maxY - minY || 1;
+
+    // Calculate the required unit (zoom) to fit all points
+    const fitUnitX = (width * 0.7) / (rangeX + 2 * padding);
+    const fitUnitY = (height * 0.7) / (rangeY + 2 * padding);
+    const fitUnit = Math.max(
+      Math.min(fitUnitX, fitUnitY, MAX_UNIT_SIZE),
+      MIN_UNIT_SIZE
+    );
+    setUnit(fitUnit);
+    // Do not change offset (no auto-centering)
+  };
+
   const center = {
     x: width / 2 + offset.x,
     y: height / 2 + offset.y,
@@ -239,6 +273,21 @@ const Graph2D: React.FC<Graph2DProps> = ({
               fill="currentColor"
             >
               <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+            </svg>
+          </button>
+          <button
+            onClick={autoZoomToFit}
+            className="absolute top-2 left-14 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-black dark:text-white rounded px-2 py-1 cursor-pointer shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center justify-center"
+            title="Auto Zoom to Fit"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="16"
+              height="16"
+              fill="currentColor"
+            >
+              <path d="M21 11h-8V3h-2v8H3v2h8v8h2v-8h8z" />
             </svg>
           </button>
         </div>
