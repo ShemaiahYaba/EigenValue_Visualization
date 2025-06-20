@@ -64,6 +64,8 @@ export const MatrixInput: React.FC<MatrixInputProps> = ({
   const [initialVector, setInitialVector] = useState<string>(
     Array(size).fill('1').join(', ')
   );
+  const [maxIterError, setMaxIterError] = useState<string | null>(null);
+  const [initialVectorError, setInitialVectorError] = useState<string | null>(null);
   const [showAdvancedFields, setShowAdvancedFields] = useState(false);
 
   // Helper booleans for which advanced options to show
@@ -120,17 +122,34 @@ export const MatrixInput: React.FC<MatrixInputProps> = ({
 
   const handleInitialVectorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInitialVector(e.target.value);
+    setInitialVectorError(null);
   };
 
   const handleMaxIterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMaxIter(Number(e.target.value));
+    setMaxIterError(null);
   };
 
   const getNumericInitialVector = () => {
-    return initialVector
-      .split(',')
-      .map((v) => Number(v.trim()))
-      .map((num) => (isNaN(num) ? 1 : num));
+    // If empty, use default
+    if (!initialVector.trim()) {
+      setInitialVectorError('Initial vector is empty. Using default.');
+      return Array(size).fill(1);
+    }
+    const arr = initialVector.split(',').map((v) => Number(v.trim()));
+    if (arr.length !== size || arr.some((num) => isNaN(num))) {
+      setInitialVectorError('Invalid initial vector. Using default.');
+      return Array(size).fill(1);
+    }
+    return arr;
+  };
+
+  const getSafeMaxIter = () => {
+    if (!maxIter || isNaN(maxIter) || maxIter < 1) {
+      setMaxIterError('Invalid iteration count. Using default (10).');
+      return 10;
+    }
+    return maxIter;
   };
 
   const handleSubmit = () => {
@@ -138,7 +157,7 @@ export const MatrixInput: React.FC<MatrixInputProps> = ({
       matrix: getNumericMatrix(),
       rotation,
       translation,
-      max_iter: maxIter,
+      max_iter: getSafeMaxIter(),
       initial_vector: getNumericInitialVector(),
     });
   };
@@ -252,6 +271,9 @@ export const MatrixInput: React.FC<MatrixInputProps> = ({
               onChange={handleMaxIterChange}
               className="w-full border rounded px-2 py-1"
             />
+            {maxIterError && (
+              <span className="text-xs text-red-500 mt-1">{maxIterError}</span>
+            )}
           </div>
           <div className="flex flex-col w-full">
             <label className="font-semibold mb-1 text-xs">Initial Vector (comma separated)</label>
@@ -262,6 +284,9 @@ export const MatrixInput: React.FC<MatrixInputProps> = ({
               className="w-full border rounded px-2 py-1"
               placeholder={Array(size).fill('1').join(', ')}
             />
+            {initialVectorError && (
+              <span className="text-xs text-red-500 mt-1">{initialVectorError}</span>
+            )}
           </div>
         </div>
       )}

@@ -115,7 +115,7 @@ const Graph2D: React.FC<Graph2DProps> = ({
     setOffset({ x: 0, y: 0 });
   };
 
-  // --- Auto-zoom to fit all plotted points (no auto-centering) ---
+  // --- Auto-zoom to fit all plotted points and center them ---
   const autoZoomToFit = () => {
     let points: { x: number; y: number }[] = [];
     if (mode === "vector" && vectors?.length) {
@@ -145,8 +145,21 @@ const Graph2D: React.FC<Graph2DProps> = ({
       Math.min(fitUnitX, fitUnitY, MAX_UNIT_SIZE),
       MIN_UNIT_SIZE
     );
+
+    // Center of the points in graph coordinates
+    const centerX = (minX + maxX) / 2;
+    const centerY = (minY + maxY) / 2;
+
+    // Center of the SVG in pixels
+    const svgCenterX = width / 2;
+    const svgCenterY = height / 2;
+
+    // Compute the new offset so the plotted values are centered
     setUnit(fitUnit);
-    // Do not change offset (no auto-centering)
+    setOffset({
+      x: svgCenterX - centerX * fitUnit,
+      y: svgCenterY + centerY * fitUnit,
+    });
   };
 
   const center = {
