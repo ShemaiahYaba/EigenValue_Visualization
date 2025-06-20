@@ -32,7 +32,7 @@ export function MatrixCell({
       onChange={handleChange}
       readOnly={isReadOnly}
       className={cn(
-        "w-12 h-12 md:w-12 md:h-12 text-center text-lg md:text-xl font-code rounded-md shadow-inner focus:ring-accent focus:border-accent transition-all duration-150 ease-in-out",
+        "w-20 h-12 md:w-20 md:h-12 text-center text-lg md:text-xl font-code rounded-md shadow-inner focus:ring-accent focus:border-accent transition-all duration-150 ease-in-out",
         isReadOnly
           ? "bg-muted cursor-not-allowed"
           : "bg-background hover:border-accent/50",

@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import MatrixInput from "@/components/GraphingTools/Matirx/MatrixInput";
 import Graph2D from "@/components/GraphingTools/Graph2D";
 import Insights from "@/components/UiComponents/Insights";
-import { useMatrix } from "@/hooks/useMatrix";
+
 import { runPowerMethod } from "@/services/matrixServices";
 import IterationSlider from "@/components/GraphingTools/IterationSlider";
 
-interface Results {
+interface  Results {
   eigenvalues: number[];
   vectors: number[][];
   true_max_eigenvalue: number;
@@ -16,13 +16,13 @@ interface Results {
 const NAVBAR_HEIGHT = 64;
 
 const NumericalMethodsInner: React.FC = () => {
-  const { matrix } = useMatrix();
+  
   const [results, setResults] = useState<Results | null>(null);
   const [, setIterations] = useState<number[][]>([]);
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [errorInsight, setErrorInsight] = useState<string | null>(null);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async ({ matrix, max_iter, initial_vector }: { matrix: number[][], max_iter?: number, initial_vector?: number[] }) => {
     try {
       await runPowerMethod(
         matrix,
@@ -36,7 +36,10 @@ const NumericalMethodsInner: React.FC = () => {
         (errMsg?: string) => {
           setErrorInsight(errMsg ? `Error: ${errMsg}` : "Power Method failed");
           alert("Power Method failed");
-        }
+        },
+        max_iter,
+        undefined,
+        initial_vector
       );
     } catch (error: unknown) {
       setErrorInsight(
@@ -72,7 +75,7 @@ const NumericalMethodsInner: React.FC = () => {
         <div className="flex-1 overflow-y-auto p-2">
           {/* Matrix Input on top */}
           <div className="mb-4">
-            <MatrixInput onSubmit={handleSubmit} />
+            <MatrixInput onSubmit={handleSubmit} advancedOptions="iteration-initial-vector" />
           </div>
           {/* Insights Panel below */}
           {errorInsight && (

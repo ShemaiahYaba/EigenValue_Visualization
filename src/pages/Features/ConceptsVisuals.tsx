@@ -218,7 +218,7 @@ export default function MatrixTransformationsPage() {
             variant="link"
             className="text-accent hover:text-accent/80 px-0"
           >
-            <Link to="/learn/made-easy">
+            <Link to="/features/made-easy">
               Review Eigen-Concepts In-Depth{" "}
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>

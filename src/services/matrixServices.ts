@@ -52,19 +52,24 @@ export const runPowerMethod = async (
   }) => void,
   onError: () => void,
   max_iter: number = 20,
-  tol: number = 1e-8
+  tol: number = 1e-8,
+  initial_vector?: number[]
 ) => {
   try {
+    const body: any = {
+      matrix,
+      max_iter,
+      tol,
+    };
+    if (initial_vector) {
+      body.initial_vector = initial_vector;
+    }
     const response = await fetch(
       "https://mlab-uezm.onrender.com/power-method",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          matrix,
-          max_iter,
-          tol,
-        }),
+        body: JSON.stringify(body),
       }
     );
 

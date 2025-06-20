@@ -16,21 +16,28 @@ import {
 } from "@/components/ui/select";
 import { Trash2, RotateCcw } from "lucide-react";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+
+type AdvancedOptionsType = 'rotation-translation' | 'iteration-initial-vector' | 'both';
 
 type MatrixInputProps = {
   onSubmit: (params: {
     matrix: number[][];
     rotation?: { x: number; y: number; z: number };
     translation?: { x: number; y: number; z: number };
+    max_iter?: number;
+    initial_vector?: number[];
   }) => void;
   initialMatrix?: Matrix;
   initialSize?: number;
+  advancedOptions?: AdvancedOptionsType;
 };
 
 export const MatrixInput: React.FC<MatrixInputProps> = ({
   onSubmit,
   initialMatrix,
   initialSize = DEFAULT_MATRIX_SIZE,
+  advancedOptions = 'both',
 }) => {
   const [size, setSize] = useState(initialSize);
   // Store as string for robust input handling
@@ -53,6 +60,15 @@ export const MatrixInput: React.FC<MatrixInputProps> = ({
     y: 0,
     z: 0,
   });
+  const [maxIter, setMaxIter] = useState(10);
+  const [initialVector, setInitialVector] = useState<string>(
+    Array(size).fill('1').join(', ')
+  );
+  const [showAdvancedFields, setShowAdvancedFields] = useState(false);
+
+  // Helper booleans for which advanced options to show
+  const showRotationTranslation = advancedOptions === 'rotation-translation' || advancedOptions === 'both';
+  const showIterationInitialVector = advancedOptions === 'iteration-initial-vector' || advancedOptions === 'both';
 
   useEffect(() => {
     if (initialMatrix) {
@@ -61,6 +77,7 @@ export const MatrixInput: React.FC<MatrixInputProps> = ({
     } else {
       setMatrix(createEmptyMatrix(size));
     }
+    setInitialVector(Array(size).fill('1').join(', '));
   }, [size, initialMatrix]);
 
   const handleSizeChange = (newSizeValue: string) => {
@@ -101,11 +118,28 @@ export const MatrixInput: React.FC<MatrixInputProps> = ({
       })
     );
 
+  const handleInitialVectorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInitialVector(e.target.value);
+  };
+
+  const handleMaxIterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMaxIter(Number(e.target.value));
+  };
+
+  const getNumericInitialVector = () => {
+    return initialVector
+      .split(',')
+      .map((v) => Number(v.trim()))
+      .map((num) => (isNaN(num) ? 1 : num));
+  };
+
   const handleSubmit = () => {
     onSubmit({
       matrix: getNumericMatrix(),
       rotation,
       translation,
+      max_iter: maxIter,
+      initial_vector: getNumericInitialVector(),
     });
   };
 
@@ -171,7 +205,7 @@ export const MatrixInput: React.FC<MatrixInputProps> = ({
       </p>
 
       {/* Optional: Rotation/Translation Inputs */}
-      {size >= 3 && (
+      {showRotationTranslation && size >= 3 && (
         <>
           <div className="flex gap-4">
             <AxisInputGroup
@@ -190,6 +224,46 @@ export const MatrixInput: React.FC<MatrixInputProps> = ({
             />
           </div>
         </>
+      )}
+
+      {/* Toggle for advanced fields */}
+      {showIterationInitialVector && (
+        <div className="flex items-center gap-2 my-2">
+          <Switch
+            checked={showAdvancedFields}
+            onCheckedChange={setShowAdvancedFields}
+            id="toggle-advanced-fields"
+          />
+          <label htmlFor="toggle-advanced-fields" className="font-medium select-none cursor-pointer text-xs">
+            Show advanced options (iterations, initial vector)
+          </label>
+        </div>
+      )}
+
+      {/* Advanced fields for power method (iterations, initial vector) */}
+      {showIterationInitialVector && showAdvancedFields && (
+        <div className="flex gap-4">
+          <div className="flex flex-col w-full">
+            <label className="font-semibold mb-1 text-xs">Max Iterations</label>
+            <input
+              type="number"
+              min={1}
+              value={maxIter}
+              onChange={handleMaxIterChange}
+              className="w-full border rounded px-2 py-1"
+            />
+          </div>
+          <div className="flex flex-col w-full">
+            <label className="font-semibold mb-1 text-xs">Initial Vector (comma separated)</label>
+            <input
+              type="text"
+              value={initialVector}
+              onChange={handleInitialVectorChange}
+              className="w-full border rounded px-2 py-1"
+              placeholder={Array(size).fill('1').join(', ')}
+            />
+          </div>
+        </div>
       )}
 
       <Button

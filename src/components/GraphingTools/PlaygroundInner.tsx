@@ -36,7 +36,7 @@ const MatrixInputWrapper = () => {
     );
   };
 
-  return <MatrixInput onSubmit={handleSubmit} />;
+  return <MatrixInput onSubmit={handleSubmit} advancedOptions="rotation-translation" />;
 };
 
 const MatrixPlayground: React.FC = () => {
