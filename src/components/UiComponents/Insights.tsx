@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Typography, Card, CardContent } from "@mui/material";
 import Tooltip from "@/components/UiComponents/Tooltip";
+import { Lightbulb } from "lucide-react";
 
 interface InsightProps {
   insights: {
@@ -32,78 +33,24 @@ const Insights: React.FC<InsightProps> = ({ insights = [] }) => {
         }}
       >
         {insights.map((insight, index) =>
-          insight.titleTooltip ? (
-            <Tooltip key={index} content={insight.titleTooltip}>
-              <Card
-                elevation={0}
-                sx={{
-                  height: "100%",
-                  backgroundColor: "background.paper",
-                  border: "1px solid",
-                  borderColor: "divider",
-                  borderRadius: 2,
-                  transition: "all 0.2s ease-in-out",
-                  "&:hover": {
-                    transform: "translateY(-2px)",
-                    boxShadow: 1,
-                  },
-                }}
-              >
-                <CardContent sx={{ p: 2.5 }}>
-                  <Tooltip content={insight.titleTooltip}>
-                    <Typography
-                      variant="subtitle1"
-                      sx={{
-                        fontWeight: 500,
-                        color: "primary.main",
-                        mb: 1,
-                      }}
-                    >
-                      {insight.title}
-                    </Typography>
-                  </Tooltip>
-                  {insight.value && (
-                    <Typography
-                      variant="h5"
-                      sx={{
-                        my: 2,
-                        fontWeight: 400,
-                        color: "text.primary",
-                      }}
-                    >
-                      {insight.value}
-                    </Typography>
-                  )}
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: "text.secondary",
-                      lineHeight: 1.6,
-                    }}
-                  >
-                    {insight.description}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Tooltip>
-          ) : (
-            <Card
-              key={index}
-              elevation={0}
-              sx={{
-                height: "100%",
-                backgroundColor: "background.paper",
-                border: "1px solid",
-                borderColor: "divider",
-                borderRadius: 2,
-                transition: "all 0.2s ease-in-out",
-                "&:hover": {
-                  transform: "translateY(-2px)",
-                  boxShadow: 1,
-                },
-              }}
-            >
-              <CardContent sx={{ p: 2.5 }}>
+          <Card
+            key={index}
+            elevation={0}
+            sx={{
+              height: "100%",
+              backgroundColor: "background.paper",
+              border: "1px solid",
+              borderColor: "divider",
+              borderRadius: 2,
+              transition: "all 0.2s ease-in-out",
+              "&:hover": {
+                transform: "translateY(-2px)",
+                boxShadow: 1,
+              },
+            }}
+          >
+            <CardContent sx={{ p: 2.5 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                 <Typography
                   variant="subtitle1"
                   sx={{
@@ -114,30 +61,37 @@ const Insights: React.FC<InsightProps> = ({ insights = [] }) => {
                 >
                   {insight.title}
                 </Typography>
-                {insight.value && (
-                  <Typography
-                    variant="h5"
-                    sx={{
-                      my: 2,
-                      fontWeight: 400,
-                      color: "text.primary",
-                    }}
-                  >
-                    {insight.value}
-                  </Typography>
+                {insight.titleTooltip && (
+                  <Tooltip content={insight.titleTooltip}>
+                    <span tabIndex={0} className="ml-1 cursor-pointer text-yellow-500 align-middle">
+                      <Lightbulb size={16} />
+                    </span>
+                  </Tooltip>
                 )}
+              </div>
+              {insight.value && (
                 <Typography
-                  variant="body2"
+                  variant="h5"
                   sx={{
-                    color: "text.secondary",
-                    lineHeight: 1.6,
+                    my: 2,
+                    fontWeight: 400,
+                    color: "text.primary",
                   }}
                 >
-                  {insight.description}
+                  {insight.value}
                 </Typography>
-              </CardContent>
-            </Card>
-          )
+              )}
+              <Typography
+                variant="body2"
+                sx={{
+                  color: "text.secondary",
+                  lineHeight: 1.6,
+                }}
+              >
+                {insight.description}
+              </Typography>
+            </CardContent>
+          </Card>
         )}
       </Box>
     </Box>

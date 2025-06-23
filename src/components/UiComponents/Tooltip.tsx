@@ -11,11 +11,13 @@ const Tooltip: React.FC<{ content: string; children: React.ReactNode }> = ({ con
       onBlur={() => setShow(false)}
     >
       {children}
-      {show && (
-        <span className="absolute z-50 left-1/2 -translate-x-1/2 mt-2 px-3 py-2 bg-gray-900 text-white text-xs rounded shadow-lg whitespace-pre-line min-w-max max-w-xs animate-fade-in">
-          {content}
-        </span>
-      )}
+      <span
+        className={`absolute z-50 left-1/2 -translate-x-1/2 mt-2 px-3 py-2 bg-gray-900 text-white text-xs rounded shadow-lg min-w-max max-w-xs transition-opacity duration-200 whitespace-pre-line break-words ${show ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        style={{ wordBreak: 'break-word', whiteSpace: 'pre-line' }}
+        aria-hidden={!show}
+      >
+        {content}
+      </span>
     </span>
   );
 };

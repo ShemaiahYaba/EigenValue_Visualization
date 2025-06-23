@@ -67,7 +67,13 @@ function getMatrixInsights(matrix: number[][] | null): { title: string; descript
   for (let i = 0; i < n; ++i) {
     const basis = Array(n).fill(0); basis[i] = 1;
     const mapped = matrix.map(row => row.reduce((sum, v, j) => sum + v * basis[j], 0));
-    insights.push({ title: `e${i + 1} maps to`, description: `[${mapped.map(x => x.toFixed(3)).join(', ')}]` });
+    let axisLabel = '';
+    if (i === 0) axisLabel = 'X-axis maps to';
+    else if (i === 1) axisLabel = 'Y-axis maps to';
+    else if (i === 2) axisLabel = 'Z-axis maps to';
+    else if (i === 3) axisLabel = 'W-axis maps to';
+    else axisLabel = `Axis ${i + 1} maps to`;
+    insights.push({ title: axisLabel, description: `[${mapped.map(x => x.toFixed(3)).join(', ')}]` });
   }
   // Eigenvalues (real only)
   try {
@@ -111,10 +117,10 @@ const insightTooltips: Record<string, string> = {
   'Area Scaling': 'How much the matrix stretches or shrinks area (2D).',
   'Volume Scaling': 'How much the matrix stretches or shrinks volume (3D).',
   '4D Hypervolume Scaling': 'How much the matrix stretches or shrinks 4D volume.',
-  'EV1 x-axis': 'Shows where the first basis vector (x-axis) is mapped.',
-  'EV2 y-axis': 'Shows where the second basis vector (y-axis) is mapped.',
-  'EV3 z-axis': 'Shows where the third basis vector (z-axis) is mapped.',
-  'EV4 w-axis': 'Shows where the fourth basis vector is mapped.',
+  'X-axis maps to': 'Shows where the x-axis (first basis vector) is mapped by the matrix.',
+  'Y-axis maps to': 'Shows where the y-axis (second basis vector) is mapped by the matrix.',
+  'Z-axis maps to': 'Shows where the z-axis (third basis vector) is mapped by the matrix.',
+  'W-axis maps to': 'Shows where the w-axis (fourth basis vector) is mapped by the matrix.',
   'Real Eigenvalues': 'Special scaling factors for directions that are only stretched or shrunk, not rotated.',
 };
 
