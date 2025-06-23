@@ -111,10 +111,10 @@ const insightTooltips: Record<string, string> = {
   'Area Scaling': 'How much the matrix stretches or shrinks area (2D).',
   'Volume Scaling': 'How much the matrix stretches or shrinks volume (3D).',
   '4D Hypervolume Scaling': 'How much the matrix stretches or shrinks 4D volume.',
-  'e1 maps to': 'Shows where the first basis vector (x-axis) is mapped.',
-  'e2 maps to': 'Shows where the second basis vector (y-axis) is mapped.',
-  'e3 maps to': 'Shows where the third basis vector (z-axis) is mapped.',
-  'e4 maps to': 'Shows where the fourth basis vector is mapped.',
+  'EV1 x-axis': 'Shows where the first basis vector (x-axis) is mapped.',
+  'EV2 y-axis': 'Shows where the second basis vector (y-axis) is mapped.',
+  'EV3 z-axis': 'Shows where the third basis vector (z-axis) is mapped.',
+  'EV4 w-axis': 'Shows where the fourth basis vector is mapped.',
   'Real Eigenvalues': 'Special scaling factors for directions that are only stretched or shrunk, not rotated.',
 };
 
