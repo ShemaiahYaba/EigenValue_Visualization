@@ -52,7 +52,7 @@ const Insights: React.FC<InsightProps> = ({ insights = [] }) => {
             <CardContent sx={{ p: 2.5 }}>
               <div className="relative">
                 {insight.titleTooltip && (
-                  <div className="absolute top-0 right-0 z-10">
+                  <div className="absolute top-0 right-0 z-100">
                     <Tooltip content={insight.titleTooltip}>
                       <span tabIndex={0} className="cursor-pointer text-yellow-500 align-middle">
                         <Lightbulb size={18} />
