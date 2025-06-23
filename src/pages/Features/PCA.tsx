@@ -7,8 +7,8 @@ import PCAProjectionControls from "@/components/PCA/PCAProjectionControls";
 import PCAInsights from "@/components/PCA/PCAInsights";
 import { runPCA } from "@/services/matrixServices";
 
-const SIDEBAR_WIDTH = "35%";
-const MAIN_WIDTH = "65%";
+// const SIDEBAR_WIDTH = "35%";
+// const MAIN_WIDTH = "65%";
 
 const DataPreview: React.FC<{ data: number[][] }> = ({ data }) => {
   if (!data.length) return null;
@@ -56,7 +56,7 @@ const PCAModule: React.FC = () => {
           setLoading(false);
           setError(null);
         },
-        (err) => {
+        (_err) => {
           setLoading(false);
           setError("PCA failed. Please check your data.");
         }
