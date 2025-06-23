@@ -2,7 +2,7 @@ import React from "react";
 import Tooltip from "@/components/UiComponents/Tooltip";
 import { Lightbulb } from "lucide-react";
 
-const PCAInsights: React.FC<any> = (props) => (
+const PCAInsights: React.FC<any> = (_props) => (
   // TODO: Use { pcaResult, selectedPCs } when implementing insights logic
   <div className="bg-primary/5 rounded-xl p-4 mt-4 flex items-center gap-2">
     <h4 className="font-semibold flex items-center gap-1">
