@@ -43,7 +43,7 @@ const faqs = [
 
 export default function EigenCrashCoursePage() {
   return (
-    <div className="space-y-12">
+    <div className="space-y-12 px-4 md:px-8">
       <header className="text-center py-8 bg-muted rounded-xl shadow-lg">
         <Brain className="h-20 w-20 text-primary mx-auto mb-6" />
         <h1 className="text-4xl md:text-5xl font-bold mb-4 font-headline text-primary">
