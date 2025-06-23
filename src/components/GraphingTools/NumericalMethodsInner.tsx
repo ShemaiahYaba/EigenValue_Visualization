@@ -126,9 +126,9 @@ const NumericalMethodsInner: React.FC = () => {
         <thead>
           <tr className="bg-gray-100">
             <th className="px-2 py-1 border">Iteration</th>
-            <th className="px-2 py-1 border">|λₙ - λₙ₋₁|</th>
-            <th className="px-2 py-1 border">||vₙ - vₙ₋₁||</th>
-            <th className="px-2 py-1 border">|λₙ - λ<sub>true</sub>|</th>
+            <th className="px-2 py-1 border">Eigenvalue Change<br/><span className='font-mono'>|λₙ - λₙ₋₁|</span></th>
+            <th className="px-2 py-1 border">Eigenvector Change<br/><span className='font-mono'>||vₙ - vₙ₋₁||</span></th>
+            <th className="px-2 py-1 border">Error to True Eigenvalue<br/><span className='font-mono'>|λₙ - λ<sub>true</sub>|</span></th>
           </tr>
         </thead>
         <tbody>
