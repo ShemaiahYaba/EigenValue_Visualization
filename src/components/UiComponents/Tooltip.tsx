@@ -12,7 +12,7 @@ const Tooltip: React.FC<{ content: string; children: React.ReactNode }> = ({ con
     >
       {children}
       <span
-        className={`fixed z-50 left-1/2 -translate-x-1/2 mt-3 px-4 py-2 bg-white text-gray-900 text-xs rounded-md border border-gray-200 shadow-lg min-w-[120px] max-w-xs transition-opacity duration-200 whitespace-pre-line break-words ${show ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed z-100 left-1/2 -translate-x-1/2 mt-3 px-4 py-2 bg-white text-gray-900 text-xs rounded-md border border-gray-200 shadow-lg min-w-[120px] max-w-xs transition-opacity duration-200 whitespace-pre-line break-words ${show ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         style={{ wordBreak: 'break-word', whiteSpace: 'pre-line', top: 'unset' }}
         aria-hidden={!show}
       >
