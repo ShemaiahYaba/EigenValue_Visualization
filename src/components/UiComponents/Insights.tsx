@@ -50,7 +50,16 @@ const Insights: React.FC<InsightProps> = ({ insights = [] }) => {
             }}
           >
             <CardContent sx={{ p: 2.5 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <div className="relative">
+                {insight.titleTooltip && (
+                  <div className="absolute top-0 right-0 z-10">
+                    <Tooltip content={insight.titleTooltip}>
+                      <span tabIndex={0} className="cursor-pointer text-yellow-500 align-middle">
+                        <Lightbulb size={18} />
+                      </span>
+                    </Tooltip>
+                  </div>
+                )}
                 <Typography
                   variant="subtitle1"
                   sx={{
@@ -61,13 +70,6 @@ const Insights: React.FC<InsightProps> = ({ insights = [] }) => {
                 >
                   {insight.title}
                 </Typography>
-                {insight.titleTooltip && (
-                  <Tooltip content={insight.titleTooltip}>
-                    <span tabIndex={0} className="ml-1 cursor-pointer text-yellow-500 align-middle">
-                      <Lightbulb size={16} />
-                    </span>
-                  </Tooltip>
-                )}
               </div>
               {insight.value && (
                 <Typography
