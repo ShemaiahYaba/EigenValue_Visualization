@@ -40,6 +40,9 @@ const Graph2D: React.FC<Graph2DProps> = ({
   const MIN_UNIT_SIZE = 0.01;
   const MAX_UNIT_SIZE = 5_000_000;
 
+  // Define colors for eigenvectors/arrows
+  const eigenArrowColors = ["#FFD600", "#E11D48", "#00C853", "#2962FF"]; // yellow, red, green, blue
+
   const getPointsToDraw = (): Point[] => {
     const centerX = width / 2 + offset.x;
     const centerY = height / 2 + offset.y;
@@ -223,7 +226,7 @@ const Graph2D: React.FC<Graph2DProps> = ({
                   y1={center.y}
                   x2={point.x}
                   y2={point.y}
-                  stroke="#e11d48"
+                  stroke={eigenArrowColors[i] || "#888"}
                   strokeWidth={2}
                   markerEnd="url(#arrowhead)"
                 />
@@ -272,6 +275,18 @@ const Graph2D: React.FC<Graph2DProps> = ({
               height={height}
             />
           </svg>
+
+          {/* Legend for EV1 and EV2 */}
+          <div className="absolute top-2 right-2 bg-white/90 dark:bg-gray-800/90 border border-gray-300 dark:border-gray-600 rounded px-3 py-2 text-xs flex flex-col gap-1 shadow-md z-20">
+            <div className="flex items-center gap-2">
+              <span className="inline-block w-4 h-2 rounded" style={{ background: '#FFD600' }} />
+              <span>EV1</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="inline-block w-4 h-2 rounded" style={{ background: '#E11D48' }} />
+              <span>EV2</span>
+            </div>
+          </div>
 
           <button
             onClick={handleReset}

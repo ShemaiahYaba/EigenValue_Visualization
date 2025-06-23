@@ -101,6 +101,23 @@ const MatrixInputWrapper = () => {
   return <MatrixInput onSubmit={handleSubmit} advancedOptions="rotation-translation" />;
 };
 
+// Tooltip definitions for matrix insights
+const insightTooltips: Record<string, string> = {
+  'Type': 'Describes the overall transformation type (identity, diagonal, symmetric, or general).',
+  'Determinant': 'Indicates area/volume scaling and invertibility. Zero means the matrix collapses space.',
+  'Trace': 'Sum of diagonal elements. For 2x2, it is the sum of eigenvalues.',
+  'Rank': 'Number of independent directions preserved. Full rank means no collapse.',
+  'Invertible': 'Whether the matrix can be reversed (has an inverse).',
+  'Area Scaling': 'How much the matrix stretches or shrinks area (2D).',
+  'Volume Scaling': 'How much the matrix stretches or shrinks volume (3D).',
+  '4D Hypervolume Scaling': 'How much the matrix stretches or shrinks 4D volume.',
+  'e1 maps to': 'Shows where the first basis vector (x-axis) is mapped.',
+  'e2 maps to': 'Shows where the second basis vector (y-axis) is mapped.',
+  'e3 maps to': 'Shows where the third basis vector (z-axis) is mapped.',
+  'e4 maps to': 'Shows where the fourth basis vector is mapped.',
+  'Real Eigenvalues': 'Special scaling factors for directions that are only stretched or shrunk, not rotated.',
+};
+
 const MatrixPlayground: React.FC = () => {
   const [is3D, setIs3D] = useState(true);
   const { transformedMatrix } = useMatrix();
@@ -126,7 +143,11 @@ const MatrixPlayground: React.FC = () => {
           >
             Toggle to {is3D ? "3D" : "2D"}
           </button>
-          <Insights insights={insights} />
+          <Insights insights={insights.map(insight => ({
+            ...insight,
+            // Add tooltip as title attribute for each card
+            titleTooltip: insightTooltips[insight.title] || undefined
+          }))} />
         </div>
       </div>
 

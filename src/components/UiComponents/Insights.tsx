@@ -6,6 +6,7 @@ interface InsightProps {
     title: string;
     description: string;
     value?: number | string;
+    titleTooltip?: string;
   }[];
 }
 
@@ -45,6 +46,7 @@ const Insights: React.FC<InsightProps> = ({ insights = [] }) => {
                 boxShadow: 1,
               },
             }}
+            title={insight.titleTooltip}
           >
             <CardContent sx={{ p: 2.5 }}>
               <Typography

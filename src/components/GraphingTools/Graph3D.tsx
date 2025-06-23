@@ -60,7 +60,18 @@ const Graph3D: React.FC = () => {
       className="flex items-center justify-center bg-gray-50 dark:bg-gray-900"
       style={{ height: "90vh", width: "100vw" }}
     >
-      <div style={{ width: "80vw", height: "100%" }}>
+      <div style={{ width: "80vw", height: "100%", position: 'relative' }}>
+        {/* Legend for EV1 and EV2 */}
+        <div style={{ position: 'absolute', top: 12, right: 12, zIndex: 20 }} className="bg-white/90 dark:bg-gray-800/90 border border-gray-300 dark:border-gray-600 rounded px-3 py-2 text-xs flex flex-col gap-1 shadow-md">
+          <div className="flex items-center gap-2">
+            <span className="inline-block w-4 h-2 rounded" style={{ background: '#FFD600' }} />
+            <span>EV1</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="inline-block w-4 h-2 rounded" style={{ background: '#E11D48' }} />
+            <span>EV2</span>
+          </div>
+        </div>
         <Canvas camera={{ position: [8, 8, 8], fov: 60 }}>
           {/* Lights */}
           <ambientLight intensity={0.5} />

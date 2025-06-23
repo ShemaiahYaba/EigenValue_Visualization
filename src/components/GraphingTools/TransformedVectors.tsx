@@ -16,7 +16,9 @@ export const TransformedVectors: React.FC = () => {
         const dir = new Vector3(x, y, z).normalize();
         const origin = new Vector3(0, 0, 0);
         const length = Math.sqrt(x ** 2 + y ** 2 + z ** 2);
-        const color = 0xe11d48; // rose-600
+        // Define colors: ev1 = yellow, ev2 = red
+        const eigenArrowColors = [0xFFD600, 0xE11D48];
+        const color = eigenArrowColors[index] || 0x888888;
         const arrowHelper = new ArrowHelper(dir, origin, length, color);
         return <primitive key={index} object={arrowHelper} />;
       })}
