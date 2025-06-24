@@ -7,7 +7,7 @@ import PCAInsights from "@/components/PCA/PCAInsights";
 import { runPCA } from "@/services/matrixServices";
 import Graph2D from "@/components/GraphingTools/Graph2D";
 import Graph3D from "@/components/GraphingTools/Graph3D";
-import { MatrixProvider } from "@/contexts/MatrixProvider";
+
 
 const NAVBAR_HEIGHT = 64;
 
