@@ -244,6 +244,7 @@ const NumericalMethodsInner: React.FC = () => {
         }}
       >
         <Graph2D
+        width={800}
           mode="eigenvalue"
           eigenvalues={results?.eigenvalues}
           currentStep={currentStep}

@@ -14,7 +14,8 @@ const MatrixPlayground = React.lazy(
 const NumericalMethods = React.lazy(
   () => import("@/pages/Features/NumericalMethods")
 );
-const PCAModule = React.lazy(() => import("@/pages/Features/PCA"));
+const PCAModule = React.lazy(() => import("@/components/PCA/PCAMain"));
+const PCAIntro = React.lazy(() => import("@/pages/Features/PCA"));
 
 const ProtectedRoutes = () => (
   <Route
@@ -28,6 +29,7 @@ const ProtectedRoutes = () => (
     <Route index element={<Features />} />
     <Route path="made-easy" element={<Course />} />
     <Route path="concepts" element={<Concepts />} />
+    <Route path="pca-intro" element={<PCAIntro />} />
     <Route path="pca" element={<PCAModule />} />
     <Route path="numerical-methods" element={<NumericalMethods />} />
     <Route path="matrix-playground" element={<MatrixPlayground />} />

@@ -173,7 +173,14 @@ const Graph2D: React.FC<Graph2DProps> = ({
   const points = getPointsToDraw();
 
   return (
-    <div className="flex items-center justify-center bg-gray-200 dark:bg-gray-900 w-full h-full max-h-[90vh] overflow-hidden">
+    <div
+      className="flex items-center justify-center bg-gray-200 dark:bg-gray-900 w-full h-full max-h-[90vh] overflow-hidden"
+      // onWheelCapture={e => {
+      //   // Prevent page scroll when mouse is over the graph
+      //   e.preventDefault();
+      //   e.stopPropagation();
+      // }}
+    >
       <div className="w-full h-full max-w-5xl max-h-[80vh]">
         <div className="relative select-none w-full h-full">
           <svg
