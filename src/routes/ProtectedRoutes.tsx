@@ -15,7 +15,7 @@ const NumericalMethods = React.lazy(
   () => import("@/pages/Features/NumericalMethods")
 );
 const PCAModule = React.lazy(() => import("@/components/PCA/PCAMain"));
-const PCAIntro = React.lazy(() => import("@/pages/Features/PCA"));
+const PCAIntro = React.lazy(() => import("@/pages/Features/PCAIntro"));
 
 const ProtectedRoutes = () => (
   <Route

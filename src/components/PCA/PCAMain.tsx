@@ -96,7 +96,7 @@ const DataPreview: React.FC<{ data: number[][] }> = ({ data }) => {
 };
 
 // --- Main PCA Module ---
-const PCAModule: React.FC = () => {
+const PCAInner: React.FC = () => {
   const [data, setData] = useState<number[][]>([]);
   const [pcaResult, setPcaResult] = useState<any>(null);
   const [selectedPCs, setSelectedPCs] = useState(2);
@@ -139,6 +139,7 @@ const PCAModule: React.FC = () => {
   // }, [selectedPCs]);
 
   return (
+    
     <div
       className="w-full flex flex-col items-center overflow-x-hidden relative"
       style={{
@@ -233,7 +234,8 @@ const PCAModule: React.FC = () => {
         </div>
       </div>
     </div>
+    
   );
 };
 
-export default PCAModule;
+export default PCAInner;
