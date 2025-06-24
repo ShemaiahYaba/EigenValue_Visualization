@@ -7,6 +7,7 @@ import PCAInsights from "@/components/PCA/PCAInsights";
 import { runPCA } from "@/services/matrixServices";
 import Graph2D from "@/components/GraphingTools/Graph2D";
 import Graph3D from "@/components/GraphingTools/Graph3D";
+import { MatrixProvider } from "@/contexts/MatrixProvider";
 
 const NAVBAR_HEIGHT = 64;
 
@@ -134,9 +135,9 @@ const PCAInner: React.FC = () => {
   }, [pcaResult, selectedPCs]);
 
   // --- Axis labels for Graphs ---
-  // const axisLabels = useMemo(() => {
-  //   return Array.from({ length: selectedPCs }).map((_, i) => `PC${i + 1}`);
-  // }, [selectedPCs]);
+  const axisLabels = useMemo(() => {
+    return Array.from({ length: selectedPCs }).map((_, i) => `PC${i + 1}`);
+  }, [selectedPCs]);
 
   return (
     
@@ -186,18 +187,19 @@ const PCAInner: React.FC = () => {
                 vectors={data}
                 mode="vector"
                 currentStep={data.length - 1}
-                width={1500}
-                height={1500}
+                width={800}
+                height={600}
                 eigenvalues={undefined}
                 trueEigenvalues={undefined}
-                
               />
             )}
             {data[0]?.length === 3 && (
               <Graph3D
-                // data={data}
-                // axisLabels={["Feature 1", "Feature 2", "Feature 3"]}
-                // showLegend={true}
+                vectors={data}
+                axisLabels={["Feature 1", "Feature 2", "Feature 3"]}
+                showLegend={true}
+                width={800}
+                height={600}
               />
             )}
             {data[0]?.length > 3 && (
@@ -212,19 +214,19 @@ const PCAInner: React.FC = () => {
                 vectors={projectedData}
                 mode="vector"
                 currentStep={projectedData.length - 1}
-                width={1500}
-                height={1500}
+                width={800}
+                height={600}
                 eigenvalues={undefined}
                 trueEigenvalues={undefined}
-                // axisLabels={axisLabels}
-                // showLegend={true}
               />
             )}
             {canShow3D && (
               <Graph3D
-                // vectors={projectedData}
-                // axisLabels={axisLabels}
-                // showLegend
+                vectors={projectedData}
+                axisLabels={axisLabels}
+                showLegend={true}
+                width={800}
+                height={600}
               />
             )}
             {!canShow2D && !canShow3D && (
