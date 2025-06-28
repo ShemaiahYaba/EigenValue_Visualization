@@ -70,7 +70,7 @@ const Navbar: React.FC = () => {
           <Link to="/features/concepts" className="group">
             <CubeIcon className="h-7 w-7 text-black hover:text-gray-700 dark:text-gray-400 dark:hover:text-white" />
           </Link>
-          <Link to="/features/pca" className="group">
+          <Link to="/features/pca-intro" className="group">
             <SquaresPlusIcon className="h-7 w-7 text-black hover:text-gray-700 dark:text-gray-400 dark:hover:text-white" />
           </Link>
           <Link to="/features/numerical-methods" className="group">

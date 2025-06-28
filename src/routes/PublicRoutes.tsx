@@ -15,6 +15,7 @@ const Auth = React.lazy(() => import("@/pages/Onboarding/AuthForm"));
 const AboutUs = React.lazy(() => import("@/pages/Onboarding/AboutUs"));
 const Resource = React.lazy(() => import("@/pages/Onboarding/Resource"));
 
+
 const PublicRoutes = () => (
   <Route path="/" element={<Layout />}>
     <Route index element={<Onboarding />} />
@@ -26,6 +27,7 @@ const PublicRoutes = () => (
     <Route path="/resources" element={<Resource />} />
     <Route path="coming-soon" element={<ComingSoon />} />
     <Route path="404" element={<NotFound />} />
+    
   </Route>
 );
 

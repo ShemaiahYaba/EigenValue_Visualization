@@ -99,13 +99,13 @@ const Graph3D: React.FC<Graph3DProps> = ({
       <div style={{ width: "100%", height: "100%", position: 'relative' }}>
         {/* Legend for EV1 and EV2 */}
         {showLegend && (
-          <div style={{ position: 'absolute', top: 12, right: 12, zIndex: 20 }} className="bg-white/90 dark:bg-gray-800/90 border border-gray-300 dark:border-gray-600 rounded px-3 py-2 text-xs flex flex-col gap-1 shadow-md">
-            <div className="flex items-center gap-2">
-              <span className="inline-block w-4 h-2 rounded" style={{ background: '#FFD600' }} />
+        <div style={{ position: 'absolute', top: 12, right: 12, zIndex: 20 }} className="bg-white/90 dark:bg-gray-800/90 border border-gray-300 dark:border-gray-600 rounded px-3 py-2 text-xs flex flex-col gap-1 shadow-md">
+          <div className="flex items-center gap-2">
+            <span className="inline-block w-4 h-2 rounded" style={{ background: '#FFD600' }} />
               <span>{axisLabels?.[0] || 'PC1'}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="inline-block w-4 h-2 rounded" style={{ background: '#E11D48' }} />
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="inline-block w-4 h-2 rounded" style={{ background: '#E11D48' }} />
               <span>{axisLabels?.[1] || 'PC2'}</span>
             </div>
             {axisLabels?.[2] && (
@@ -133,7 +133,7 @@ const Graph3D: React.FC<Graph3DProps> = ({
           {vectors ? (
             <PCAVectors vectors={vectors} />
           ) : (
-            <TransformedVectors />
+          <TransformedVectors />
           )}
 
           {/* User interaction with auto-rotation */}

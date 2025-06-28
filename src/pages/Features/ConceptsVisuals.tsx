@@ -80,6 +80,16 @@ const commonTransformations = [
     imgAlt: "Projection matrix transformation visualization",
     aiHint: "vector projection shadow",
   },
+  {
+    title: "Linear Transformations: Grid Visualization",
+    icon: <Layers className="h-7 w-7 text-accent" />,
+    description:
+      "Visualize how a matrix transforms the plane using a grid. Try different matrices to see how they affect the grid.",
+    imgSrc: "https://placehold.co/400x250.png",
+    imgAlt: "Projection matrix transformation visualization",
+    aiHint: "vector projection shadow",
+    href: "/features/custom-visuals/linear-transformation",
+  },
 ];
 
 export default function MatrixTransformationsPage() {
@@ -122,7 +132,7 @@ export default function MatrixTransformationsPage() {
 
       <Separator className="my-8 border-primary/20" />
 
-      <h2 className="text-3xl font-bold text-center mb-8 font-headline text-primary">
+      <h2 className="text-3xl font-bold text-center mb-8 font-headline text-primary" id="common-transformations">
         Common Matrix Transformations
       </h2>
       <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-8">
@@ -164,7 +174,7 @@ export default function MatrixTransformationsPage() {
                 size="sm"
                 className="text-accent border-accent hover:bg-accent/10"
               >
-                <Link to="/features/matrix-playground">
+                <Link to={tf.href ?? ''}>
                   <PlayCircle className="mr-2 h-4 w-4" /> Try in Playground
                 </Link>
               </Button>
@@ -313,8 +323,8 @@ export default function MatrixTransformationsPage() {
               size="lg"
               className="bg-primary hover:bg-primary/90 text-primary-foreground"
             >
-              <Link to="/features/pca">
-                Dive Deeper into PCA (Content Coming Soon!){" "}
+              <Link to="/features/pca-intro">
+                Dive Deeper into PCA {" "}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
