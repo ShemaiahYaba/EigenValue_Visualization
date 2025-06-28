@@ -55,12 +55,13 @@ const LinearTransformation: React.FC = () => {
   const handleNavigate = () => {
     navigate('/features/concepts#common-transformations');
   };
+
   return (
-    <div className="flex flex-col items-center gap-6 p-8">
-      <h2 className="text-2xl font-bold mb-2">Linear Transformation Visualization</h2>
-      <div className="flex flex-row gap-8 items-start">
-        {/* Controls */}
-        <div className="flex flex-col gap-4 items-center">
+    <div className="w-full flex overflow-hidden" style={{ height: 'calc(100vh - 64px)' }}>
+      {/* Left Panel: Controls */}
+      <div className="w-[35%] h-full bg-white border-r border-gray-200 flex flex-col">
+        <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-6">
+          <h2 className="text-2xl font-bold mb-4">Linear Transformation Visualization</h2>
           <div className="flex gap-2 mb-2">
             <button
               className={`px-3 py-1 rounded ${mode==='2D' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
@@ -114,29 +115,28 @@ const LinearTransformation: React.FC = () => {
             ))}
           </div>
           <div className="flex flex-row gap-2">
-          <button
-            className="mt-2 px-3 py-1 rounded bg-gray-500 text-white hover:bg-gray-600"
-            onClick={handleReset}
-          >Reset</button>
-          <button
-            className="mt-2 px-3 py-1 rounded bg-gray-500 text-white hover:bg-gray-600"
-            onClick={handleNavigate}
-          >More Visualizations</button>
+            <button
+              className="mt-2 px-3 py-1 rounded bg-gray-500 text-white hover:bg-gray-600"
+              onClick={handleReset}
+            >Reset</button>
+            <button
+              className="mt-2 px-3 py-1 rounded bg-gray-500 text-white hover:bg-gray-600"
+              onClick={handleNavigate}
+            >More Visualizations</button>
           </div>
           <div className="text-gray-500 text-sm mt-4 max-w-2xl text-center">
-        <b>Tip:</b> Try different preset matrices or enter your own to see how the grid is transformed! In 3D, you can rotate the view with your mouse.
-      </div>
-        </div>
-        {/* Visualization */}
-        <div>
-          {mode === '2D' ? (
-            <GridTransformation2D matrix={matrix2D} width={600} height={400} />
-          ) : (
-            <GridTransformation3D matrix={matrix3D} width={600} height={400} />
-          )}
+            <b>Tip:</b> Try different preset matrices or enter your own to see how the grid is transformed! In 3D, you can rotate the view with your mouse.
+          </div>
         </div>
       </div>
-      
+      {/* Right Panel: Visualization */}
+      <div className="w-[65%] h-full flex justify-center items-center bg-gray-50 overflow-hidden">
+        {mode === '2D' ? (
+          <GridTransformation2D matrix={matrix2D} width={600} height={400} />
+        ) : (
+          <GridTransformation3D matrix={matrix3D} width={600} height={400} />
+        )}
+      </div>
     </div>
   );
 };

@@ -17,6 +17,13 @@ const NumericalMethods = React.lazy(
 const PCAModule = React.lazy(() => import("@/components/PCA/PCAMain"));
 const PCAIntro = React.lazy(() => import("@/pages/Features/PCAIntro"));
 const LinearTransformation = React.lazy(() => import("@/pages/CustomVisuals/LinearTransformation"));
+const IdentityMatrix = React.lazy(() => import("@/pages/CustomVisuals/IdentityMatrix"));
+const ScalingMatrix = React.lazy(() => import("@/pages/CustomVisuals/ScalingMatrix"));
+const RotationMatrix = React.lazy(() => import("@/pages/CustomVisuals/RotationMatrix"));
+const ShearMatrix = React.lazy(() => import("@/pages/CustomVisuals/ShearMatrix"));
+const ReflectionMatrix = React.lazy(() => import("@/pages/CustomVisuals/ReflectionMatrix"));  
+const OrthogonalMatrix = React.lazy(() => import("@/pages/CustomVisuals/OrthogonalMatrix"));
+const ProjectionMatrix = React.lazy(() => import("@/pages/CustomVisuals/ProjectionMatrix"));
 
 const ProtectedRoutes = () => (
   <>
@@ -29,6 +36,13 @@ const ProtectedRoutes = () => (
     }
   >
     <Route path="custom-visuals/linear-transformation" element={<LinearTransformation />}  />
+    <Route path="custom-visuals/identity-matrix" element={<IdentityMatrix />}  />
+    <Route path="custom-visuals/scaling-matrix" element={<ScalingMatrix />}  />
+    <Route path="custom-visuals/rotation-matrix" element={<RotationMatrix />}  />
+    <Route path="custom-visuals/shear-matrix" element={<ShearMatrix />}  />
+    <Route path="custom-visuals/reflection-matrix" element={<ReflectionMatrix />}  />
+    <Route path="custom-visuals/orthogonal-matrix" element={<OrthogonalMatrix />}  />
+    <Route path="custom-visuals/projection-matrix" element={<ProjectionMatrix />}  />
     <Route index element={<Features />} />
     <Route path="made-easy" element={<Course />} />
     <Route path="concepts" element={<Concepts />} />

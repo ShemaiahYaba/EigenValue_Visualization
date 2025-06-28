@@ -25,6 +25,7 @@ const commonTransformations = [
     imgSrc: "https://placehold.co/400x250.png",
     imgAlt: "Identity matrix transformation visualization",
     aiHint: "grid vector unchanged",
+    href: "/features/custom-visuals/identity-matrix",
   },
   {
     title: "Scaling Matrices: Stretch & Shrink",
@@ -34,6 +35,7 @@ const commonTransformations = [
     imgSrc: "https://placehold.co/400x250.png",
     imgAlt: "Scaling matrix transformation visualization",
     aiHint: "circle ellipse scale",
+    href: "/features/custom-visuals/scaling-matrix",
   },
   {
     title: "Rotation Matrices: Spin Around",
@@ -43,6 +45,7 @@ const commonTransformations = [
     imgSrc: "https://placehold.co/400x250.png",
     imgAlt: "Rotation matrix transformation visualization",
     aiHint: "vector rotation origin",
+    href: "/features/custom-visuals/rotation-matrix",
   },
   {
     title: "Shear Matrices: Tilt and Skew",
@@ -52,6 +55,7 @@ const commonTransformations = [
     imgSrc: "https://placehold.co/400x250.png",
     imgAlt: "Shear matrix transformation visualization",
     aiHint: "square parallelogram shear",
+    href: "/features/custom-visuals/shear-matrix",
   },
   {
     title: "Reflection Matrices: Mirror Image",
@@ -61,6 +65,7 @@ const commonTransformations = [
     imgSrc: "https://placehold.co/400x250.png",
     imgAlt: "Reflection matrix transformation visualization",
     aiHint: "vector reflection axis",
+    href: "/features/custom-visuals/reflection-matrix",
   },
   {
     title: "Orthogonal Matrices: Preserve Structure",
@@ -70,6 +75,7 @@ const commonTransformations = [
     imgSrc: "https://placehold.co/400x250.png",
     imgAlt: "Orthogonal matrix transformation visualization",
     aiHint: "shape preserved angles",
+    href: "/features/custom-visuals/orthogonal-matrix",
   },
   {
     title: "Projection Matrices: Casting Shadows",
@@ -79,6 +85,7 @@ const commonTransformations = [
     imgSrc: "https://placehold.co/400x250.png",
     imgAlt: "Projection matrix transformation visualization",
     aiHint: "vector projection shadow",
+    href: "/features/custom-visuals/projection-matrix",
   },
   {
     title: "Linear Transformations: Grid Visualization",
