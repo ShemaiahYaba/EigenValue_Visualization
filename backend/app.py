@@ -1,4 +1,5 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
+from typing import Union, Tuple, Any
 import numpy as np
 from flask_cors import CORS
 
@@ -41,8 +42,11 @@ def create_translation_matrix(tx, ty, tz):
     ])
 
 @app.route("/transform", methods=["POST"])
-def transform():
+def transform() -> Any:
     data = request.json
+    if data is None:
+        return jsonify({"error": "No data provided"}), 400
+    
     matrix = np.array(data["matrix"])
     rotation = data.get("rotation", {"x": 0, "y": 0, "z": 0})
     translation = data.get("translation", {"x": 0, "y": 0, "z": 0})
@@ -105,8 +109,11 @@ def transform():
         return jsonify({"transformed": transformed.tolist()})
 
 @app.route("/power-method", methods=["POST"])
-def power_method():
+def power_method() -> Any:
     data = request.json
+    if data is None:
+        return jsonify({"error": "No data provided"}), 400
+    
     matrix = np.array(data["matrix"], dtype=float)
     v0 = np.array(data.get("initial_vector", [1]*len(matrix)), dtype=float)
     max_iter = int(data.get("max_iter", 10))
@@ -138,8 +145,12 @@ def power_method():
         v = v_next
 
     # Compute true eigenvalues and find max
-    true_eigenvalues = np.linalg.eigvals(matrix).tolist()
-    max_true_eigenvalue = max(true_eigenvalues, key=abs)
+    true_eigenvalues = np.linalg.eigvals(matrix).tolist()  # type: ignore
+    # Find the eigenvalue with maximum absolute value
+    max_true_eigenvalue = true_eigenvalues[0]  # type: ignore
+    for eigval in true_eigenvalues:  # type: ignore
+        if abs(eigval) > abs(max_true_eigenvalue):  # type: ignore
+            max_true_eigenvalue = eigval
 
     return jsonify({
         "vectors": vectors,
@@ -149,8 +160,11 @@ def power_method():
 
 
 @app.route("/pca", methods=["POST"])
-def pca():
+def pca() -> Any:
     data = request.json
+    if data is None:
+        return jsonify({"error": "No data provided"}), 400
+    
     X = np.array(data["matrix"], dtype=float)  # shape: (n_samples, n_features)
     n_samples, n_features = X.shape
 

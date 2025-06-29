@@ -18,6 +18,16 @@ import {
 
 const commonTransformations = [
   {
+    title: "Linear Transformations: Grid Visualization",
+    icon: <Layers className="h-7 w-7 text-accent" />,
+    description:
+      "Visualize how a matrix transforms the plane using a grid. Try different matrices to see how they affect the grid.",
+    imgSrc: "https://placehold.co/400x250.png",
+    imgAlt: "Projection matrix transformation visualization",
+    aiHint: "vector projection shadow",
+    href: "/features/custom-visuals/linear-transformation",
+  },
+  {
     title: "Identity Matrix: The Unchanged",
     icon: <RotateCcw className="h-7 w-7 text-accent" />,
     description:
@@ -87,16 +97,7 @@ const commonTransformations = [
     aiHint: "vector projection shadow",
     href: "/features/custom-visuals/projection-matrix",
   },
-  {
-    title: "Linear Transformations: Grid Visualization",
-    icon: <Layers className="h-7 w-7 text-accent" />,
-    description:
-      "Visualize how a matrix transforms the plane using a grid. Try different matrices to see how they affect the grid.",
-    imgSrc: "https://placehold.co/400x250.png",
-    imgAlt: "Projection matrix transformation visualization",
-    aiHint: "vector projection shadow",
-    href: "/features/custom-visuals/linear-transformation",
-  },
+ 
 ];
 
 export default function MatrixTransformationsPage() {
