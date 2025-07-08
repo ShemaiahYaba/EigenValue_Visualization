@@ -140,9 +140,9 @@ def power_method() -> Any:
         v_next = w / w_norm
         vectors.append(v_next.tolist())
         eigenvalues.append(eigval)
-        if np.linalg.norm(v_next - v) < tol:
-            break
-        v = v_next
+        # if np.linalg.norm(v_next - v) < tol:
+        #     break
+        # v = v_next
 
     # Compute true eigenvalues and find max
     true_eigenvalues = np.linalg.eigvals(matrix).tolist()  # type: ignore
