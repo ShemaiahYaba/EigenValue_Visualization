@@ -115,7 +115,9 @@ def power_method() -> Any:
         return jsonify({"error": "No data provided"}), 400
     
     matrix = np.array(data["matrix"], dtype=float)
-    v0 = np.array(data.get("initial_vector", [1]*len(matrix)), dtype=float)
+    n = matrix.shape[0]
+    initial_vector = data.get("initial_vector", None)
+    use_random = data.get("use_random", False)
     max_iter = int(data.get("max_iter", 10))
     tol = float(data.get("tol", 1e-8))
 
@@ -123,9 +125,13 @@ def power_method() -> Any:
     if matrix.ndim != 2 or matrix.shape[0] != matrix.shape[1]:
         return jsonify({"error": "Matrix must be square"}), 400
 
-    n = matrix.shape[0]
-    if v0.shape[0] != n:
-        return jsonify({"error": "Initial vector size mismatch"}), 400
+    if use_random or initial_vector is None:
+        v0 = np.random.rand(n)
+        v0 /= np.linalg.norm(v0)
+    else:
+        v0 = np.array(initial_vector, dtype=float)
+        if v0.shape[0] != n:
+            return jsonify({"error": "Initial vector size mismatch"}), 400
 
     vectors = []
     eigenvalues = []
@@ -137,7 +143,6 @@ def power_method() -> Any:
         if w_norm == 0:
             break
         v_next = w / w_norm
-        # Standard Rayleigh quotient using the current vector (after normalization)
         eigval = np.dot(v_next, matrix @ v_next) / np.dot(v_next, v_next)
         vectors.append(v_next.tolist())
         eigenvalues.append(eigval)
@@ -146,12 +151,8 @@ def power_method() -> Any:
         v = v_next
 
     # Compute true eigenvalues and find max
-    true_eigenvalues = np.linalg.eigvals(matrix).tolist()  # type: ignore
-    # Find the eigenvalue with maximum absolute value
-    max_true_eigenvalue = true_eigenvalues[0]  # type: ignore
-    for eigval in true_eigenvalues:  # type: ignore
-        if abs(eigval) > abs(max_true_eigenvalue):  # type: ignore
-            max_true_eigenvalue = eigval
+    true_eigenvalues = np.linalg.eigvals(matrix)
+    max_true_eigenvalue = true_eigenvalues[np.argmax(np.abs(true_eigenvalues))].item()
 
     return jsonify({
         "vectors": vectors,
