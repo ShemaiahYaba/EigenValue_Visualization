@@ -133,16 +133,17 @@ def power_method() -> Any:
     v = v0 / np.linalg.norm(v0)
     for i in range(max_iter):
         w = matrix @ v
-        eigval = np.dot(w, v) / np.dot(v, v)
         w_norm = np.linalg.norm(w)
         if w_norm == 0:
             break
         v_next = w / w_norm
+        # Standard Rayleigh quotient using the current vector (after normalization)
+        eigval = np.dot(v_next, matrix @ v_next) / np.dot(v_next, v_next)
         vectors.append(v_next.tolist())
         eigenvalues.append(eigval)
-        # if np.linalg.norm(v_next - v) < tol:
-        #     break
-        # v = v_next
+        if np.linalg.norm(v_next - v) < tol:
+            break
+        v = v_next
 
     # Compute true eigenvalues and find max
     true_eigenvalues = np.linalg.eigvals(matrix).tolist()  # type: ignore
