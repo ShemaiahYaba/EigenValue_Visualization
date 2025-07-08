@@ -24,7 +24,17 @@ const NumericalMethodsInner: React.FC = () => {
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [showIterationModal, setShowIterationModal] = useState(false);
 
-  const handleSubmit = async ({ matrix, max_iter, initial_vector }: { matrix: number[][], max_iter?: number, initial_vector?: number[] }) => {
+  const handleSubmit = async ({
+    matrix,
+    max_iter,
+    initial_vector,
+    use_random,
+  }: {
+    matrix: number[][];
+    max_iter?: number;
+    initial_vector?: number[];
+    use_random?: boolean;
+  }) => {
     try {
       await runPowerMethod(
         matrix,
@@ -41,7 +51,8 @@ const NumericalMethodsInner: React.FC = () => {
         },
         max_iter,
         undefined,
-        initial_vector
+        initial_vector,
+        use_random
       );
     } catch (error: unknown) {
       setErrorInsight(

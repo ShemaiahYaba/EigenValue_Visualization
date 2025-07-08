@@ -53,7 +53,8 @@ export const runPowerMethod = async (
   onError: () => void,
   max_iter: number = 20,
   tol: number = 1e-8,
-  initial_vector?: number[]
+  initial_vector?: number[],
+  use_random?: boolean
 ) => {
   try {
     const body: any = {
@@ -63,6 +64,9 @@ export const runPowerMethod = async (
     };
     if (initial_vector) {
       body.initial_vector = initial_vector;
+    }
+    if (use_random) {
+      body.use_random = true;
     }
     const response = await fetch(
       "https://mlab-uezm.onrender.com/power-method",

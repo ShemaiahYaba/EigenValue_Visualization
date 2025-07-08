@@ -27,6 +27,7 @@ type MatrixInputProps = {
     translation?: { x: number; y: number; z: number };
     max_iter?: number;
     initial_vector?: number[];
+    use_random?: boolean;
   }) => void;
   initialMatrix?: Matrix;
   initialSize?: number;
@@ -67,6 +68,7 @@ export const MatrixInput: React.FC<MatrixInputProps> = ({
   const [maxIterError, setMaxIterError] = useState<string | null>(null);
   const [initialVectorError, setInitialVectorError] = useState<string | null>(null);
   const [showAdvancedFields, setShowAdvancedFields] = useState(false);
+  const [useRandom, setUseRandom] = useState(false);
 
   // Helper booleans for which advanced options to show
   const showRotationTranslation = advancedOptions === 'rotation-translation' || advancedOptions === 'both';
@@ -158,7 +160,8 @@ export const MatrixInput: React.FC<MatrixInputProps> = ({
       rotation,
       translation,
       max_iter: getSafeMaxIter(),
-      initial_vector: getNumericInitialVector(),
+      initial_vector: useRandom ? undefined : getNumericInitialVector(),
+      use_random: useRandom,
     });
   };
 
@@ -290,6 +293,18 @@ export const MatrixInput: React.FC<MatrixInputProps> = ({
           </div>
         </div>
       )}
+
+      <div className="flex items-center gap-2 my-2">
+        <input
+          type="checkbox"
+          checked={useRandom}
+          onChange={e => setUseRandom(e.target.checked)}
+          className="mr-2"
+        />
+        <label className="font-medium select-none cursor-pointer text-xs">
+          Use random initial vector
+        </label>
+      </div>
 
       <Button
         onClick={handleSubmit}
