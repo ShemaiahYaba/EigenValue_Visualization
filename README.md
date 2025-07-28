@@ -25,35 +25,7 @@ MatrixLAB lets you:
 - **Frontend:** React, TypeScript, Tailwind CSS, Recharts, Three.js
 - **Backend:** Python (Flask), NumPy
 - **Deployment:** Vercel (frontend), Render (backend)
-
-## 🔧 Installation
-
-Clone the repo and install dependencies:
-
-```bash
-git clone https://github.com/yourusername/matrixlab.git
-cd matrixlab
-npm install
-cd backend
-pip install -r requirements.txt
-```
-
-## ▶️ Usage
-
-Start the backend (Flask):
-
-```bash
-cd backend
-python app.py
-```
-
-Start the frontend (Vite):
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:5173](http://localhost:5173) in your browser.
+  You can get started at [mlab-inky.vercel.app](https://mlab-inky.vercel.app)
 
 ## 🧮 Example: Matrix Transformation
 
