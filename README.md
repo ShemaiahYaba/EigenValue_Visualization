@@ -1,63 +1,82 @@
-# Eigenvalue Visualization with MLAB
+# MatrixLAB: Interactive Eigenvalue & PCA Visualization
 
-A graphical project that helps users intuitively understand the behavior of eigenvalues and eigenvectors by visualizing their impact on linear transformations in 2D and 3D space. Built using MLAB (Matplotlib + NumPy) in Python.
+MatrixLAB is a modern educational web app that helps users intuitively explore the behavior of eigenvalues, eigenvectors, and principal components through interactive visualizations in 2D and 3D. Designed for students and educators in linear algebra, data science, and machine learning.
 
 ## 📊 Overview
 
-This tool provides interactive visualizations that demonstrate how eigenvectors define invariant directions under a matrix transformation, and how eigenvalues scale those vectors. It’s particularly useful for educational purposes in linear algebra and numerical analysis.
+MatrixLAB lets you:
+
+- Input or upload custom matrices and datasets
+- Visualize linear transformations, eigenvectors, and eigenvalues in real time
+- Explore the Power Method and PCA (Principal Component Analysis) with step-by-step insights
+- See how data is projected onto principal components, with explained variance charts and scatter plots
 
 ## 🚀 Features
 
-- Visualize 2D and 3D linear transformations
-- Plot eigenvectors and show their orientation and scaling
-- Animate transformations applied to a vector space
-- Custom matrix input (manual or random)
-- Color-coded axis and vectors for clarity
+- **Interactive Matrix Input:** Manual entry, CSV upload, or sample data for instant experimentation
+- **2D & 3D Graphing:** Zoom, pan, color-coded axes, and animated transformations
+- **Eigenvalue/Eigenvector Visualization:** See invariant directions and scaling effects
+- **Numerical Methods Playground:** Power Method iterations, error tracking, and true eigenvalue comparison
+- **PCA Module:** Upload data, select number of principal components, view explained variance, and project data
+- **Modern UI:** Responsive split layouts, scrollable panels, tooltips, and protected routes for user sessions
 
 ## 🛠️ Tech Stack
 
-- **Python 3.8+**
-- **Matplotlib**
-- **NumPy**
+- **Frontend:** React, TypeScript, Tailwind CSS, Recharts, Three.js
+- **Backend:** Python (Flask), NumPy
+- **Deployment:** Vercel (frontend), Render (backend)
 
 ## 🔧 Installation
 
+Clone the repo and install dependencies:
+
 ```bash
-git clone https://github.com/yourusername/eigenvalue-visualization.git
-cd eigenvalue-visualization
+git clone https://github.com/yourusername/matrixlab.git
+cd matrixlab
+npm install
+cd backend
 pip install -r requirements.txt
 ```
 
 ## ▶️ Usage
 
-Run the main script:
+Start the backend (Flask):
 
 ```bash
-python eigen_visualizer.py
+cd backend
+python app.py
 ```
 
-You will be prompted to either enter your own 2x2 matrix or generate a random one. Once the matrix is set, the transformation and its effect on eigenvectors will be visualized.
+Start the frontend (Vite):
 
-## 📷 Screenshots
+```bash
+npm run dev
+```
 
-_(Optional: Add screenshots or a demo GIF here to show the project in action)_
+Open [http://localhost:5173](http://localhost:5173) in your browser.
 
-## 👨‍💻 Author
+## 🧮 Example: Matrix Transformation
 
-- **Your Name** – [your.email@example.com](mailto:your.email@example.com)
-- GitHub: [@yourusername](https://github.com/yourusername)
+You can enter a matrix like
+
+```latex
+\begin{bmatrix}
+2 & 1 \\
+1 & 3
+\end{bmatrix}
+```
+
+and see how it transforms vectors, with eigenvectors shown as invariant directions and eigenvalues as scaling factors.
+
+## 🧑‍💻 Author
+
+- **SHEMAIAH YABA-SHIAKA** – [shemaiahwambebe@gmail.com](mailto:shemaiahwambebe@gmail.com)
+- GitHub: [@ShemaiahYaba](https://github.com/ShemaiahYaba/)
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT License – see the [LICENSE](LICENSE) file for details.
 
 ---
 
-_This project is part of an ongoing exploration into making abstract linear algebra concepts more intuitive through visualization._
-
-```
-
----
-
-Would you like me to include LaTeX-rendered math for the matrix equations or provide a sample image to embed as a screenshot?
-```
+_MatrixLAB is part of an ongoing effort to make abstract linear algebra and data science concepts more intuitive through interactive visualization._
